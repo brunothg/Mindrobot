@@ -268,7 +268,7 @@ public class StartDialog extends JDialog implements ActionListener,
 	public static void start() {
 
 		StartDialog start = new StartDialog();
-		start.setSize(500, 300);
+		start.setSize(500, 200);
 		start.setVisible(true);
 
 	}
