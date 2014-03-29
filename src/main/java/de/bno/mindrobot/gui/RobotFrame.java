@@ -3,6 +3,8 @@ package de.bno.mindrobot.gui;
 import static de.bno.mindrobot.gui.Strings.String;
 import static de.bno.mindrobot.gui.Strings.TITLE;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.logging.Logger;
@@ -24,7 +26,7 @@ public class RobotFrame extends JFrame implements WindowListener {
 		super();
 		setTitle(String(TITLE));
 		setLocationByPlatform(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		setIcon();
 
@@ -38,8 +40,35 @@ public class RobotFrame extends JFrame implements WindowListener {
 	}
 
 	private void setFullscreen() {
-		// TODO Auto-generated method stub
+		LOG.info("Versuche in den Vollbildmodus zu wechseln.");
+		GraphicsEnvironment graphEnvironment = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+		GraphicsDevice graphDevice = graphEnvironment.getDefaultScreenDevice();
 
+		if (!graphDevice.isFullScreenSupported()) {
+			GraphicsDevice[] screenDevices = graphEnvironment
+					.getScreenDevices();
+
+			boolean failed = true;
+
+			for (GraphicsDevice device : screenDevices) {
+				if (device.isFullScreenSupported()) {
+					graphDevice = device;
+					failed = false;
+				}
+			}
+
+			if (failed) {
+				LOG.info("Vollbildmodus nicht verfügbar. Gehe zurück zum normalen Modus.");
+				setSize();
+				return;
+			}
+		}
+
+		setUndecorated(true);
+		graphDevice.setFullScreenWindow(this);
+
+		validate();
 	}
 
 	private void setSize() {
