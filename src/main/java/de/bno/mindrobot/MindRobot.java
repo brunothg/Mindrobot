@@ -8,9 +8,14 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import de.bno.mindrobot.gui.RobotFrame;
+
 public class MindRobot {
 
+	private static Logger LOG;
+
 	public static Handler handler;
+	public static RobotFrame display;
 
 	public static void main(String[] args) {
 
@@ -19,7 +24,17 @@ public class MindRobot {
 			setupLogging();
 		} catch (Exception e) {
 		}
+		LOG = getLogger(MindRobot.class);
 
+		LOG.info("Starte Applikation");
+		showGUI();
+
+	}
+
+	private static void showGUI() {
+		display = new RobotFrame();
+		display.setSize(800, 600);
+		display.setVisible(true);
 	}
 
 	private static void setupLogging() throws SecurityException, IOException {
