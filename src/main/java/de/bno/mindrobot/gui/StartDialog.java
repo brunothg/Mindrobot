@@ -1,11 +1,14 @@
 package de.bno.mindrobot.gui;
 
 import static de.bno.mindrobot.gui.Strings.CANCEL;
+import static de.bno.mindrobot.gui.Strings.DSIPLAY_SET;
+import static de.bno.mindrobot.gui.Strings.FULLSCREEN;
 import static de.bno.mindrobot.gui.Strings.LANGUAGE;
 import static de.bno.mindrobot.gui.Strings.START_APP;
 import static de.bno.mindrobot.gui.Strings.String;
 import static de.bno.mindrobot.gui.Strings.TITLE;
 import static de.bno.mindrobot.gui.Strings.TOOLTIP_SELECT_LANG;
+import static de.bno.mindrobot.gui.Strings.WINDOWED;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,7 +44,7 @@ public class StartDialog extends JDialog implements ActionListener,
 	private static final String LANG_DIR = "./lang";
 	private static final long serialVersionUID = -8806641182590281978L;
 	private static final Logger LOG = MindRobot.getLogger(StartDialog.class);
-	private static final String DEF_LAN = "Default";
+	private static final String DEF_LAN = "Deutsch";
 	private JLabel logo;
 	private JPanel buttonsPanel;
 	private JButton okButton;
@@ -51,6 +54,8 @@ public class StartDialog extends JDialog implements ActionListener,
 	private GridBagLayout gridBagLayout;
 	private JComboBox<String> selectLang;
 	private JLabel langLabel;
+	private JComboBox<String> selectDisplay;
+	private JLabel displayLabel;
 
 	private StartDialog() {
 		super();
@@ -75,7 +80,18 @@ public class StartDialog extends JDialog implements ActionListener,
 		mainPanel.add(settingsPanel, BorderLayout.CENTER);
 
 		addLanguageRow();
+		addDisplayRow();
 
+	}
+
+	private void addDisplayRow() {
+
+		displayLabel = new JLabel(String(DSIPLAY_SET));
+
+		String[] options = new String[] { String(WINDOWED), String(FULLSCREEN) };
+		selectDisplay = new JComboBox<String>(options);
+
+		addRow(displayLabel, selectDisplay, 1);
 	}
 
 	private void addLanguageRow() {
@@ -204,6 +220,23 @@ public class StartDialog extends JDialog implements ActionListener,
 		settingsPanel.add(comp);
 	}
 
+	private void updateRow(JComponent old, JComponent comp, int col, int row) {
+
+		settingsPanel.remove(old);
+
+		GridBagConstraints gbc2 = new GridBagConstraints();
+		gbc2.gridx = 1;
+		gbc2.gridy = row;
+		gbc2.gridwidth = 1;
+		gbc2.gridheight = 1;
+		gbc2.weightx = 1;
+		gbc2.ipadx = 5;
+		gbc2.fill = GridBagConstraints.HORIZONTAL;
+
+		gridBagLayout.setConstraints(comp, gbc2);
+		settingsPanel.add(comp);
+	}
+
 	private void setIcon() {
 		try {
 			setIconImage(loadIcon("MindRobot.png").getImage());
@@ -263,6 +296,19 @@ public class StartDialog extends JDialog implements ActionListener,
 		langLabel.setText(String(LANGUAGE));
 		cancelButton.setText(String(CANCEL));
 		okButton.setText(String(START_APP));
+		displayLabel.setText(String(DSIPLAY_SET));
+
+		updateStringsForDisplaySettings();
+		repaint();
+	}
+
+	private void updateStringsForDisplaySettings() {
+
+		String[] options = new String[] { String(WINDOWED), String(FULLSCREEN) };
+		JComboBox<String> old = selectDisplay;
+		selectDisplay = new JComboBox<String>(options);
+
+		updateRow(old, selectDisplay, 1, 1);
 	}
 
 	public static void start() {

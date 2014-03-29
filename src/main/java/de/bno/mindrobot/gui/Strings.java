@@ -28,6 +28,9 @@ public class Strings {
 	public static final String LANGUAGE = "lang";
 	public static final String DEFAULT = "dft";
 	public static final String TOOLTIP_SELECT_LANG = "tp_sel_lng";
+	public static final String DSIPLAY_SET = "disp_set";
+	public static final String WINDOWED = "windowed";
+	public static final String FULLSCREEN = "fullscreen";
 
 	private static Map<String, String> values;
 
@@ -47,6 +50,9 @@ public class Strings {
 		values.put(DEFAULT, "Standart");
 		values.put(TOOLTIP_SELECT_LANG,
 				"Weitere Sprachen müssen im Ordner '%s' abgelegt werden.");
+		values.put(DSIPLAY_SET, "Grafikeinstellung");
+		values.put(FULLSCREEN, "Vollbild");
+		values.put(WINDOWED, "Fenster");
 	}
 
 	public static String String(String key) {
