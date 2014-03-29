@@ -32,11 +32,11 @@ public class Strings {
 	private static Map<String, String> values;
 
 	static {
+		values = new HashMap<String, String>();
 		loadDefault();
 	}
 
 	public static void loadDefault() {
-		values = new HashMap<String, String>();
 		values.put(TITLE, "MindRobot");
 		values.put(ONE_INSTANZ_ONLY_TITLE, "Programm wurde bereits gestartet");
 		values.put(ONE_INSTANZ_ONLY_MESSAGE,

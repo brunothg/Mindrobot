@@ -233,22 +233,24 @@ public class StartDialog extends JDialog implements ActionListener,
 
 		if (e.getSource() == selectLang) {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
-
 				if (selectLang.getSelectedIndex() == 0
 						|| selectLang.getSelectedItem().toString()
 								.equals(DEF_LAN)) {
+					LOG.info("Lade Default Sprache.");
 					Strings.loadDefault();
 				} else {
-
 					Path file = Paths.get(LANG_DIR, selectLang
 							.getSelectedItem().toString());
+
+					LOG.info("Lade neue Sprache: "
+							+ selectLang.getSelectedItem().toString());
 					try {
 						Strings.loadStrings(file);
-						updateStrings();
 					} catch (IOException e1) {
 						LOG.warning("Fehler beim Umschalten der Sprache.");
 					}
 				}
+				updateStrings();
 			}
 		}
 
