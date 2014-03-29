@@ -1,7 +1,7 @@
 package de.bno.mindrobot.feld;
 
 public enum FeldTyp {
-	NORMAL('#'), BLOCKED('X'), CONFUSE('?');
+	NORMAL('#'), BLOCKED('X'), CONFUSE('?'), START('S'), ZIEL('Z');
 
 	char c;
 
