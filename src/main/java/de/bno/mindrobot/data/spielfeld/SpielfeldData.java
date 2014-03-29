@@ -4,15 +4,10 @@ import de.bno.mindrobot.feld.Feld;
 
 public class SpielfeldData {
 
-	private int width;
-	private int height;
-
 	private Feld[][] felder;
 
 	public SpielfeldData(int width, int height) {
-		this.width = width;
-		this.height = height;
-		felder = new Feld[this.height][this.width];
+		felder = new Feld[height][width];
 		iniFelder();
 	}
 
@@ -34,6 +29,14 @@ public class SpielfeldData {
 
 	public void setFeld(int posX, int posY, Feld feld) {
 		felder[posY][posX] = feld;
+	}
+
+	public int getWidth() {
+		return felder[0].length;
+	}
+
+	public int getHeight() {
+		return felder.length;
 	}
 
 }

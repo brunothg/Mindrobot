@@ -20,7 +20,9 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 
 	@Override
 	public SpielfeldData importSpielfeld() {
-		return null;
+		SpielfeldData sp = null;
+
+		return sp;
 	}
 
 }
