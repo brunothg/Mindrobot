@@ -7,7 +7,7 @@ public class SpielfeldData {
 	private int width;
 	private int height;
 
-	Feld[][] felder;
+	private Feld[][] felder;
 
 	public SpielfeldData(int width, int height) {
 		this.width = width;
@@ -26,6 +26,14 @@ public class SpielfeldData {
 				felder[y][x] = new Feld();
 			}
 		}
+	}
+
+	public Feld getFeld(int posX, int posY) {
+		return felder[posY][posX];
+	}
+
+	public void setFeld(int posX, int posY, Feld feld) {
+		felder[posY][posX] = feld;
 	}
 
 }
