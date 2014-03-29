@@ -14,7 +14,8 @@ import javax.swing.JFrame;
 
 import de.bno.mindrobot.MindRobot;
 
-public class RobotFrame extends JFrame implements WindowListener {
+public class RobotFrame extends JFrame implements WindowListener,
+		SignalListener {
 
 	private static final Logger LOG = MindRobot.getLogger(RobotFrame.class);
 	private static final long serialVersionUID = -2366663477203061018L;
@@ -90,6 +91,14 @@ public class RobotFrame extends JFrame implements WindowListener {
 				"de/bno/mindrobot/gui/" + s));
 	}
 
+	// SIGNAL LISTENER
+	@Override
+	public boolean Signal(String signal, Object... values) {
+
+		return false;
+	}
+
+	// WINDOW LISTENER
 	@Override
 	public void windowOpened(WindowEvent e) {
 	}

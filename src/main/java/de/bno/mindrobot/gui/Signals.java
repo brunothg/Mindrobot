@@ -17,8 +17,8 @@ public class Signals {
 	public static void sendSignal(String signal, final Object... values) {
 		for (int i = 0; i < Signals.listener.size(); i++) {
 			SignalListener lis = Signals.listener.get(i);
-			if (lis.consumeSignal(signal)) {
-				lis.Signal(signal, values);
+			if (lis.Signal(signal, values)) {
+				break;
 			}
 		}
 	}
