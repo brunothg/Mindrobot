@@ -23,15 +23,30 @@ public class Strings {
 	public static final String TITLE = "title";
 	public static final String ONE_INSTANZ_ONLY_TITLE = "one_instanz_only_title";
 	public static final String ONE_INSTANZ_ONLY_MESSAGE = "one_instanz_only_message";
+	public static final String START_APP = "start_app";
+	public static final String CANCEL = "cancel";
+	public static final String LANGUAGE = "lang";
+	public static final String DEFAULT = "dft";
+	public static final String TOOLTIP_SELECT_LANG = "tp_sel_lng";
 
 	private static Map<String, String> values;
 
 	static {
+		loadDefault();
+	}
+
+	public static void loadDefault() {
 		values = new HashMap<String, String>();
 		values.put(TITLE, "MindRobot");
 		values.put(ONE_INSTANZ_ONLY_TITLE, "Programm wurde bereits gestartet");
 		values.put(ONE_INSTANZ_ONLY_MESSAGE,
 				"Es läuft bereits eine Instanz des Programms.");
+		values.put(START_APP, "Start");
+		values.put(CANCEL, "Abbrechen");
+		values.put(LANGUAGE, "Sprache");
+		values.put(DEFAULT, "Standart");
+		values.put(TOOLTIP_SELECT_LANG,
+				"Weitere Sprachen müssen im Ordner '%s' abgelegt werden.");
 	}
 
 	public static String String(String key) {

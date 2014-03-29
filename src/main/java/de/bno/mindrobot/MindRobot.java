@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import de.bno.mindrobot.gui.RobotFrame;
 import de.bno.mindrobot.gui.StartDialog;
@@ -43,9 +44,27 @@ public class MindRobot {
 	}
 
 	public static void setToSystemLookAndFeel() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
+
+		if (UIManager.getSystemLookAndFeelClassName().equals(
+				UIManager.getCrossPlatformLookAndFeelClassName())) {
+			try {
+				for (LookAndFeelInfo info : UIManager
+						.getInstalledLookAndFeels()) {
+					if ("Nimbus".equals(info.getName())) {
+						UIManager.setLookAndFeel(info.getClassName());
+						break;
+					}
+				}
+			} catch (Exception e) {
+			}
+		} else {
+
+			try {
+				UIManager.setLookAndFeel(UIManager
+						.getSystemLookAndFeelClassName());
+			} catch (Exception e) {
+			}
+
 		}
 	}
 
