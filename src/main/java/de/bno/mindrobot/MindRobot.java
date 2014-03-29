@@ -5,6 +5,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -19,6 +20,8 @@ public class MindRobot {
 	public static Handler handler;
 	public static RobotFrame display;
 
+	public static Preferences userPrefs;
+
 	public static void main(String[] args) {
 
 		setToSystemLookAndFeel();
@@ -28,9 +31,15 @@ public class MindRobot {
 		}
 		LOG = getLogger(MindRobot.class);
 
+		setupPreferences();
+
 		LOG.info("Starte Applikation");
 		showGUI();
 
+	}
+
+	private static void setupPreferences() {
+		userPrefs = Preferences.userNodeForPackage(MindRobot.class);
 	}
 
 	private static void showGUI() {

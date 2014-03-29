@@ -91,6 +91,12 @@ public class StartDialog extends JDialog implements ActionListener,
 		String[] options = new String[] { String(WINDOWED), String(FULLSCREEN) };
 		selectDisplay = new JComboBox<String>(options);
 
+		int index = MindRobot.userPrefs.getInt("DisplayOption", 0);
+		if (index < 0 || index > options.length - 1) {
+			index = 0;
+		}
+		selectDisplay.setSelectedIndex(index);
+
 		addRow(displayLabel, selectDisplay, 1);
 	}
 
@@ -308,15 +314,24 @@ public class StartDialog extends JDialog implements ActionListener,
 		JComboBox<String> old = selectDisplay;
 		selectDisplay = new JComboBox<String>(options);
 
+		int index = MindRobot.userPrefs.getInt("DisplayOption", 0);
+		if (index < 0 || index > options.length - 1) {
+			index = 0;
+		}
+		selectDisplay.setSelectedIndex(index);
+
 		updateRow(old, selectDisplay, 1, 1);
 	}
 
 	private void startMainApp() {
 		LOG.info("Start Main App");
 
+		MindRobot.userPrefs.putInt("DisplayOption",
+				selectDisplay.getSelectedIndex());
 		dispose();
 
-		RobotFrame robotframe = new RobotFrame();
+		RobotFrame robotframe = new RobotFrame(
+				(selectDisplay.getSelectedIndex() == 1) ? true : false);
 		robotframe.setVisible(true);
 	}
 

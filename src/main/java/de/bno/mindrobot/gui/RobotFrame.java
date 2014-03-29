@@ -3,6 +3,8 @@ package de.bno.mindrobot.gui;
 import static de.bno.mindrobot.gui.Strings.String;
 import static de.bno.mindrobot.gui.Strings.TITLE;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -10,7 +12,7 @@ import javax.swing.JFrame;
 
 import de.bno.mindrobot.MindRobot;
 
-public class RobotFrame extends JFrame {
+public class RobotFrame extends JFrame implements WindowListener {
 
 	private static final Logger LOG = MindRobot.getLogger(RobotFrame.class);
 	private static final long serialVersionUID = -2366663477203061018L;
@@ -18,15 +20,31 @@ public class RobotFrame extends JFrame {
 	private static final int DEFAULT_WIDTH = 800;
 	private static final int DEFAULT_HEIGHT = 600;
 
-	public RobotFrame() {
+	public RobotFrame(boolean fullscreen) {
 		super();
 		setTitle(String(TITLE));
 		setLocationByPlatform(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
 		setIcon();
 
+		if (!fullscreen) {
+			setSize();
+		} else {
+			setFullscreen();
+		}
+
+		addWindowListener(this);
+	}
+
+	private void setFullscreen() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void setSize() {
+		setSize(MindRobot.userPrefs.getInt("Width", DEFAULT_WIDTH),
+				MindRobot.userPrefs.getInt("Height", DEFAULT_HEIGHT));
 	}
 
 	private void setIcon() {
@@ -41,6 +59,36 @@ public class RobotFrame extends JFrame {
 	private ImageIcon loadIcon(String s) {
 		return new ImageIcon(getClass().getClassLoader().getResource(
 				"de/bno/mindrobot/gui/" + s));
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		MindRobot.userPrefs.putInt("Width", getWidth());
+		MindRobot.userPrefs.putInt("Height", getHeight());
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
 	}
 
 }
