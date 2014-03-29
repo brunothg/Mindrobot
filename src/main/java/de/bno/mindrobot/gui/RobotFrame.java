@@ -26,7 +26,7 @@ public class RobotFrame extends JFrame implements WindowListener {
 		super();
 		setTitle(String(TITLE));
 		setLocationByPlatform(true);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		setIcon();
 
