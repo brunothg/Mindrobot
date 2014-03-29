@@ -5,7 +5,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.bno.mindrobot.feld.BlockedFeld;
+import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.FeldTyp;
 
 public class SpielfeldDataTest {
 
@@ -18,7 +19,7 @@ public class SpielfeldDataTest {
 
 	@Test
 	public void setAndGetFeld() throws Exception {
-		BlockedFeld feld = new BlockedFeld();
+		Feld feld = new Feld(FeldTyp.BLOCKED);
 		sp.setFeld(0, 0, feld);
 
 		assertTrue(sp.getFeld(0, 0) == feld);

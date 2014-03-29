@@ -1,6 +1,7 @@
 package de.bno.mindrobot.feld;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class FeldTest {
 	@Test
 	public void compareToBlockedFeld() throws Exception {
 		feld = new Feld();
-		BlockedFeld bf = new BlockedFeld();
+		Feld bf = new Feld(FeldTyp.BLOCKED);
 
 		assertFalse(feld.equals(bf));
 
@@ -40,7 +41,7 @@ public class FeldTest {
 	@Test
 	public void compareToConfusingFeld() throws Exception {
 		feld = new Feld();
-		ConfusingFeld bf = new ConfusingFeld();
+		Feld bf = new Feld(FeldTyp.CONFUSE);
 
 		assertFalse(feld.equals(bf));
 

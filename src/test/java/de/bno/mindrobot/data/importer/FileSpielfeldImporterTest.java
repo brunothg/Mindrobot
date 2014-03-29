@@ -12,8 +12,8 @@ import org.junit.Test;
 import de.bno.mindrobot.data.exporter.FileSpielfeldExporter;
 import de.bno.mindrobot.data.exporter.SpielfeldExporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
-import de.bno.mindrobot.feld.BlockedFeld;
-import de.bno.mindrobot.feld.ConfusingFeld;
+import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.ZielFeld;
 
 public class FileSpielfeldImporterTest {
@@ -24,8 +24,8 @@ public class FileSpielfeldImporterTest {
 	public void exportAndImport() throws Exception {
 
 		SpielfeldData sp = new SpielfeldData(3, 3);
-		sp.setFeld(0, 0, new BlockedFeld());
-		sp.setFeld(1, 1, new ConfusingFeld());
+		sp.setFeld(0, 0, new Feld(FeldTyp.BLOCKED));
+		sp.setFeld(1, 1, new Feld(FeldTyp.CONFUSE));
 		sp.setFeld(0, 2, new ZielFeld());
 
 		Path dir = Paths.get("./test");
