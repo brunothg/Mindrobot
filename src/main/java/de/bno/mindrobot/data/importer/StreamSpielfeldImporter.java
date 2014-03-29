@@ -16,17 +16,17 @@ import de.bno.mindrobot.feld.Feld;
 import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.ZielFeld;
 
-public class StreamSpielfeldImporter implements SpielfeldImporter{
+public class StreamSpielfeldImporter implements SpielfeldImporter {
 
 	private static final Logger LOG = MindRobot
 			.getLogger(StreamSpielfeldImporter.class);
-	
+
 	InputStream in;
-	
+
 	public StreamSpielfeldImporter(InputStream in) {
 		this.in = in;
 	}
-	
+
 	@Override
 	public SpielfeldData importSpielfeld() throws IOException {
 		SpielfeldData sp = null;
@@ -142,7 +142,8 @@ public class StreamSpielfeldImporter implements SpielfeldImporter{
 	}
 
 	private boolean acceptHeader(String header) {
-		return header.trim().equalsIgnoreCase(StreamSpielfeldExporter.MIME_TYPE);
+		return header.trim()
+				.equalsIgnoreCase(StreamSpielfeldExporter.MIME_TYPE);
 	}
 
 	private String getNextNotEmptyLine(BufferedReader reader)
@@ -165,5 +166,5 @@ public class StreamSpielfeldImporter implements SpielfeldImporter{
 
 		return ret;
 	}
-	
+
 }
