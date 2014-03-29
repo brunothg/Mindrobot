@@ -1,6 +1,7 @@
 package de.bno.mindrobot.data.importer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import de.bno.mindrobot.data.exporter.SpielfeldExporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.feld.BlockedFeld;
 import de.bno.mindrobot.feld.ConfusingFeld;
+import de.bno.mindrobot.feld.ZielFeld;
 
 public class FileSpielfeldImporterTest {
 
@@ -24,6 +26,7 @@ public class FileSpielfeldImporterTest {
 		SpielfeldData sp = new SpielfeldData(3, 3);
 		sp.setFeld(0, 0, new BlockedFeld());
 		sp.setFeld(1, 1, new ConfusingFeld());
+		sp.setFeld(0, 2, new ZielFeld());
 
 		Path dir = Paths.get("./test");
 		if (!Files.exists(dir)) {
@@ -41,7 +44,7 @@ public class FileSpielfeldImporterTest {
 
 		for (int y = 0; y < sp.getHeight(); y++) {
 			for (int x = 0; x < sp.getWidth(); x++) {
-				sp.getFeld(x, y).equals(sp2.getFeld(x, y));
+				assertTrue(sp.getFeld(x, y).equals(sp2.getFeld(x, y)));
 			}
 		}
 	}

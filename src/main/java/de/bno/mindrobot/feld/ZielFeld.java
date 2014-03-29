@@ -9,7 +9,7 @@ public class ZielFeld extends Feld {
 	public ZielFeld(int number) {
 		super(FeldTyp.ZIEL);
 		this.number = number;
-		ZielFeld.numbers++;
+		ZielFeld.numbers = number + 1;
 	}
 
 	public ZielFeld() {
@@ -18,5 +18,18 @@ public class ZielFeld extends Feld {
 
 	public int getNumber() {
 		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ZielFeld) {
+			return getNumber() == ((ZielFeld) obj).getNumber();
+		}
+
+		return false;
 	}
 }

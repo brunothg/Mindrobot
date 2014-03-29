@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
+import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.ZielFeld;
 
 public class FileSpielfeldExporter implements SpielfeldExporter {
 
@@ -47,7 +49,12 @@ public class FileSpielfeldExporter implements SpielfeldExporter {
 
 		for (int y = 0; y < spielfeld.getHeight(); y++) {
 			for (int x = 0; x < spielfeld.getWidth(); x++) {
-				writer.append(spielfeld.getFeld(x, y).toChar());
+				Feld feld = spielfeld.getFeld(x, y);
+				writer.append(feld.toChar());
+
+				if (feld instanceof ZielFeld) {
+					writer.append("" + ((ZielFeld) feld).getNumber());
+				}
 			}
 			writer.newLine();
 		}
@@ -58,5 +65,4 @@ public class FileSpielfeldExporter implements SpielfeldExporter {
 		writer.close();
 
 	}
-
 }

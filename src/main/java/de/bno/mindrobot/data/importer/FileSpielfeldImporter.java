@@ -15,6 +15,8 @@ import de.bno.mindrobot.data.exporter.FileSpielfeldExporter;
 import de.bno.mindrobot.data.importer.SpielfeldImporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.FeldTyp;
+import de.bno.mindrobot.feld.ZielFeld;
 
 public class FileSpielfeldImporter implements SpielfeldImporter {
 
@@ -62,19 +64,19 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 			throw new IOException("Could not find START Tag. Found: " + start);
 		}
 
-		char[][] feld = getFelder(reader, dimension.width, dimension.height);
+		Feld[][] feld = getFelder(reader, dimension.width, dimension.height);
 
 		sp = new SpielfeldData(dimension.width, dimension.height);
 		for (int y = 0; y < feld.length; y++) {
 			for (int x = 0; x < feld[y].length; x++) {
-				sp.setFeld(x, y, Feld.getFeldFromChar(feld[y][x]));
+				sp.setFeld(x, y, feld[y][x]);
 			}
 		}
 
 		return sp;
 	}
 
-	private char[][] getFelder(BufferedReader reader, int width, int height)
+	private Feld[][] getFelder(BufferedReader reader, int width, int height)
 			throws IOException {
 
 		String tmp;
@@ -87,13 +89,34 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 			rows.add(new String(tmp));
 		}
 
-		char[][] ret = new char[height][width];
+		Feld[][] ret = new Feld[height][width];
 
 		int y = 0;
 		for (String row : rows) {
 
+			int i = 0;
 			for (int x = 0; x < width; x++) {
-				ret[y][x] = (x < row.length()) ? row.charAt(x) : ' ';
+
+				if (row.charAt(i) == FeldTyp.ZIEL.getCharRepresentation()) {
+
+					ZielFeld zf = new ZielFeld();
+
+					i++;
+					int start = i;
+					while (i < row.length() && Character.isDigit(row.charAt(i))) {
+						i++;
+					}
+
+					String number = row.substring(start, i);
+					zf.setNumber(Integer.valueOf(number).intValue());
+					ret[y][x] = zf;
+
+				} else {
+					ret[y][x] = (i < row.length()) ? Feld.getFeldFromChar(row
+							.charAt(i)) : new Feld();
+					i++;
+				}
+
 			}
 
 			y++;
@@ -101,7 +124,7 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 
 		for (; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				ret[y][x] = ' ';
+				ret[y][x] = new Feld();
 			}
 		}
 
