@@ -1,6 +1,6 @@
 package de.bno.mindrobot.feld;
 
-public class ZielFeld extends Feld {
+public class ZielFeld extends Feld implements Comparable<ZielFeld> {
 
 	private static int numbers = 0;
 
@@ -31,5 +31,18 @@ public class ZielFeld extends Feld {
 		}
 
 		return false;
+	}
+
+	@Override
+	public int compareTo(ZielFeld arg0) {
+
+		if (arg0.getNumber() < getNumber()) {
+			return -1;
+		} else if (arg0.getNumber() > getNumber()) {
+			return 1;
+		} else {
+			return 0;
+		}
+
 	}
 }
