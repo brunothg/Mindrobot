@@ -254,7 +254,7 @@ public class StartDialog extends JDialog implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
-
+			startMainApp();
 		} else if (e.getSource() == cancelButton) {
 			LOG.info("Close App");
 			dispose();
@@ -309,6 +309,15 @@ public class StartDialog extends JDialog implements ActionListener,
 		selectDisplay = new JComboBox<String>(options);
 
 		updateRow(old, selectDisplay, 1, 1);
+	}
+
+	private void startMainApp() {
+		LOG.info("Start Main App");
+
+		dispose();
+
+		RobotFrame robotframe = new RobotFrame();
+		robotframe.setVisible(true);
 	}
 
 	public static void start() {
