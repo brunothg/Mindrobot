@@ -1,12 +1,15 @@
 package de.bno.mindrobot.feld;
 
 public enum FeldTyp {
-	NORMAL('#'), BLOCKED('X'), CONFUSE('?'), START('S'), ZIEL('Z');
+	NORMAL('#'), BLOCKED('X'), CONFUSE('?'), START('S'), ZIEL('Z'), UNDEFINIERT(
+			'$');
 
 	char c;
+	char[] alias;
 
-	FeldTyp(char c) {
+	FeldTyp(char c, char... alias) {
 		this.c = c;
+		this.alias = alias;
 	}
 
 	public char getCharRepresentation() {
@@ -23,7 +26,10 @@ public enum FeldTyp {
 			}
 		}
 
-		return null;
+		FeldTyp ret = UNDEFINIERT;
+		ret.alias = new char[] { c };
+
+		return ret;
 	}
 
 }
