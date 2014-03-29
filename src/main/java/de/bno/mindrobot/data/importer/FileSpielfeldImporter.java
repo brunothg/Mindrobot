@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import de.bno.mindrobot.MindRobot;
-import de.bno.mindrobot.data.exporter.FileSpielfeldExporter;
-import de.bno.mindrobot.data.importer.SpielfeldImporter;
+import de.bno.mindrobot.data.exporter.StreamSpielfeldExporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.feld.Feld;
 import de.bno.mindrobot.feld.FeldTyp;
@@ -40,7 +39,7 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 		SpielfeldData sp = null;
 
 		BufferedReader reader = Files.newBufferedReader(path,
-				FileSpielfeldExporter.CHARSET);
+				StreamSpielfeldExporter.CHARSET);
 
 		String header = getNextNotEmptyLine(reader);
 		if (!acceptHeader(header)) {
@@ -151,7 +150,7 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 	}
 
 	private boolean acceptHeader(String header) {
-		return header.trim().equalsIgnoreCase(FileSpielfeldExporter.MIME_TYPE);
+		return header.trim().equalsIgnoreCase(StreamSpielfeldExporter.MIME_TYPE);
 	}
 
 	private String getNextNotEmptyLine(BufferedReader reader)
