@@ -13,4 +13,17 @@ public enum FeldTyp {
 		return c;
 	}
 
+	public static FeldTyp getTyp(char c) {
+
+		FeldTyp[] types = values();
+
+		for (FeldTyp typ : types) {
+			if (typ.c == c) {
+				return typ;
+			}
+		}
+
+		return null;
+	}
+
 }

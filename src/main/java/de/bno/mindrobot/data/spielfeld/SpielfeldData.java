@@ -11,10 +11,6 @@ public class SpielfeldData {
 		iniFelder();
 	}
 
-	public SpielfeldData() {
-		this(5, 7);
-	}
-
 	private void iniFelder() {
 		for (int y = 0; y < felder.length; y++) {
 			for (int x = 0; x < felder[y].length; x++) {

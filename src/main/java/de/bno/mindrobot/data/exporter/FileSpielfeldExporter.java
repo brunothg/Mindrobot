@@ -7,14 +7,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
+import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 
 public class FileSpielfeldExporter implements SpielfeldExporter {
 
+	private static final Logger LOG = MindRobot
+			.getLogger(FileSpielfeldExporter.class);
+
 	Path path;
 	public static final String MIME_TYPE = "text/mindrobot";
-	private static final Charset CHARSET = StandardCharsets.UTF_8;
+	public static final Charset CHARSET = StandardCharsets.UTF_8;
 
 	public FileSpielfeldExporter(Path path) {
 		this.path = path;
@@ -27,18 +32,27 @@ public class FileSpielfeldExporter implements SpielfeldExporter {
 	@Override
 	public void exportSpielfeld(SpielfeldData spielfeld) throws IOException {
 
+		LOG.info("Lade Spielfelddaten von " + path.toAbsolutePath());
+
 		BufferedWriter writer = Files.newBufferedWriter(path, CHARSET);
 
-		writer.append(MIME_TYPE + "\n");
-		writer.append(spielfeld.getWidth() + ", " + spielfeld.getHeight()
-				+ ":\n");
+		writer.append(MIME_TYPE);
+		writer.newLine();
+
+		writer.append(spielfeld.getWidth() + ", " + spielfeld.getHeight() + ":");
+		writer.newLine();
+
+		writer.append("START");
+		writer.newLine();
 
 		for (int y = 0; y < spielfeld.getHeight(); y++) {
 			for (int x = 0; x < spielfeld.getWidth(); x++) {
 				writer.append(spielfeld.getFeld(x, y).toChar());
 			}
-			writer.append('\n');
+			writer.newLine();
 		}
+
+		writer.append("END");
 
 		writer.flush();
 		writer.close();

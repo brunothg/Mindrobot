@@ -3,6 +3,7 @@ package de.bno.mindrobot.data.importer;
 import static org.junit.Assert.assertEquals;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Test;
@@ -24,7 +25,10 @@ public class FileSpielfeldImporterTest {
 		sp.setFeld(0, 0, new BlockedFeld());
 		sp.setFeld(1, 1, new ConfusingFeld());
 
-		Files.createDirectory(Paths.get("./test"));
+		Path dir = Paths.get("./test");
+		if (!Files.exists(dir)) {
+			Files.createDirectory(dir);
+		}
 
 		SpielfeldExporter export = new FileSpielfeldExporter("./test/Feld.sp");
 		export.exportSpielfeld(sp);
@@ -41,5 +45,4 @@ public class FileSpielfeldImporterTest {
 			}
 		}
 	}
-
 }

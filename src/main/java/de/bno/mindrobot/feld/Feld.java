@@ -29,4 +29,8 @@ public class Feld {
 	public char toChar() {
 		return feldtyp.getCharRepresentation();
 	}
+
+	public static Feld getFeldFromChar(char c) {
+		return new Feld(FeldTyp.getTyp(c));
+	}
 }

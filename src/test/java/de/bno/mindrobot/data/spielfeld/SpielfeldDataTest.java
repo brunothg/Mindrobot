@@ -13,7 +13,7 @@ public class SpielfeldDataTest {
 
 	@Before
 	public void setUp() throws Exception {
-		sp = new SpielfeldData();
+		sp = new SpielfeldData(5, 5);
 	}
 
 	@Test
