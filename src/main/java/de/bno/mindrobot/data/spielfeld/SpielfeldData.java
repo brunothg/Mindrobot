@@ -1,4 +1,4 @@
-package de.bno.mindrobot.spielfeld;
+package de.bno.mindrobot.data.spielfeld;
 
 import de.bno.mindrobot.feld.Feld;
 

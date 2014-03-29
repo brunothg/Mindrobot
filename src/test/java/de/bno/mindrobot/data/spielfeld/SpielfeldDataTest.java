@@ -1,6 +1,8 @@
-package de.bno.mindrobot.spielfeld;
+package de.bno.mindrobot.data.spielfeld;
 
 import org.junit.Test;
+
+import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 
 public class SpielfeldDataTest {
 
