@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 import de.bno.mindrobot.gui.RobotFrame;
+import de.bno.mindrobot.gui.StartDialog;
 
 public class MindRobot {
 
@@ -32,9 +33,7 @@ public class MindRobot {
 	}
 
 	private static void showGUI() {
-		display = new RobotFrame();
-		display.setSize(800, 600);
-		display.setVisible(true);
+		StartDialog.start();
 	}
 
 	private static void setupLogging() throws SecurityException, IOException {
