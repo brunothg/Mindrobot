@@ -4,7 +4,6 @@ import static de.bno.mindrobot.gui.Strings.String;
 import static de.bno.mindrobot.gui.Strings.TITLE;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -33,7 +32,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 		super();
 		setTitle(String(TITLE));
 		setLocationByPlatform(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout(0, 0));
 
 		setIcon();
@@ -48,12 +47,14 @@ public class RobotFrame extends JFrame implements WindowListener,
 		addWindowListener(this);
 
 		addMainPanel();
+
+		mainPanel.add(new MainMenu(), BorderLayout.CENTER);
+
+		Signals.addListener(this);
 	}
 
 	private void addMainPanel() {
 		mainPanel = new Background();
-		mainPanel.setOpaque(true);
-		mainPanel.setBackground(Color.BLACK);
 		mainPanel.setLayout(new BorderLayout(0, 0));
 		add(mainPanel, BorderLayout.CENTER);
 
@@ -114,6 +115,10 @@ public class RobotFrame extends JFrame implements WindowListener,
 	// SIGNAL LISTENER
 	@Override
 	public boolean Signal(String signal, Object... values) {
+		if (signal.equalsIgnoreCase("exit")) {
+			dispose();
+			return true;
+		}
 
 		return false;
 	}
@@ -125,7 +130,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		if (isFullscreen) {
+		if (!isFullscreen) {
 			MindRobot.userPrefs.putInt("Width", getWidth());
 			MindRobot.userPrefs.putInt("Height", getHeight());
 		}

@@ -31,6 +31,7 @@ public class Strings {
 	public static final String DSIPLAY_SET = "disp_set";
 	public static final String WINDOWED = "windowed";
 	public static final String FULLSCREEN = "fullscreen";
+	public static final String EXIT = "exit";
 
 	private static Map<String, String> values;
 
@@ -53,6 +54,7 @@ public class Strings {
 		values.put(DSIPLAY_SET, "Grafikeinstellung");
 		values.put(FULLSCREEN, "Vollbild");
 		values.put(WINDOWED, "Fenster");
+		values.put(EXIT, "Verlassen");
 	}
 
 	public static String String(String key) {

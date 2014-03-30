@@ -41,11 +41,11 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 
 	public static List<String> getSpielfelder(Path search) {
 
-		if (!Files.exists(search) || !Files.isDirectory(search)) {
-			return null;
-		}
-
 		List<String> ret = new LinkedList<String>();
+
+		if (!Files.exists(search) || !Files.isDirectory(search)) {
+			return ret;
+		}
 
 		try {
 			DirectoryStream<Path> dirs = Files.newDirectoryStream(search);

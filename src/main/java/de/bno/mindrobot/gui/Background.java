@@ -15,6 +15,7 @@ public class Background extends JPanel {
 	public Background() {
 
 		bg = loadIcon("Sky.jpg").getImage();
+		setOpaque(false);
 	}
 
 	private void superPaint(Graphics g) {
@@ -24,11 +25,10 @@ public class Background extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 
-		superPaint(g);
-
 		g.drawImage(bg, 0, 0, getWidth(), getHeight(), 0, 0, bg.getWidth(this),
 				bg.getHeight(this), this);
 
+		superPaint(g);
 	}
 
 	private ImageIcon loadIcon(String s) {
