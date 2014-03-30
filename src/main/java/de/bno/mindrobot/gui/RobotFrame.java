@@ -3,6 +3,8 @@ package de.bno.mindrobot.gui;
 import static de.bno.mindrobot.gui.Strings.String;
 import static de.bno.mindrobot.gui.Strings.TITLE;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -11,6 +13,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import de.bno.mindrobot.MindRobot;
 
@@ -22,22 +25,38 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private static final int DEFAULT_WIDTH = 800;
 	private static final int DEFAULT_HEIGHT = 600;
+	private JPanel mainPanel;
+
+	private boolean isFullscreen;
 
 	public RobotFrame(boolean fullscreen) {
 		super();
 		setTitle(String(TITLE));
 		setLocationByPlatform(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLayout(new BorderLayout(0, 0));
 
 		setIcon();
 
 		if (!fullscreen) {
 			setSize();
+			isFullscreen = false;
 		} else {
 			setFullscreen();
 		}
 
 		addWindowListener(this);
+
+		addMainPanel();
+	}
+
+	private void addMainPanel() {
+		mainPanel = new Background();
+		mainPanel.setOpaque(true);
+		mainPanel.setBackground(Color.BLACK);
+		mainPanel.setLayout(new BorderLayout(0, 0));
+		add(mainPanel, BorderLayout.CENTER);
+
 	}
 
 	private void setFullscreen() {
@@ -66,6 +85,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 			}
 		}
 
+		isFullscreen = true;
 		setUndecorated(true);
 		graphDevice.setFullScreenWindow(this);
 
@@ -105,8 +125,10 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		MindRobot.userPrefs.putInt("Width", getWidth());
-		MindRobot.userPrefs.putInt("Height", getHeight());
+		if (isFullscreen) {
+			MindRobot.userPrefs.putInt("Width", getWidth());
+			MindRobot.userPrefs.putInt("Height", getHeight());
+		}
 	}
 
 	@Override
