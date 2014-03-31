@@ -43,7 +43,8 @@ public class FileSpielfeldImporter implements SpielfeldImporter {
 
 		List<String> ret = new LinkedList<String>();
 
-		if (!Files.exists(search) || !Files.isDirectory(search)) {
+		if (search != null && !Files.exists(search)
+				|| !Files.isDirectory(search)) {
 			return ret;
 		}
 

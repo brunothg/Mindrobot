@@ -9,8 +9,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -20,6 +22,8 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 
 	private static final long serialVersionUID = 8596091572742102180L;
 
+	private static final String MAP_SEARCH_STRING = "./maps";
+
 	String[] maps;
 
 	private GridBagLayout gbL;
@@ -27,6 +31,10 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 	private StartButton exitButton;
 
 	private StartButton startButton;
+
+	private JComboBox<String> mapSelect;
+
+	private Path mapSearchPath;
 
 	public MainMenu() {
 
@@ -38,10 +46,25 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		gbL = new GridBagLayout();
 		setLayout(gbL);
 
+		mapSearchPath = Paths.get(MAP_SEARCH_STRING);
+
 		createExitButton();
 		createStartButton();
+		createMapSelect();
 
 		Signals.addListener(this);
+	}
+
+	private void createMapSelect() {
+		String[] values = getMaps();
+		mapSelect = new JComboBox<String>(values);
+		add(mapSelect, 0);
+	}
+
+	private String[] getMaps() {
+
+		return FileSpielfeldImporter.getSpielfelder(mapSearchPath).toArray(
+				new String[0]);
 	}
 
 	private void createStartButton() {
@@ -84,7 +107,7 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		if (arg0.getSource() == exitButton) {
 			Signals.sendSignal("exit");
 		} else if (arg0.getSource() == startButton) {
-			System.out.println("START");
+			Signals.sendSignal("start", mapSelect.getSelectedItem().toString());
 		}
 
 	}
