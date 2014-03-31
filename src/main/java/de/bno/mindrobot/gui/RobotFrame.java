@@ -151,10 +151,12 @@ public class RobotFrame extends JFrame implements WindowListener,
 			}
 			return true;
 		}
+		LOG.warning("Versuche Spiel ohne Map zu starten. Mache nichts.");
 		return false;
 	}
 
 	private boolean signalExit() {
+		storeSize();
 		dispose();
 		return true;
 	}
@@ -166,10 +168,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		if (!isFullscreen) {
-			MindRobot.userPrefs.putInt("Width", getWidth());
-			MindRobot.userPrefs.putInt("Height", getHeight());
-		}
+		storeSize();
 	}
 
 	@Override
@@ -190,6 +189,13 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
+	}
+
+	private void storeSize() {
+		if (!isFullscreen) {
+			MindRobot.userPrefs.putInt("Width", getWidth());
+			MindRobot.userPrefs.putInt("Height", getHeight());
+		}
 	}
 
 }

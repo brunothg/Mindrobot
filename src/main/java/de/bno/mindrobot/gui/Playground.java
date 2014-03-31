@@ -22,7 +22,17 @@ public class Playground extends JComponent {
 
 	@Override
 	public void paint(Graphics g) {
+		System.out.println(String.format("Width: %d (%d) Height: %d (%d)",
+				getWidth(), getWidthPt(), getHeight(), getHeightPt()));
 		g.fillRect(0, 0, getWidth(), getHeight());
+	}
+
+	public int getWidthPt() {
+		return Pixel.pixelToPoints(getWidth());
+	}
+
+	public int getHeightPt() {
+		return Pixel.pixelToPoints(getHeight());
 	}
 
 }
