@@ -8,6 +8,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -16,6 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import de.bno.mindrobot.MindRobot;
+import de.bno.mindrobot.data.importer.FileSpielfeldImporter;
+import de.bno.mindrobot.data.importer.SpielfeldImporter;
+import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 
 public class RobotFrame extends JFrame implements WindowListener,
 		SignalListener {
@@ -133,7 +138,17 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private boolean signalStart(Object[] values) {
 		if (values.length > 0) {
+			String mapPath = "./maps/" + values[0].toString();
+			SpielfeldImporter spielfeldImporter = new FileSpielfeldImporter(
+					Paths.get(mapPath));
+			LOG.info("Load Map Data from: " + mapPath);
 
+			try {
+				SpielfeldData spielfeld = spielfeldImporter.importSpielfeld();
+				setView(new Playground(spielfeld));
+			} catch (IOException e) {
+				LOG.warning("Fehler beim Laden der Map: " + e.getMessage());
+			}
 			return true;
 		}
 		return false;
