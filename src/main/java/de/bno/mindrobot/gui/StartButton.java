@@ -38,11 +38,9 @@ public class StartButton extends JButton implements MouseListener {
 			g.drawRoundRect(5, 5, getWidth() - 10, getHeight() - 10, 20, 20);
 
 			if (!isMouseDown) {
-				g.setColor(new Color(getBackground().getRed(), getBackground()
-						.getGreen(), getBackground().getBlue(), 150));
+				g.setColor(getColorWithAlpha(getBackground(), 150));
 			} else {
-				g.setColor(new Color(getBackground().getRed(), getBackground()
-						.getGreen(), getBackground().getBlue(), 255));
+				g.setColor(getColorWithAlpha(getBackground(), 255));
 			}
 			g.fillRoundRect(6, 6, getWidth() - 11, getHeight() - 11, 20, 20);
 
@@ -55,7 +53,7 @@ public class StartButton extends JButton implements MouseListener {
 			if (!isMouseIn) {
 				g.setColor(Color.BLACK);
 			} else {
-				g.setColor(Color.RED);
+				g.setColor(getColorWithAlpha(getForeground(), 255));
 			}
 
 			int fontWidth = metrics.charsWidth(start, 0, start.length);
@@ -64,6 +62,11 @@ public class StartButton extends JButton implements MouseListener {
 					(getHeight() + fontHeight) / 2);
 		}
 
+	}
+
+	private Color getColorWithAlpha(Color color, int alpha) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(),
+				alpha);
 	}
 
 	private Font getSizedFont(Graphics g, char[] string) {

@@ -70,6 +70,7 @@ public class MainMenu extends JPanel implements ActionListener {
 	private void createStartButton() {
 		startButton = new StartButton(String(START));
 		startButton.setBackground(Color.LIGHT_GRAY);
+		startButton.setForeground(Color.YELLOW);
 		add(startButton, 1);
 		startButton.addActionListener(this);
 	}
@@ -77,6 +78,7 @@ public class MainMenu extends JPanel implements ActionListener {
 	private void createExitButton() {
 		exitButton = new StartButton(String(EXIT));
 		exitButton.setBackground(new Color(255, 0, 0));
+		exitButton.setForeground(Color.YELLOW);
 		add(exitButton, 3);
 		exitButton.addActionListener(this);
 	}
