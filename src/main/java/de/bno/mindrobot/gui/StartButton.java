@@ -38,9 +38,11 @@ public class StartButton extends JButton implements MouseListener {
 			g.drawRoundRect(5, 5, getWidth() - 10, getHeight() - 10, 20, 20);
 
 			if (!isMouseDown) {
-				g.setColor(new Color(0, 150, 0, 150));
+				g.setColor(new Color(getBackground().getRed(), getBackground()
+						.getGreen(), getBackground().getBlue(), 150));
 			} else {
-				g.setColor(new Color(0, 150, 0, 255));
+				g.setColor(new Color(getBackground().getRed(), getBackground()
+						.getGreen(), getBackground().getBlue(), 255));
 			}
 			g.fillRoundRect(6, 6, getWidth() - 11, getHeight() - 11, 20, 20);
 

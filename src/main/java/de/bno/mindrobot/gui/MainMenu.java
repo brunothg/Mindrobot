@@ -4,6 +4,7 @@ import static de.bno.mindrobot.gui.Strings.EXIT;
 import static de.bno.mindrobot.gui.Strings.START;
 import static de.bno.mindrobot.gui.Strings.String;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -68,12 +69,14 @@ public class MainMenu extends JPanel implements ActionListener {
 
 	private void createStartButton() {
 		startButton = new StartButton(String(START));
+		startButton.setBackground(Color.LIGHT_GRAY);
 		add(startButton, 1);
 		startButton.addActionListener(this);
 	}
 
 	private void createExitButton() {
 		exitButton = new StartButton(String(EXIT));
+		exitButton.setBackground(new Color(255, 0, 0));
 		add(exitButton, 3);
 		exitButton.addActionListener(this);
 	}
