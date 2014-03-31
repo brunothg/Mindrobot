@@ -69,7 +69,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 	private void setView(JComponent comp) {
 		mainPanel.removeAll();
 		mainPanel.add(comp, BorderLayout.CENTER);
-		invalidate();
+		revalidate();
 	}
 
 	private void setFullscreen() {
@@ -146,6 +146,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 			try {
 				SpielfeldData spielfeld = spielfeldImporter.importSpielfeld();
 				setView(new Playground(spielfeld));
+				revalidate();
 			} catch (IOException e) {
 				LOG.warning("Fehler beim Laden der Map: " + e.getMessage());
 			}
