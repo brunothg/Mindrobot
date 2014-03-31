@@ -24,7 +24,7 @@ public class MindRobot {
 
 	public static void main(String[] args) {
 
-		setToSystemLookAndFeel();
+		setLookAndFeel();
 		try {
 			setupLogging();
 		} catch (Exception e) {
@@ -52,21 +52,23 @@ public class MindRobot {
 		handler.setLevel(Level.CONFIG);
 	}
 
-	public static void setToSystemLookAndFeel() {
+	public static void setLookAndFeel() {
 
-		if (UIManager.getSystemLookAndFeelClassName().equals(
-				UIManager.getCrossPlatformLookAndFeelClassName())) {
-			try {
-				for (LookAndFeelInfo info : UIManager
-						.getInstalledLookAndFeels()) {
-					if ("Nimbus".equals(info.getName())) {
-						UIManager.setLookAndFeel(info.getClassName());
-						break;
-					}
+		boolean failed = true;
+
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					failed = false;
+					break;
 				}
-			} catch (Exception e) {
 			}
-		} else {
+		} catch (Exception e) {
+			failed = true;
+		}
+
+		if (failed) {
 
 			try {
 				UIManager.setLookAndFeel(UIManager

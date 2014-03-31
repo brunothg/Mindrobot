@@ -11,6 +11,7 @@ import java.awt.event.WindowListener;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -48,7 +49,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 		addMainPanel();
 
-		mainPanel.add(new MainMenu(), BorderLayout.CENTER);
+		setView(new MainMenu());
 
 		Signals.addListener(this);
 	}
@@ -58,6 +59,12 @@ public class RobotFrame extends JFrame implements WindowListener,
 		mainPanel.setLayout(new BorderLayout(0, 0));
 		add(mainPanel, BorderLayout.CENTER);
 
+	}
+
+	private void setView(JComponent comp) {
+		mainPanel.removeAll();
+		mainPanel.add(comp, BorderLayout.CENTER);
+		invalidate();
 	}
 
 	private void setFullscreen() {
