@@ -116,17 +116,25 @@ public class RobotFrame extends JFrame implements WindowListener,
 	@Override
 	public boolean Signal(String signal, Object... values) {
 		if (signal.equalsIgnoreCase("exit")) {
-			dispose();
-			return true;
+			return signalExit();
 		} else if (signal.equalsIgnoreCase("start")) {
-			if (values.length <= 0) {
-
-			}
-
-			return true;
+			return signalStart(values);
 		}
 
 		return false;
+	}
+
+	private boolean signalStart(Object[] values) {
+		if (values.length > 0) {
+
+			return true;
+		}
+		return false;
+	}
+
+	private boolean signalExit() {
+		dispose();
+		return true;
 	}
 
 	// WINDOW LISTENER
