@@ -32,6 +32,7 @@ public class Strings {
 	public static final String WINDOWED = "windowed";
 	public static final String FULLSCREEN = "fullscreen";
 	public static final String EXIT = "exit";
+	public static final String START = "start";
 
 	private static Map<String, String> values;
 
@@ -55,6 +56,7 @@ public class Strings {
 		values.put(FULLSCREEN, "Vollbild");
 		values.put(WINDOWED, "Fenster");
 		values.put(EXIT, "Verlassen");
+		values.put(START, "Starten");
 	}
 
 	public static String String(String key) {

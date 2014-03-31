@@ -1,10 +1,12 @@
 package de.bno.mindrobot.gui;
 
 import static de.bno.mindrobot.gui.Strings.EXIT;
+import static de.bno.mindrobot.gui.Strings.START;
 import static de.bno.mindrobot.gui.Strings.String;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
@@ -25,6 +27,8 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 
 	private JButton exitButton;
 
+	private JButton startButton;
+
 	public MainMenu() {
 
 		maps = FileSpielfeldImporter.getSpielfelder(Paths.get("./maps"))
@@ -36,8 +40,15 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		setLayout(gbL);
 
 		createExitButton();
+		createStartButton();
 
 		Signals.addListener(this);
+	}
+
+	private void createStartButton() {
+		startButton = new StartButton(String(START));
+		add(startButton, 1);
+		startButton.addActionListener(this);
 	}
 
 	private void createExitButton() {
@@ -56,6 +67,7 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		gbc.gridwidth = 1;
 		gbc.weightx = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(10, 10, 10, 10);
 
 		gbL.setConstraints(comp, gbc);
 		add(comp);
