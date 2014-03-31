@@ -27,7 +27,7 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 
 	private JButton exitButton;
 
-	private JButton startButton;
+	private StartButton startButton;
 
 	public MainMenu() {
 
@@ -84,6 +84,8 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 
 		if (arg0.getSource() == exitButton) {
 			Signals.sendSignal("exit");
+		} else if (arg0.getSource() == startButton) {
+			System.out.println("START");
 		}
 
 	}
