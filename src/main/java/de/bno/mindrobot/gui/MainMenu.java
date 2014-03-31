@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 import de.bno.mindrobot.data.importer.FileSpielfeldImporter;
 
-public class MainMenu extends JPanel implements ActionListener, SignalListener {
+public class MainMenu extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 8596091572742102180L;
 
@@ -52,7 +52,6 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		createStartButton();
 		createMapSelect();
 
-		Signals.addListener(this);
 	}
 
 	private void createMapSelect() {
@@ -94,11 +93,6 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		gbL.setConstraints(comp, gbc);
 		add(comp);
 
-	}
-
-	@Override
-	public boolean Signal(String signal, Object... values) {
-		return false;
 	}
 
 	@Override
