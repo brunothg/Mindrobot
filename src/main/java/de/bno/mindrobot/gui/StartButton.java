@@ -3,6 +3,7 @@ package de.bno.mindrobot.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,19 +16,12 @@ public class StartButton extends JButton implements MouseListener {
 	private boolean isMouseDown;
 	private boolean isMouseIn;
 
-	private Font f;
-
 	public StartButton(String s) {
 		super(s);
 		setOpaque(false);
 		isMouseDown = false;
 
 		addMouseListener(this);
-		loadFont();
-	}
-
-	private void loadFont() {
-		f = null;
 	}
 
 	@Override
@@ -50,17 +44,33 @@ public class StartButton extends JButton implements MouseListener {
 			}
 			g.fillRoundRect(6, 6, getWidth() - 11, getHeight() - 11, 20, 20);
 
-			if (f != null) {
-				g.setFont(f);
-			}
+			char[] start = getText().toCharArray();
+
+			Font f = getSizedFont(g, start);
+			FontMetrics metrics = g.getFontMetrics(f);
+			g.setFont(f);
 
 			if (!isMouseIn) {
 				g.setColor(Color.BLACK);
 			} else {
 				g.setColor(Color.RED);
 			}
+
+			int fontWidth = metrics.charsWidth(start, 0, start.length);
+			int fontHeight = metrics.getHeight();
+			g.drawChars(start, 0, start.length, (getWidth() - fontWidth) / 2,
+					(getHeight() + fontHeight) / 2);
 		}
 
+	}
+
+	private Font getSizedFont(Graphics g, char[] string) {
+		Font f = new Font(g.getFont().getName(), Font.BOLD, getHeight() / 4);
+
+		while ((g.getFontMetrics(f)).charsWidth(string, 0, string.length) > getWidth() - 15) {
+			f = new Font(g.getFont().getName(), Font.BOLD, f.getSize() - 1);
+		}
+		return f;
 	}
 
 	@Override
@@ -77,7 +87,7 @@ public class StartButton extends JButton implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		isMouseIn = true;
+		isMouseIn = false;
 		invalidate();
 	}
 

@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -25,7 +24,7 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 
 	private GridBagLayout gbL;
 
-	private JButton exitButton;
+	private StartButton exitButton;
 
 	private StartButton startButton;
 
@@ -52,7 +51,7 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 	}
 
 	private void createExitButton() {
-		exitButton = new JButton(String(EXIT));
+		exitButton = new StartButton(String(EXIT));
 		add(exitButton, 3);
 		exitButton.addActionListener(this);
 	}
