@@ -32,7 +32,7 @@ public class Playground extends JComponent {
 
 	private void loadImages() {
 
-		defFloor = loadIcon("");
+		defFloor = loadIcon("Floor_Normal.jpg");
 
 	}
 
