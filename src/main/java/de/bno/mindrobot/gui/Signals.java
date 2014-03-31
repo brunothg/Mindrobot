@@ -37,7 +37,9 @@ public class Signals {
 			ret = "<Empty>";
 		} else {
 			for (int i = 0; i < values.length; i++) {
-				ret += "'" + values[i].toString() + "'";
+
+				ret += (values[i] == null) ? "<NULL>" : ("'"
+						+ values[i].toString() + "'");
 				if (i < values.length - 1) {
 					ret += ", ";
 				}

@@ -107,9 +107,13 @@ public class MainMenu extends JPanel implements ActionListener, SignalListener {
 		if (arg0.getSource() == exitButton) {
 			Signals.sendSignal("exit");
 		} else if (arg0.getSource() == startButton) {
-			Signals.sendSignal("start", mapSelect.getSelectedItem().toString());
+			Object selectedMap = mapSelect.getSelectedItem();
+			if (selectedMap != null) {
+				Signals.sendSignal("start", selectedMap.toString());
+			} else {
+				Signals.sendSignal("start");
+			}
 		}
 
 	}
-
 }

@@ -118,6 +118,12 @@ public class RobotFrame extends JFrame implements WindowListener,
 		if (signal.equalsIgnoreCase("exit")) {
 			dispose();
 			return true;
+		} else if (signal.equalsIgnoreCase("start")) {
+			if (values.length <= 0) {
+
+			}
+
+			return true;
 		}
 
 		return false;
