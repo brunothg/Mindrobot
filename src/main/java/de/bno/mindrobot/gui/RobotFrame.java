@@ -145,7 +145,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 			try {
 				SpielfeldData spielfeld = spielfeldImporter.importSpielfeld();
-				setView(new Playground(spielfeld));
+				setView(new Playground(spielfeld, values[0].toString()));
 				revalidate();
 			} catch (IOException e) {
 				LOG.warning("Fehler beim Laden der Map: " + e.getMessage());

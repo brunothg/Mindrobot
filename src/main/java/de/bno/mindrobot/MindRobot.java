@@ -21,6 +21,7 @@ public class MindRobot {
 	public static RobotFrame display;
 
 	public static final String MAP_SEARCH_STRING = "./maps";
+	public static final String IMAGE_SEARCH_STRING = "Images";
 
 	public static Preferences userPrefs;
 

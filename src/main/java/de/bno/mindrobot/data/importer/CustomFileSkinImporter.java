@@ -6,9 +6,15 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import de.bno.mindrobot.MindRobot;
@@ -22,7 +28,11 @@ public class CustomFileSkinImporter implements SkinImporter {
 	HashMap<FeldTyp, ImageIcon> images;
 	HashMap<Integer, ImageIcon> goalImages;
 
-	public CustomFileSkinImporter() {
+	private String map;
+
+	public CustomFileSkinImporter(String map) {
+		this.map = map;
+
 		images = new HashMap<FeldTyp, ImageIcon>();
 		goalImages = new HashMap<Integer, ImageIcon>();
 	}
@@ -35,9 +45,43 @@ public class CustomFileSkinImporter implements SkinImporter {
 	public ImageIcon getImageIcon(int goalNumber) {
 		ImageIcon ret = null;
 
+		ret = goalImages.get(new Integer(goalNumber));
+
+		if (ret == null) {
+			ret = reloadCustomGoalImageIcon(goalNumber);
+		}
+
 		if (ret == null) {
 			ret = getImageIcon(FeldTyp.ZIEL);
 			ret = paintNumberOnGoal(ret, goalNumber);
+		}
+
+		return ret;
+	}
+
+	private ImageIcon reloadCustomGoalImageIcon(int goalNumber) {
+		ImageIcon ret = null;
+
+		Path dir = Paths.get(MindRobot.MAP_SEARCH_STRING, map
+				+ MindRobot.IMAGE_SEARCH_STRING);
+
+		if (Files.exists(dir) && Files.isDirectory(dir)) {
+
+			try {
+				DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir);
+				for (Path file : dirStream) {
+					if (Files.isReadable(file)
+							&& Files.isRegularFile(file)
+							&& file.getFileName().toString()
+									.indexOf("G" + goalNumber) != -1) {
+						ret = new ImageIcon(ImageIO.read(Files
+								.newInputStream(file)));
+					}
+				}
+			} catch (IOException e) {
+				LOG.warning("Fehler beim Laden der Custom Tiles: "
+						+ e.getMessage());
+			}
 		}
 
 		return ret;
@@ -73,7 +117,6 @@ public class CustomFileSkinImporter implements SkinImporter {
 		int numY = (int) ((ret.getHeight() + numHeight) / 2.0);
 
 		g.setColor(Color.RED);
-		System.out.println(new String(numberChar) + " " + numX + " " + numY);
 		g.drawChars(numberChar, 0, numberChar.length, numX, numY);
 
 		return new ImageIcon(ret);
@@ -88,7 +131,43 @@ public class CustomFileSkinImporter implements SkinImporter {
 		ImageIcon ret = images.get(typ);
 
 		if (ret == null) {
+			ret = reloadCustomImage(typ);
+		}
+
+		if (ret == null) {
 			ret = reloadImage(typ);
+		}
+
+		return ret;
+	}
+
+	private ImageIcon reloadCustomImage(FeldTyp typ) {
+		ImageIcon ret = null;
+
+		Path dir = Paths.get(MindRobot.MAP_SEARCH_STRING, map
+				+ MindRobot.IMAGE_SEARCH_STRING);
+
+		if (Files.exists(dir) && Files.isDirectory(dir)) {
+
+			try {
+				DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir);
+				for (Path file : dirStream) {
+					if (Files.isReadable(file)
+							&& Files.isRegularFile(file)
+							&& file.getFileName()
+									.toString()
+									.indexOf(
+											"Custom"
+													+ Character.toUpperCase(typ
+															.getCharRepresentation())) != -1) {
+						ret = new ImageIcon(ImageIO.read(Files
+								.newInputStream(file)));
+					}
+				}
+			} catch (IOException e) {
+				LOG.warning("Fehler beim Laden der Custom Tiles: "
+						+ e.getMessage());
+			}
 		}
 
 		return ret;

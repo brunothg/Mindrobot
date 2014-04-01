@@ -26,15 +26,18 @@ public class Playground extends JComponent {
 
 	private SkinImporter skinImporter;
 
-	public Playground(SpielfeldData spielfeld) {
+	private String map;
+
+	public Playground(SpielfeldData spielfeld, String map) {
 		super();
 		this.spielfeld = spielfeld;
+		this.map = map;
 
 		loadImages();
 	}
 
 	private void loadImages() {
-		skinImporter = new CustomFileSkinImporter();
+		skinImporter = new CustomFileSkinImporter(this.map);
 	}
 
 	@Override
