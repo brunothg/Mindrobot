@@ -8,8 +8,12 @@ public class ZielFeld extends Feld implements Comparable<ZielFeld> {
 
 	public ZielFeld(int number) {
 		super(FeldTyp.ZIEL);
-		this.number = number;
-		ZielFeld.numbers = number + 1;
+		if (number > 0) {
+			this.number = number;
+		} else {
+			this.number = numbers + 1;
+		}
+		ZielFeld.numbers = this.number + 1;
 	}
 
 	public ZielFeld() {
@@ -21,7 +25,9 @@ public class ZielFeld extends Feld implements Comparable<ZielFeld> {
 	}
 
 	public void setNumber(int number) {
-		this.number = number;
+		if (number > 0) {
+			this.number = number;
+		}
 	}
 
 	@Override
