@@ -14,6 +14,7 @@ import de.bno.mindrobot.data.exporter.StreamSpielfeldExporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.feld.Feld;
 import de.bno.mindrobot.feld.FeldTyp;
+import de.bno.mindrobot.feld.StartFeld;
 import de.bno.mindrobot.feld.ZielFeld;
 
 public class StreamSpielfeldImporter implements SpielfeldImporter {
@@ -102,6 +103,22 @@ public class StreamSpielfeldImporter implements SpielfeldImporter {
 					zf.setNumber(Integer.valueOf(number).intValue());
 					ret[y][x] = zf;
 
+				} else if (row.charAt(i) == FeldTyp.START
+						.getCharRepresentation()) {
+
+					StartFeld sf = new StartFeld();
+
+					i++;
+					int start = i;
+					while (i < row.length() && Character.isDigit(row.charAt(i))) {
+						i++;
+					}
+
+					String number = row.substring(start, i);
+					if (number != null && !number.isEmpty()) {
+						sf.setDirection(Integer.valueOf(number).intValue());
+					}
+					ret[y][x] = sf;
 				} else {
 					ret[y][x] = (i < row.length()) ? Feld.getFeldFromChar(row
 							.charAt(i)) : new Feld();

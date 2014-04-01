@@ -9,23 +9,25 @@ import java.nio.charset.StandardCharsets;
 
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.StartFeld;
 import de.bno.mindrobot.feld.ZielFeld;
 
-public class StreamSpielfeldExporter implements SpielfeldExporter{
+public class StreamSpielfeldExporter implements SpielfeldExporter {
 
 	public static final String MIME_TYPE = "text/mindrobot";
 	public static final Charset CHARSET = StandardCharsets.UTF_8;
-	
+
 	OutputStream out;
-	
+
 	public StreamSpielfeldExporter(OutputStream out) {
 		this.out = out;
 	}
-	
+
 	@Override
 	public void exportSpielfeld(SpielfeldData spielfeld) throws IOException {
 
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, CHARSET));
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out,
+				CHARSET));
 
 		writer.append(MIME_TYPE);
 		writer.newLine();
@@ -43,6 +45,8 @@ public class StreamSpielfeldExporter implements SpielfeldExporter{
 
 				if (feld instanceof ZielFeld) {
 					writer.append("" + ((ZielFeld) feld).getNumber());
+				} else if (feld instanceof StartFeld) {
+					writer.append("" + ((StartFeld) feld).getDirection());
 				}
 			}
 			writer.newLine();

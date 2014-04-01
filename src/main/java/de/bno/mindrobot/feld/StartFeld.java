@@ -25,4 +25,12 @@ public class StartFeld extends Feld {
 		return this.direction;
 	}
 
+	public void setDirection(int direction) {
+		if (direction >= 1 && direction <= 4) {
+			this.direction = direction;
+		} else {
+			this.direction = EAST;
+		}
+	}
+
 }
