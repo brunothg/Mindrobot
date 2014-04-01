@@ -42,7 +42,7 @@ public class Playground extends JComponent {
 
 		defFloor = loadIcon("Floor_Normal.jpg").getImage();
 		defBlocked = loadIcon("Floor_Closed.jpg").getImage();
-		defConfuse = loadIcon("Floor_Normal.jpg").getImage();
+		defConfuse = loadIcon("Floor_Confuse.jpg").getImage();
 		defZiel = loadIcon("Floor_Normal.jpg").getImage();
 		defColored = loadIcon("Floor_Normal.jpg").getImage();
 
