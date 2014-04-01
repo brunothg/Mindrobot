@@ -28,7 +28,6 @@ public class Playground extends JComponent {
 	private Image defBlocked;
 	private Image defConfuse;
 	private Image defZiel;
-	private Image defColored;
 	private Image[] usrZiel;
 
 	public Playground(SpielfeldData spielfeld) {
@@ -44,7 +43,6 @@ public class Playground extends JComponent {
 		defBlocked = loadIcon("Floor_Closed.jpg").getImage();
 		defConfuse = loadIcon("Floor_Confuse.jpg").getImage();
 		defZiel = loadIcon("Floor_Normal.jpg").getImage();
-		defColored = loadIcon("Floor_Normal.jpg").getImage();
 
 		usrZiel = null;
 		tryLoadusrImages();
@@ -99,8 +97,6 @@ public class Playground extends JComponent {
 
 		if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.BLOCKED) {
 			ret = defBlocked;
-		} else if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.COLORED) {
-			ret = defColored;
 		} else if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.CONFUSE) {
 			ret = defConfuse;
 		} else if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.ZIEL) {
