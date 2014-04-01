@@ -10,9 +10,20 @@ import de.bno.mindrobot.feld.FeldTyp;
 public class CustomFileSkinImporter implements SkinImporter {
 
 	HashMap<FeldTyp, Image> images;
+	HashMap<Integer, Image> goalImages;
 
 	public CustomFileSkinImporter() {
 		images = new HashMap<FeldTyp, Image>();
+		goalImages = new HashMap<Integer, Image>();
+	}
+
+	@Override
+	public Image getImage(int goalNumber) {
+		Image ret = null;
+
+		ret = getImage(FeldTyp.ZIEL);
+
+		return ret;
 	}
 
 	@Override

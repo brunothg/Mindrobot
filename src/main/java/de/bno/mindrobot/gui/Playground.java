@@ -10,7 +10,6 @@ import javax.swing.JComponent;
 import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
 import de.bno.mindrobot.data.importer.SkinImporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
-import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.ZielFeld;
 
 public class Playground extends JComponent {
@@ -26,7 +25,6 @@ public class Playground extends JComponent {
 	private SpielfeldData spielfeld;
 
 	private SkinImporter skinImporter;
-	private Image[] usrZiel;
 
 	public Playground(SpielfeldData spielfeld) {
 		super();
@@ -36,10 +34,7 @@ public class Playground extends JComponent {
 	}
 
 	private void loadImages() {
-
 		skinImporter = new CustomFileSkinImporter();
-
-		usrZiel = null;
 	}
 
 	@Override
@@ -85,12 +80,10 @@ public class Playground extends JComponent {
 	private Image getTile(int x, int y) {
 		Image ret = null;
 
-		if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.ZIEL
-				&& (usrZiel != null
-						&& spielfeld.getFeld(x, y) instanceof ZielFeld && usrZiel.length >= ((ZielFeld) spielfeld
-						.getFeld(x, y)).getNumber())) {
+		if (spielfeld.getFeld(x, y) instanceof ZielFeld) {
+			ZielFeld zf = (ZielFeld) spielfeld.getFeld(x, y);
 
-			ret = usrZiel[((ZielFeld) spielfeld.getFeld(x, y)).getNumber() - 1];
+			ret = skinImporter.getImage(zf.getNumber());
 
 		} else {
 			ret = skinImporter.getImage(spielfeld.getFeld(x, y).getTyp());

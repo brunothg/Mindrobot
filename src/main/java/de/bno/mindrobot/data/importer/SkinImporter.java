@@ -8,6 +8,8 @@ public interface SkinImporter {
 
 	public Image getImage(FeldTyp typ);
 
+	public Image getImage(int goalNumber);
+
 	public Image getAvatar(int direction);
 
 }
