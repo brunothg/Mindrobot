@@ -41,7 +41,7 @@ public class Playground extends JComponent {
 	private void loadImages() {
 
 		defFloor = loadIcon("Floor_Normal.jpg").getImage();
-		defBlocked = loadIcon("Floor_Normal.jpg").getImage();
+		defBlocked = loadIcon("Floor_Closed.jpg").getImage();
 		defConfuse = loadIcon("Floor_Normal.jpg").getImage();
 		defZiel = loadIcon("Floor_Normal.jpg").getImage();
 		defColored = loadIcon("Floor_Normal.jpg").getImage();
