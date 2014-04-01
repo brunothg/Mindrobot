@@ -84,6 +84,8 @@ public class CustomFileSkinImporter implements SkinImporter {
 			}
 		}
 
+		goalImages.put(new Integer(goalNumber), ret);
+
 		return ret;
 	}
 
@@ -169,6 +171,8 @@ public class CustomFileSkinImporter implements SkinImporter {
 						+ e.getMessage());
 			}
 		}
+
+		images.put(typ, ret);
 
 		return ret;
 	}
