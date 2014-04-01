@@ -17,13 +17,12 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.data.importer.FileSpielfeldImporter;
 
 public class MainMenu extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 8596091572742102180L;
-
-	private static final String MAP_SEARCH_STRING = "./maps";
 
 	String[] maps;
 
@@ -47,7 +46,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		gbL = new GridBagLayout();
 		setLayout(gbL);
 
-		mapSearchPath = Paths.get(MAP_SEARCH_STRING);
+		mapSearchPath = Paths.get(MindRobot.MAP_SEARCH_STRING);
 
 		createExitButton();
 		createStartButton();

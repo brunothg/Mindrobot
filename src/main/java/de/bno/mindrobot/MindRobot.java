@@ -20,6 +20,8 @@ public class MindRobot {
 	public static Handler handler;
 	public static RobotFrame display;
 
+	public static final String MAP_SEARCH_STRING = "./maps";
+
 	public static Preferences userPrefs;
 
 	public static void main(String[] args) {

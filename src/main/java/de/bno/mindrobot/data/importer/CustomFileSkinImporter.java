@@ -2,12 +2,17 @@ package de.bno.mindrobot.data.importer;
 
 import java.awt.Image;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
+import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.feld.FeldTyp;
 
 public class CustomFileSkinImporter implements SkinImporter {
+
+	private static final Logger LOG = MindRobot
+			.getLogger(CustomFileSkinImporter.class);
 
 	HashMap<FeldTyp, Image> images;
 	HashMap<Integer, Image> goalImages;
@@ -28,7 +33,6 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 	@Override
 	public Image getImage(FeldTyp typ) {
-
 		Image ret = images.get(typ);
 
 		if (ret == null) {
@@ -39,6 +43,8 @@ public class CustomFileSkinImporter implements SkinImporter {
 	}
 
 	private Image reloadImage(FeldTyp typ) {
+		LOG.info("Lade Feld Tile: " + typ.toString());
+
 		Image ret = null;
 
 		if (typ == FeldTyp.CONFUSE) {
