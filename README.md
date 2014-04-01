@@ -5,6 +5,7 @@ Folder:
 
 	./maps - store maps here
 	./maps/<mapname>Images/<Custom<FeldChar>|G<GoalNumber>> - store custom images here
+	./lang - Translations
 
 Maps Format:
 
@@ -28,3 +29,24 @@ Maps Format:
 	5: #?#
 	6: Z1#Z2
 	7: END
+	
+Translations:
+	
+	Filename should have no extension and represent the language name e.g. "German"
+	
+	Values and example:
+	
+		fullscreen=Vollbild
+		dft=Standart
+		windowed=Fenster
+		title=MindRobot
+		tp_sel_lng=Weitere Sprachen müssen im Ordner '%s' abgelegt werden.
+		one_instanz_only_message=Es läuft bereits eine Instanz des Programms.
+		start=Starten
+		cancel=Abbrechen
+		one_instanz_only_title=Programm wurde bereits gestartet
+		lang=Sprache
+		exit=Verlassen
+		disp_set=Grafikeinstellung
+		start_app=Start
+		END
