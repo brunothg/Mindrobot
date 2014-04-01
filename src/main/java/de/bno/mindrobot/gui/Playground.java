@@ -5,9 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
+import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
+import de.bno.mindrobot.data.importer.SkinImporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.ZielFeld;
@@ -24,10 +25,7 @@ public class Playground extends JComponent {
 
 	private SpielfeldData spielfeld;
 
-	private Image defFloor;
-	private Image defBlocked;
-	private Image defConfuse;
-	private Image defZiel;
+	private SkinImporter skinImporter;
 	private Image[] usrZiel;
 
 	public Playground(SpielfeldData spielfeld) {
@@ -39,17 +37,9 @@ public class Playground extends JComponent {
 
 	private void loadImages() {
 
-		defFloor = loadIcon("Floor_Normal.jpg").getImage();
-		defBlocked = loadIcon("Floor_Closed.jpg").getImage();
-		defConfuse = loadIcon("Floor_Confuse.jpg").getImage();
-		defZiel = loadIcon("Floor_Goal.jpg").getImage();
+		skinImporter = new CustomFileSkinImporter();
 
 		usrZiel = null;
-		tryLoadusrImages();
-	}
-
-	private void tryLoadusrImages() {
-
 	}
 
 	@Override
@@ -93,23 +83,17 @@ public class Playground extends JComponent {
 	}
 
 	private Image getTile(int x, int y) {
-		Image ret = defFloor;
+		Image ret = null;
 
-		if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.BLOCKED) {
-			ret = defBlocked;
-		} else if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.CONFUSE) {
-			ret = defConfuse;
-		} else if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.ZIEL) {
-			if (usrZiel != null
-					&& spielfeld.getFeld(x, y) instanceof ZielFeld
-					&& usrZiel.length >= ((ZielFeld) spielfeld.getFeld(x, y))
-							.getNumber()) {
+		if (spielfeld.getFeld(x, y).getTyp() == FeldTyp.ZIEL
+				&& (usrZiel != null
+						&& spielfeld.getFeld(x, y) instanceof ZielFeld && usrZiel.length >= ((ZielFeld) spielfeld
+						.getFeld(x, y)).getNumber())) {
 
-				ret = usrZiel[((ZielFeld) spielfeld.getFeld(x, y)).getNumber() - 1];
+			ret = usrZiel[((ZielFeld) spielfeld.getFeld(x, y)).getNumber() - 1];
 
-			} else {
-				ret = defZiel;
-			}
+		} else {
+			ret = skinImporter.getImage(spielfeld.getFeld(x, y).getTyp());
 		}
 
 		return ret;
@@ -131,11 +115,6 @@ public class Playground extends JComponent {
 
 	public int getHeightPt() {
 		return Pixel.pixelToPoints(getHeight());
-	}
-
-	private ImageIcon loadIcon(String s) {
-		return new ImageIcon(getClass().getClassLoader().getResource(
-				"de/bno/mindrobot/gui/" + s));
 	}
 
 }
