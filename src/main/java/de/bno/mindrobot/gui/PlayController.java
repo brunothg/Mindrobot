@@ -73,7 +73,7 @@ public class PlayController extends JComponent implements ActionListener {
 
 	private void createOpenButton() {
 
-		btnOpen = new JButton(">");
+		btnOpen = new JButton("<");
 		btnOpen.addActionListener(this);
 		add(btnOpen);
 
@@ -93,7 +93,7 @@ public class PlayController extends JComponent implements ActionListener {
 		} else if (arg0.getSource() == btnOpen) {
 			btnOpen.setText((btnOpen.getText().equalsIgnoreCase(">")) ? "<"
 					: ">");
-			if (btnOpen.getText().equalsIgnoreCase("<")) {
+			if (btnOpen.getText().equalsIgnoreCase(">")) {
 				openedPanel.setVisible(false);
 			} else {
 				openedPanel.setVisible(true);
