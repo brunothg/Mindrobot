@@ -8,6 +8,13 @@ import de.bno.mindrobot.MindRobot;
 public class Signals {
 
 	private static final Logger LOG = MindRobot.getLogger(Signals.class);
+
+	public static final String SIGNAL_PLAY_BTN = "playbutton";
+	public static final String SIGNAL_STOP_BTN = "stopbutton";
+	public static final String SIGNAL_EDIT_BTN = "editbutton";
+	public static final String SIGNAL_EXIT = "exit";
+	public static final String SIGNAL_START = "start";
+
 	private static Vector<SignalListener> listener;
 
 	static {

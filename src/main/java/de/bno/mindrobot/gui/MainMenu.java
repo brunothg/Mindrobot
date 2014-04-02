@@ -103,13 +103,13 @@ public class MainMenu extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getSource() == exitButton) {
-			Signals.sendSignal("exit");
+			Signals.sendSignal(Signals.SIGNAL_EXIT);
 		} else if (arg0.getSource() == startButton) {
 			Object selectedMap = mapSelect.getSelectedItem();
 			if (selectedMap != null) {
-				Signals.sendSignal("start", selectedMap.toString());
+				Signals.sendSignal(Signals.SIGNAL_START, selectedMap.toString());
 			} else {
-				Signals.sendSignal("start");
+				Signals.sendSignal(Signals.SIGNAL_START);
 			}
 		}
 
