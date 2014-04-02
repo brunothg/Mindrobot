@@ -28,12 +28,24 @@ public class Playground extends JComponent {
 
 	private String map;
 
+	private PlayController playController;
+
 	public Playground(SpielfeldData spielfeld, String map) {
 		super();
 		this.spielfeld = spielfeld;
 		this.map = map;
+		setLayout(null);
 
 		loadImages();
+
+		createControl();
+	}
+
+	private void createControl() {
+		playController = new PlayController();
+		playController.setSize(playController.getPreferredSize());
+		playController.setLocation(5, 5);
+		add(playController);
 	}
 
 	private void loadImages() {
@@ -45,6 +57,16 @@ public class Playground extends JComponent {
 
 		paintFloor(g);
 
+		updateControllerSize();
+
+		paintChildren(g);
+	}
+
+	private void updateControllerSize() {
+		Dimension prefSize = playController.getPreferredSize();
+		Dimension size = new Dimension(Math.min(prefSize.width, getWidth()),
+				Math.min(prefSize.height, getHeight()));
+		playController.setSize(size);
 	}
 
 	private void paintFloor(Graphics g) {

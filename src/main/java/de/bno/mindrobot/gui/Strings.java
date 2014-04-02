@@ -33,6 +33,9 @@ public class Strings {
 	public static final String FULLSCREEN = "fullscreen";
 	public static final String EXIT = "exit";
 	public static final String START = "start";
+	public static final String PLAY = "play";
+	public static final String STOP = "stop";
+	public static final String EDIT = "edit";
 
 	private static Map<String, String> values;
 
@@ -57,6 +60,9 @@ public class Strings {
 		values.put(WINDOWED, "Fenster");
 		values.put(EXIT, "Verlassen");
 		values.put(START, "Starten");
+		values.put(STOP, "Stop");
+		values.put(PLAY, "Start");
+		values.put(EDIT, "Konsole");
 	}
 
 	public static String String(String key) {
