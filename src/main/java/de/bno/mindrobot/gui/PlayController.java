@@ -73,7 +73,13 @@ public class PlayController extends JComponent implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-		if (arg0.getSource() == btnOpen) {
+		if (arg0.getSource() == btnPlay) {
+
+		} else if (arg0.getSource() == btnStop) {
+
+		} else if (arg0.getSource() == btnEdit) {
+
+		} else if (arg0.getSource() == btnOpen) {
 			btnOpen.setText((btnOpen.getText().equalsIgnoreCase(">")) ? "<"
 					: ">");
 			if (btnOpen.getText().equalsIgnoreCase("<")) {
