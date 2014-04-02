@@ -1,6 +1,8 @@
 package de.bno.mindrobot;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -36,7 +38,13 @@ public class MindRobot {
 
 		setupPreferences();
 
-		LOG.info("Starte Applikation");
+		Path myDir = null;
+		try {
+			myDir = Paths.get("./").toAbsolutePath();
+		} catch (Exception e) {
+		}
+		LOG.info("Starte Applikation "
+				+ ((myDir != null) ? myDir.toString() : "N/A"));
 		showGUI();
 
 	}
