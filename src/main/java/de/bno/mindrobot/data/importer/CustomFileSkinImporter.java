@@ -28,6 +28,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 	HashMap<FeldTyp, ImageIcon> images;
 	HashMap<Integer, ImageIcon> goalImages;
+	HashMap<Integer, ImageIcon> avatarImages;
 
 	private String map;
 
@@ -36,6 +37,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 		images = new HashMap<FeldTyp, ImageIcon>();
 		goalImages = new HashMap<Integer, ImageIcon>();
+		avatarImages = new HashMap<Integer, ImageIcon>();
 	}
 
 	@Override
@@ -55,6 +57,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 		if (ret == null) {
 			ret = getImageIcon(FeldTyp.ZIEL);
 			ret = paintNumberOnGoal(ret, goalNumber);
+			goalImages.put(new Integer(goalNumber), ret);
 		}
 
 		return ret;
@@ -204,12 +207,19 @@ public class CustomFileSkinImporter implements SkinImporter {
 	}
 
 	private ImageIcon getAvatarIcon(int direction) {
-		ImageIcon ret = null;
+		if (!StartFeld.isValidDirection(direction)) {
+			return null;
+		}
+
+		ImageIcon ret = avatarImages.get(new Integer(direction));
 
 		if (ret == null) {
 			ret = loadIcon("Avatar.png");
 			ret = paintArrowOnAvatar(ret, direction);
+			avatarImages.put(new Integer(direction), ret);
 		}
+
+		avatarImages.put(new Integer(direction), ret);
 
 		return ret;
 	}
