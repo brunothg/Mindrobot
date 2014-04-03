@@ -199,7 +199,12 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 	@Override
 	public Image getAvatar(int direction) {
-		return null;
+		return getAvatarIcon(direction).getImage();
+	}
+
+	private ImageIcon getAvatarIcon(int direction) {
+
+		return loadIcon("Avatar.png");
 	}
 
 	private ImageIcon loadIcon(String s) {

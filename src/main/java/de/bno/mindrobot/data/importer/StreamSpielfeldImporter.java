@@ -105,7 +105,6 @@ public class StreamSpielfeldImporter implements SpielfeldImporter {
 
 				} else if (row.charAt(i) == FeldTyp.START
 						.getCharRepresentation()) {
-
 					StartFeld sf = new StartFeld();
 
 					i++;

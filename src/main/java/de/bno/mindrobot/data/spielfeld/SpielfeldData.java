@@ -1,6 +1,9 @@
 package de.bno.mindrobot.data.spielfeld;
 
 import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.FeldTyp;
+import de.bno.mindrobot.feld.StartFeld;
+import de.bno.mindrobot.gui.Location;
 
 public class SpielfeldData {
 
@@ -33,6 +36,42 @@ public class SpielfeldData {
 
 	public int getHeight() {
 		return felder.length;
+	}
+
+	public Location getStartPoint() {
+		Location ret = null;
+
+		loop: for (int y = 0; y < felder.length; y++) {
+			for (int x = 0; x < felder[y].length; x++) {
+				Feld tmp = felder[y][x];
+				if (tmp.getTyp() == FeldTyp.START) {
+					ret = new Location(x, y);
+					break loop;
+				}
+			}
+		}
+
+		if (ret == null) {
+			ret = new Location(0, 0);
+		}
+
+		return ret;
+	}
+
+	public int getStartDirection() {
+		int ret = 1;
+
+		loop: for (int y = 0; y < felder.length; y++) {
+			for (int x = 0; x < felder[y].length; x++) {
+				Feld tmp = felder[y][x];
+				if (tmp.getTyp() == FeldTyp.START && tmp instanceof StartFeld) {
+					ret = ((StartFeld) tmp).getDirection();
+					break loop;
+				}
+			}
+		}
+
+		return ret;
 	}
 
 }

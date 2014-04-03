@@ -30,15 +30,22 @@ public class Playground extends JComponent {
 
 	private PlayController playController;
 
+	private Location posAvatar;
+	private int directionAvatar;
+
 	public Playground(SpielfeldData spielfeld, String map) {
 		super();
 		this.spielfeld = spielfeld;
 		this.map = map;
+		this.posAvatar = this.spielfeld.getStartPoint();
+		this.directionAvatar = this.spielfeld.getStartDirection();
+
 		setLayout(null);
 
 		loadImages();
 
 		createControl();
+
 	}
 
 	private void createControl() {
@@ -84,22 +91,38 @@ public class Playground extends JComponent {
 		int offsetHeight = (getHeight() - fullHeight) / 2;
 
 		Image tile;
-
+		Location actLocation;
 		for (int y = 0; y < spielfeld.getHeight(); y++) {
 			for (int x = 0; x < spielfeld.getWidth(); x++) {
+				actLocation = new Location(x, y);
 				tile = getTile(x, y);
 				g.setColor(Color.BLACK);
 				g.fillRect(offsetWidth + x * size, offsetHeight + y * size,
 						size, size);
 
-				g.drawImage(tile, offsetWidth + x * size
-						+ ((x == 0) ? inset : 0), offsetHeight + y * size
-						+ ((y == 0) ? inset : 0), offsetWidth + x * size + size
-						- inset, offsetHeight + y * size + size - inset, 0, 0,
-						tile.getWidth(this), tile.getHeight(this), this);
+				drawTile(g, size, inset, offsetWidth, offsetHeight, tile, y, x);
+
+				if (actLocation.equals(posAvatar)) {
+					drawTile(g, size, inset, offsetWidth, offsetHeight,
+							getAvatar(directionAvatar), y, x);
+				}
+
 			}
 		}
 
+	}
+
+	private Image getAvatar(int direction) {
+		return skinImporter.getAvatar(direction);
+	}
+
+	private void drawTile(Graphics g, int size, int inset, int offsetWidth,
+			int offsetHeight, Image tile, int y, int x) {
+		g.drawImage(tile, offsetWidth + x * size + ((x == 0) ? inset : 0),
+				offsetHeight + y * size + ((y == 0) ? inset : 0), offsetWidth
+						+ x * size + size - inset, offsetHeight + y * size
+						+ size - inset, 0, 0, tile.getWidth(this),
+				tile.getHeight(this), this);
 	}
 
 	private Image getTile(int x, int y) {
@@ -133,6 +156,10 @@ public class Playground extends JComponent {
 
 	public int getHeightPt() {
 		return Pixel.pixelToPoints(getHeight());
+	}
+
+	public Location getAvatarPosition() {
+		return new Location(posAvatar);
 	}
 
 }

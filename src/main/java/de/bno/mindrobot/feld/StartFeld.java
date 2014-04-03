@@ -14,6 +14,8 @@ public class StartFeld extends Feld {
 	}
 
 	public StartFeld(int direction) {
+		super(FeldTyp.START);
+
 		if (direction >= 1 && direction <= 4) {
 			this.direction = direction;
 		} else {
