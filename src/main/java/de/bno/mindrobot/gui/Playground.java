@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
 import de.bno.mindrobot.data.importer.SkinImporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
+import de.bno.mindrobot.feld.StartFeld;
 import de.bno.mindrobot.feld.ZielFeld;
 
 public class Playground extends JComponent {
@@ -160,6 +161,28 @@ public class Playground extends JComponent {
 
 	public Location getAvatarPosition() {
 		return new Location(posAvatar);
+	}
+
+	public void moveAvatarToLocation(Location l) {
+		if (l == null) {
+			return;
+		}
+
+		if (l.getX() >= 0 && l.getY() >= 0 && l.getX() < spielfeld.getWidth()
+				&& l.getY() < spielfeld.getHeight()) {
+			if (spielfeld.canMoveTo(l.getX(), l.getY())) {
+				posAvatar.setX(l.getX());
+				posAvatar.setY(l.getY());
+			}
+		}
+	}
+
+	public void setAvatarsDirection(int direction) {
+		if (!StartFeld.isValidDirection(direction)) {
+			return;
+		}
+
+		this.directionAvatar = direction;
 	}
 
 }

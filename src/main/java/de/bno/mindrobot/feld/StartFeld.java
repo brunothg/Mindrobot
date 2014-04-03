@@ -35,4 +35,13 @@ public class StartFeld extends Feld {
 		}
 	}
 
+	public static boolean isValidDirection(int direction) {
+		if (direction == EAST || direction == WEST || direction == SOUTH
+				|| direction == NORTH) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

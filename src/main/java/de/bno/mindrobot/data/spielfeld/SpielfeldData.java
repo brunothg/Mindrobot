@@ -74,4 +74,16 @@ public class SpielfeldData {
 		return ret;
 	}
 
+	public boolean canMoveTo(int x, int y) {
+		boolean ret = false;
+
+		if (x >= 0 && y >= 0 && x < getWidth() && y < getHeight()) {
+			if (felder[y][x].getTyp() != FeldTyp.BLOCKED) {
+				ret = true;
+			}
+		}
+
+		return ret;
+	}
+
 }

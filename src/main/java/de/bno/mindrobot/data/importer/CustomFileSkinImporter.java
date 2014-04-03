@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 
 import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.feld.FeldTyp;
+import de.bno.mindrobot.feld.StartFeld;
 
 public class CustomFileSkinImporter implements SkinImporter {
 
@@ -203,8 +204,51 @@ public class CustomFileSkinImporter implements SkinImporter {
 	}
 
 	private ImageIcon getAvatarIcon(int direction) {
+		ImageIcon ret = null;
 
-		return loadIcon("Avatar.png");
+		if (ret == null) {
+			ret = loadIcon("Avatar.png");
+			ret = paintArrowOnAvatar(ret, direction);
+		}
+
+		return ret;
+	}
+
+	private ImageIcon paintArrowOnAvatar(ImageIcon img, int direction) {
+		BufferedImage ret = new BufferedImage(img.getIconWidth(),
+				img.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D g = (Graphics2D) ret.getGraphics();
+		g.drawImage(img.getImage(), 0, 0, ret.getWidth(), ret.getHeight(), 0,
+				0, img.getIconWidth(), img.getIconHeight(),
+				img.getImageObserver());
+
+		int midX, midY;
+		midX = ret.getWidth() / 2;
+		midY = ret.getHeight() / 2;
+
+		int arrowWidth = Math.min(ret.getHeight(), ret.getHeight()) / 6;
+
+		g.setColor(new Color(255, 0, 0, 150));
+		if (direction == StartFeld.NORTH) {
+			g.fillPolygon(new int[] { midX, midX - arrowWidth,
+					midX + arrowWidth },
+					new int[] { 0, arrowWidth, arrowWidth }, 3);
+		} else if (direction == StartFeld.SOUTH) {
+			g.fillPolygon(new int[] { midX, midX - arrowWidth,
+					midX + arrowWidth },
+					new int[] { ret.getHeight(), ret.getHeight() - arrowWidth,
+							ret.getHeight() - arrowWidth }, 3);
+		} else if (direction == StartFeld.EAST) {
+			g.fillPolygon(new int[] { ret.getWidth(),
+					ret.getWidth() - arrowWidth, ret.getWidth() - arrowWidth },
+					new int[] { midY, midY - arrowWidth, midY + arrowWidth }, 3);
+		} else if (direction == StartFeld.WEST) {
+			g.fillPolygon(new int[] { 0, arrowWidth, arrowWidth }, new int[] {
+					midY, midY - arrowWidth, midY + arrowWidth }, 3);
+		}
+
+		return new ImageIcon(ret);
 	}
 
 	private ImageIcon loadIcon(String s) {
