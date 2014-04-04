@@ -2,6 +2,7 @@ package de.bno.mindrobot.gui;
 
 import static de.bno.mindrobot.gui.Strings.EDIT;
 import static de.bno.mindrobot.gui.Strings.EXIT;
+import static de.bno.mindrobot.gui.Strings.EXIT_QUESTION;
 import static de.bno.mindrobot.gui.Strings.PLAY;
 import static de.bno.mindrobot.gui.Strings.STOP;
 import static de.bno.mindrobot.gui.Strings.String;
@@ -13,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
@@ -89,7 +91,7 @@ public class PlayController extends JComponent implements ActionListener {
 		} else if (arg0.getSource() == btnEdit) {
 			Signals.sendSignal(Signals.SIGNAL_EDIT_BTN);
 		} else if (arg0.getSource() == btnExit) {
-			Signals.sendSignal(Signals.SIGNAL_EXIT);
+			exitAction();
 		} else if (arg0.getSource() == btnOpen) {
 			btnOpen.setText((btnOpen.getText().equalsIgnoreCase(">")) ? "<"
 					: ">");
@@ -102,4 +104,14 @@ public class PlayController extends JComponent implements ActionListener {
 
 	}
 
+	private void exitAction() {
+
+		int answer = JOptionPane.showConfirmDialog(btnExit,
+				String(EXIT_QUESTION), String(EXIT), JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
+
+		if (answer == JOptionPane.OK_OPTION) {
+			Signals.sendSignal(Signals.SIGNAL_EXIT);
+		}
+	}
 }
