@@ -4,7 +4,7 @@ Mindrobot
 Folder:
 
 	./maps - store maps here
-	./maps/<mapname>Images/<Custom<FeldChar>|G<GoalNumber>> - store custom images here
+	./maps/<mapname>Images/<Custom<FeldChar>|G<GoalNumber>|Avatar<Direction|Any>> - store custom images here
 	./lang - Translations
 
 Maps Format:
@@ -36,17 +36,21 @@ Translations:
 	
 	Values and example:
 	
-		fullscreen=Vollbild
+		exit_question=Wollen Sie das Programm wirklich verlassen?
 		dft=Standart
-		windowed=Fenster
-		title=MindRobot
+		stop=Stop
 		tp_sel_lng=Weitere Sprachen müssen im Ordner '%s' abgelegt werden.
+		edit=Konsole
+		play=Start
+		cancel=Abbrechen
+		lang=Sprache
+		start_app=Start
+		disp_set=Grafikeinstellung
+		exit=Verlassen
+		fullscreen=Vollbild
+		title=MindRobot
+		windowed=Fenster
 		one_instanz_only_message=Es läuft bereits eine Instanz des Programms.
 		start=Starten
-		cancel=Abbrechen
 		one_instanz_only_title=Programm wurde bereits gestartet
-		lang=Sprache
-		exit=Verlassen
-		disp_set=Grafikeinstellung
-		start_app=Start
 		END
