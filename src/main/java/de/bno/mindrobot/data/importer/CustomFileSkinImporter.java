@@ -52,6 +52,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 		if (ret == null) {
 			ret = reloadCustomGoalImageIcon(goalNumber);
+			goalImages.put(new Integer(goalNumber), ret);
 		}
 
 		if (ret == null) {
@@ -74,12 +75,13 @@ public class CustomFileSkinImporter implements SkinImporter {
 			try {
 				DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir);
 				for (Path file : dirStream) {
-					if (Files.isReadable(file)
-							&& Files.isRegularFile(file)
-							&& file.getFileName().toString()
-									.indexOf("G" + goalNumber) != -1) {
+					boolean isGoalWithNumber = file.getFileName().toString()
+							.indexOf("G" + goalNumber) != -1;
+					if (Files.isReadable(file) && Files.isRegularFile(file)
+							&& isGoalWithNumber) {
 						ret = new ImageIcon(ImageIO.read(Files
 								.newInputStream(file)));
+						break;
 					}
 				}
 			} catch (IOException e) {
@@ -87,8 +89,6 @@ public class CustomFileSkinImporter implements SkinImporter {
 						+ e.getMessage());
 			}
 		}
-
-		goalImages.put(new Integer(goalNumber), ret);
 
 		return ret;
 	}
@@ -138,10 +138,12 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 		if (ret == null) {
 			ret = reloadCustomImage(typ);
+			images.put(typ, ret);
 		}
 
 		if (ret == null) {
 			ret = reloadImage(typ);
+			images.put(typ, ret);
 		}
 
 		return ret;
@@ -158,16 +160,18 @@ public class CustomFileSkinImporter implements SkinImporter {
 			try {
 				DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir);
 				for (Path file : dirStream) {
-					if (Files.isReadable(file)
-							&& Files.isRegularFile(file)
-							&& file.getFileName()
-									.toString()
-									.indexOf(
-											"Custom"
-													+ Character.toUpperCase(typ
-															.getCharRepresentation())) != -1) {
+					boolean isImageOfTyp = file
+							.getFileName()
+							.toString()
+							.indexOf(
+									"Custom"
+											+ Character.toUpperCase(typ
+													.getCharRepresentation())) != -1;
+					if (Files.isReadable(file) && Files.isRegularFile(file)
+							&& isImageOfTyp) {
 						ret = new ImageIcon(ImageIO.read(Files
 								.newInputStream(file)));
+						break;
 					}
 				}
 			} catch (IOException e) {
@@ -175,8 +179,6 @@ public class CustomFileSkinImporter implements SkinImporter {
 						+ e.getMessage());
 			}
 		}
-
-		images.put(typ, ret);
 
 		return ret;
 	}
@@ -196,8 +198,6 @@ public class CustomFileSkinImporter implements SkinImporter {
 			ret = loadIcon("Floor_Normal.jpg");
 		}
 
-		images.put(typ, ret);
-
 		return ret;
 	}
 
@@ -207,19 +207,69 @@ public class CustomFileSkinImporter implements SkinImporter {
 	}
 
 	private ImageIcon getAvatarIcon(int direction) {
+
 		if (!StartFeld.isValidDirection(direction)) {
 			return null;
 		}
 
-		ImageIcon ret = avatarImages.get(new Integer(direction));
+		Integer directionI = new Integer(direction);
+
+		ImageIcon ret = avatarImages.get(directionI);
+
+		if (ret == null) {
+			ret = reloadCustomAvatar(directionI);
+			avatarImages.put(directionI, ret);
+		}
 
 		if (ret == null) {
 			ret = loadIcon("Avatar.png");
 			ret = paintArrowOnAvatar(ret, direction);
-			avatarImages.put(new Integer(direction), ret);
+			avatarImages.put(directionI, ret);
 		}
 
-		avatarImages.put(new Integer(direction), ret);
+		return ret;
+	}
+
+	private ImageIcon reloadCustomAvatar(Integer directionI) {
+		LOG.info("Lade AvatarIcon " + directionI.intValue());
+		ImageIcon ret = null;
+
+		Path dir = Paths.get(MindRobot.MAP_SEARCH_STRING, map
+				+ MindRobot.IMAGE_SEARCH_STRING);
+
+		if (!Files.exists(dir) || !Files.isDirectory(dir)) {
+			return null;
+		}
+
+		boolean paintArrows = true;
+
+		try {
+			DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir);
+			for (Path file : dirStream) {
+				boolean isAvatarWithDirecion = file.getFileName().toString()
+						.indexOf("Avatar" + directionI.toString()) != -1;
+				boolean isAvatarForAnyDirection = file.getFileName().toString()
+						.indexOf("AvatarAny") != -1;
+				if (Files.isReadable(file) && Files.isRegularFile(file)
+						&& (isAvatarWithDirecion || isAvatarForAnyDirection)) {
+
+					ret = new ImageIcon(
+							ImageIO.read(Files.newInputStream(file)));
+
+					if (isAvatarWithDirecion) {
+						paintArrows = false;
+						break;
+					}
+
+				}
+			}
+		} catch (IOException e) {
+			LOG.warning("Fehler beim Laden der Custom Tiles: " + e.getMessage());
+		}
+
+		if (paintArrows && ret != null) {
+			ret = paintArrowOnAvatar(ret, directionI.intValue());
+		}
 
 		return ret;
 	}
