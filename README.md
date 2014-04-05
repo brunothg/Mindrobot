@@ -4,7 +4,7 @@ Mindrobot
 Folder:
 
 	./maps - store maps here
-	./maps/<mapname>Images/<Custom<FeldChar>|G<GoalNumber>|Avatar<Direction|Any>> - store custom images here
+	./maps/<mapname>Images/Custom<FeldChar>|G<GoalNumber>|Avatar<Direction|Any> - store custom images here
 	./lang - Translations
 
 Maps Format:
