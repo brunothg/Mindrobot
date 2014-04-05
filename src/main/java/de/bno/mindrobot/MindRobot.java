@@ -27,7 +27,13 @@ public class MindRobot {
 
 	public static Preferences userPrefs;
 
+	private static boolean logDetailed;
+
 	public static void main(String[] args) {
+
+		if (args != null) {
+			logDetailed = isDetailedLogEnabled(args);
+		}
 
 		setLookAndFeel();
 		try {
@@ -49,6 +55,19 @@ public class MindRobot {
 
 	}
 
+	private static boolean isDetailedLogEnabled(String[] args) {
+		boolean ret = false;
+
+		for (String s : args) {
+			if (s.equalsIgnoreCase("logfine")) {
+				ret = true;
+				break;
+			}
+		}
+
+		return ret;
+	}
+
 	private static void setupPreferences() {
 		userPrefs = Preferences.userNodeForPackage(MindRobot.class);
 	}
@@ -60,7 +79,12 @@ public class MindRobot {
 	private static void setupLogging() throws SecurityException, IOException {
 		handler = new FileHandler("log.txt");
 		handler.setEncoding("UTF-8");
-		handler.setLevel(Level.CONFIG);
+
+		if (logDetailed) {
+			handler.setLevel(Level.INFO);
+		} else {
+			handler.setLevel(Level.WARNING);
+		}
 	}
 
 	public static void setLookAndFeel() {

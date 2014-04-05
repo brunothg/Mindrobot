@@ -1,6 +1,10 @@
 Mindrobot
 =========
 
+Args:
+
+	logfine - set logging level to INFO
+
 Folder:
 
 	./maps - store maps here
