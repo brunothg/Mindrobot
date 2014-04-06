@@ -34,6 +34,8 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private boolean isFullscreen;
 
+	private JComponent actualView;
+
 	public RobotFrame(boolean fullscreen) {
 		super();
 		setTitle(String(TITLE));
@@ -67,8 +69,9 @@ public class RobotFrame extends JFrame implements WindowListener,
 	}
 
 	private void setView(JComponent comp) {
+		this.actualView = comp;
 		mainPanel.removeAll();
-		mainPanel.add(comp, BorderLayout.CENTER);
+		mainPanel.add(this.actualView, BorderLayout.CENTER);
 		revalidate();
 	}
 
