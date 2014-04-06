@@ -1,11 +1,8 @@
 package de.bno.mindrobot.feld;
 
-public class StartFeld extends Feld {
+import static de.bno.mindrobot.gui.Avatar.EAST;
 
-	public static final int EAST = 1;
-	public static final int SOUTH = 2;
-	public static final int WEST = 3;
-	public static final int NORTH = 4;
+public class StartFeld extends Feld {
 
 	int direction;
 
@@ -33,15 +30,6 @@ public class StartFeld extends Feld {
 		} else {
 			this.direction = EAST;
 		}
-	}
-
-	public static boolean isValidDirection(int direction) {
-		if (direction == EAST || direction == WEST || direction == SOUTH
-				|| direction == NORTH) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

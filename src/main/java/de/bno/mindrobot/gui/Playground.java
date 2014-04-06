@@ -10,10 +10,11 @@ import javax.swing.JComponent;
 import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
 import de.bno.mindrobot.data.importer.SkinImporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
-import de.bno.mindrobot.feld.StartFeld;
+import de.bno.mindrobot.feld.Feld;
+import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.ZielFeld;
 
-public class Playground extends JComponent {
+public class Playground extends JComponent implements RobotControl {
 
 	private static final long serialVersionUID = -5702637217520674503L;
 
@@ -34,9 +35,13 @@ public class Playground extends JComponent {
 	private Location posAvatar;
 	private int directionAvatar;
 
+	private int nextGoal;
+	private int lastGoal;
+
 	public Playground(SpielfeldData spielfeld, String map) {
 		super();
 		this.spielfeld = spielfeld;
+		this.lastGoal = spielfeld.getLastGoal();
 		this.map = map;
 		this.posAvatar = this.spielfeld.getStartPoint();
 		this.directionAvatar = this.spielfeld.getStartDirection();
@@ -175,14 +180,176 @@ public class Playground extends JComponent {
 				posAvatar.setY(l.getY());
 			}
 		}
+		update(getGraphics());
 	}
 
 	public void setAvatarsDirection(int direction) {
-		if (!StartFeld.isValidDirection(direction)) {
+		if (!Avatar.isValidDirection(direction)) {
 			return;
 		}
 
 		this.directionAvatar = direction;
+		update(getGraphics());
+	}
+
+	public int getAvatarsDirection() {
+		return this.directionAvatar;
+	}
+
+	@Override
+	public void turnLeft() {
+		int actualDirection = getAvatarsDirection();
+		setAvatarsDirection(Avatar.leftOf(actualDirection));
+	}
+
+	@Override
+	public void turnRight() {
+		int actualDirection = getAvatarsDirection();
+		setAvatarsDirection(Avatar.rightOf(actualDirection));
+	}
+
+	@Override
+	public boolean moveForwards() {
+		if (isBlockedFieldInFront()) {
+			finisehdGameFailed();
+			return false;
+		}
+
+		Location actualLocation = getAvatarPosition();
+		Location newLocation = Avatar.fieldInFront(actualLocation,
+				getAvatarsDirection());
+
+		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+			finisehdGameFailed();
+			return false;
+		}
+
+		moveAvatarToLocation(newLocation);
+
+		checkIfGoalIsFinished();
+
+		return true;
+	}
+
+	private void checkIfGoalIsFinished() {
+		int goal;
+		if ((goal = standOnGoalField()) == nextGoal) {
+			nextGoal = goal + 1;
+
+			if (nextGoal > lastGoal) {
+				finisehdGameSuccessful();
+			}
+		}
+	}
+
+	private void finisehdGameSuccessful() {
+		Signals.sendSignal(Signals.SIGNAL_FINISHED, Boolean.TRUE);
+	}
+
+	private void finisehdGameFailed() {
+		Signals.sendSignal(Signals.SIGNAL_FINISHED, Boolean.FALSE);
+	}
+
+	@Override
+	public boolean moveBackwards() {
+		if (isBlockedFieldBehind()) {
+			finisehdGameFailed();
+			return false;
+		}
+
+		Location actualLocation = getAvatarPosition();
+		Location newLocation = Avatar.fieldBehind(actualLocation,
+				getAvatarsDirection());
+
+		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+			finisehdGameFailed();
+			return false;
+		}
+
+		moveAvatarToLocation(newLocation);
+
+		checkIfGoalIsFinished();
+
+		return true;
+	}
+
+	public boolean isLocationInBoundsOfSpielfeld(Location location) {
+		return spielfeld.isLocationInBounds(location);
+	}
+
+	@Override
+	public boolean isBlockedFieldInFront() {
+		boolean ret = false;
+
+		Location actualLocation = getAvatarPosition();
+		Location newLocation = Avatar.fieldInFront(actualLocation,
+				getAvatarsDirection());
+
+		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+			return false;
+		}
+
+		Feld fieldInFront = spielfeld.getFeld(newLocation.getX(),
+				newLocation.getY());
+
+		if (fieldInFront.getTyp().equals(FeldTyp.BLOCKED)) {
+			ret = true;
+		}
+
+		return ret;
+	}
+
+	private boolean isBlockedFieldBehind() {
+		boolean ret = false;
+
+		Location actualLocation = getAvatarPosition();
+		Location newLocation = Avatar.fieldBehind(actualLocation,
+				getAvatarsDirection());
+
+		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+			return false;
+		}
+
+		Feld fieldInFront = spielfeld.getFeld(newLocation.getX(),
+				newLocation.getY());
+
+		if (fieldInFront.getTyp().equals(FeldTyp.BLOCKED)) {
+			ret = true;
+		}
+
+		return ret;
+	}
+
+	@Override
+	public boolean standOnConfusingField() {
+		boolean ret = false;
+
+		Location actualLocation = getAvatarPosition();
+
+		Feld field = spielfeld.getFeld(actualLocation.getX(),
+				actualLocation.getY());
+
+		if (field.getTyp().equals(FeldTyp.CONFUSE)) {
+			ret = true;
+		}
+
+		return ret;
+	}
+
+	@Override
+	public int standOnGoalField() {
+		int ret = -1;
+
+		Location actualLocation = getAvatarPosition();
+
+		Feld field = spielfeld.getFeld(actualLocation.getX(),
+				actualLocation.getY());
+
+		if (field instanceof ZielFeld) {
+			ret = ((ZielFeld) field).getNumber();
+		}
+
+		return ret;
 	}
 
 }

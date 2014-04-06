@@ -15,6 +15,7 @@ public class Signals {
 	public static final String SIGNAL_EXIT = "exit";
 	public static final String SIGNAL_START = "start";
 	public static final String SIGNAL_MENU = "mainmenu";
+	public static final String SIGNAL_FINISHED = "finished";
 
 	private static Vector<SignalListener> listener;
 

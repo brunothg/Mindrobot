@@ -3,6 +3,7 @@ package de.bno.mindrobot.data.spielfeld;
 import de.bno.mindrobot.feld.Feld;
 import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.StartFeld;
+import de.bno.mindrobot.feld.ZielFeld;
 import de.bno.mindrobot.gui.Location;
 
 public class SpielfeldData {
@@ -86,4 +87,32 @@ public class SpielfeldData {
 		return ret;
 	}
 
+	public boolean isLocationInBounds(Location loc) {
+
+		if (loc.getX() < 0 || loc.getY() < 0 || loc.getX() >= getWidth()
+				|| loc.getY() >= getHeight()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public int getLastGoal() {
+		int ret = -1;
+
+		loop: for (int y = 0; y < felder.length; y++) {
+			for (int x = 0; x < felder[y].length; x++) {
+				Feld tmp = felder[y][x];
+				if (tmp instanceof ZielFeld) {
+					int number = ((ZielFeld) tmp).getNumber();
+					if (number > ret) {
+						ret = number;
+						break loop;
+					}
+				}
+			}
+		}
+
+		return ret;
+	}
 }

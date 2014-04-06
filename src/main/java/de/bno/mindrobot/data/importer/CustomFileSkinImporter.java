@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 
 import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.feld.FeldTyp;
-import de.bno.mindrobot.feld.StartFeld;
+import de.bno.mindrobot.gui.Avatar;
 
 public class CustomFileSkinImporter implements SkinImporter {
 
@@ -208,7 +208,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 
 	private ImageIcon getAvatarIcon(int direction) {
 
-		if (!StartFeld.isValidDirection(direction)) {
+		if (!Avatar.isValidDirection(direction)) {
 			return null;
 		}
 
@@ -290,20 +290,20 @@ public class CustomFileSkinImporter implements SkinImporter {
 		int arrowWidth = Math.min(ret.getHeight(), ret.getHeight()) / 6;
 
 		g.setColor(new Color(255, 0, 0, 150));
-		if (direction == StartFeld.NORTH) {
+		if (direction == Avatar.NORTH) {
 			g.fillPolygon(new int[] { midX, midX - arrowWidth,
 					midX + arrowWidth },
 					new int[] { 0, arrowWidth, arrowWidth }, 3);
-		} else if (direction == StartFeld.SOUTH) {
+		} else if (direction == Avatar.SOUTH) {
 			g.fillPolygon(new int[] { midX, midX - arrowWidth,
 					midX + arrowWidth },
 					new int[] { ret.getHeight(), ret.getHeight() - arrowWidth,
 							ret.getHeight() - arrowWidth }, 3);
-		} else if (direction == StartFeld.EAST) {
+		} else if (direction == Avatar.EAST) {
 			g.fillPolygon(new int[] { ret.getWidth(),
 					ret.getWidth() - arrowWidth, ret.getWidth() - arrowWidth },
 					new int[] { midY, midY - arrowWidth, midY + arrowWidth }, 3);
-		} else if (direction == StartFeld.WEST) {
+		} else if (direction == Avatar.WEST) {
 			g.fillPolygon(new int[] { 0, arrowWidth, arrowWidth }, new int[] {
 					midY, midY - arrowWidth, midY + arrowWidth }, 3);
 		}
