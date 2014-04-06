@@ -1,8 +1,8 @@
 package de.bno.mindrobot.gui;
 
 import static de.bno.mindrobot.gui.Strings.EDIT;
-import static de.bno.mindrobot.gui.Strings.EXIT;
 import static de.bno.mindrobot.gui.Strings.EXIT_QUESTION;
+import static de.bno.mindrobot.gui.Strings.MENU;
 import static de.bno.mindrobot.gui.Strings.PLAY;
 import static de.bno.mindrobot.gui.Strings.STOP;
 import static de.bno.mindrobot.gui.Strings.String;
@@ -26,7 +26,7 @@ public class PlayController extends JComponent implements ActionListener {
 	private JButton btnPlay;
 	private JButton btnStop;
 	private JButton btnEdit;
-	private JButton btnExit;
+	private JButton btnMenu;
 
 	public PlayController() {
 		setOpaque(false);
@@ -45,14 +45,14 @@ public class PlayController extends JComponent implements ActionListener {
 		addPlayButton();
 		addStopButton();
 		addEditButton();
-		addExitButton();
+		addMenuButton();
 		add(openedPanel);
 	}
 
-	private void addExitButton() {
-		btnExit = new JButton(String(EXIT));
-		btnExit.addActionListener(this);
-		openedPanel.add(btnExit);
+	private void addMenuButton() {
+		btnMenu = new JButton(String(MENU));
+		btnMenu.addActionListener(this);
+		openedPanel.add(btnMenu);
 	}
 
 	private void addEditButton() {
@@ -90,8 +90,8 @@ public class PlayController extends JComponent implements ActionListener {
 			Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
 		} else if (arg0.getSource() == btnEdit) {
 			Signals.sendSignal(Signals.SIGNAL_EDIT_BTN);
-		} else if (arg0.getSource() == btnExit) {
-			exitAction();
+		} else if (arg0.getSource() == btnMenu) {
+			menuAction();
 		} else if (arg0.getSource() == btnOpen) {
 			btnOpen.setText((btnOpen.getText().equalsIgnoreCase(">")) ? "<"
 					: ">");
@@ -104,14 +104,13 @@ public class PlayController extends JComponent implements ActionListener {
 
 	}
 
-	private void exitAction() {
+	private void menuAction() {
 
-		int answer = JOptionPane.showConfirmDialog(btnExit,
-				String(EXIT_QUESTION), String(EXIT), JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE);
-
+		int answer = JOptionPane.showConfirmDialog(btnMenu,
+				String(EXIT_QUESTION), String(MENU),
+				JOptionPane.OK_CANCEL_OPTION);
 		if (answer == JOptionPane.OK_OPTION) {
-			Signals.sendSignal(Signals.SIGNAL_EXIT);
+			Signals.sendSignal(Signals.SIGNAL_MENU);
 		}
 	}
 }

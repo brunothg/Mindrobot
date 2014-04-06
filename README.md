@@ -40,7 +40,7 @@ Translations:
 	
 	Values and example:
 	
-		exit_question=Wollen Sie das Programm wirklich verlassen?
+		exit_question=Wollen Sie das Spiel wirklich verlassen?
 		dft=Standart
 		stop=Stop
 		tp_sel_lng=Weitere Sprachen müssen im Ordner '%s' abgelegt werden.
@@ -57,4 +57,5 @@ Translations:
 		one_instanz_only_message=Es läuft bereits eine Instanz des Programms.
 		start=Starten
 		one_instanz_only_title=Programm wurde bereits gestartet
+		menu=Menü
 		END

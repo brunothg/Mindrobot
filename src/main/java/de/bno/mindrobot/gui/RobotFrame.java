@@ -131,9 +131,18 @@ public class RobotFrame extends JFrame implements WindowListener,
 			return signalExit();
 		} else if (signal.equalsIgnoreCase(Signals.SIGNAL_START)) {
 			return signalStart(values);
+		} else if (signal.equalsIgnoreCase(Signals.SIGNAL_MENU)) {
+			return signalMenu();
 		}
 
 		return false;
+	}
+
+	private boolean signalMenu() {
+
+		setView(new MainMenu());
+
+		return true;
 	}
 
 	private boolean signalStart(Object[] values) {

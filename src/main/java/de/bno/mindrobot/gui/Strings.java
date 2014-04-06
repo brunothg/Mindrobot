@@ -37,6 +37,7 @@ public class Strings {
 	public static final String STOP = "stop";
 	public static final String EDIT = "edit";
 	public static final String EXIT_QUESTION = "exit_question";
+	public static final String MENU = "menu";
 
 	private static Map<String, String> values;
 
@@ -64,7 +65,8 @@ public class Strings {
 		values.put(STOP, "Stop");
 		values.put(PLAY, "Start");
 		values.put(EDIT, "Konsole");
-		values.put(EXIT_QUESTION, "Wollen Sie das Programm wirklich verlassen?");
+		values.put(EXIT_QUESTION, "Wollen Sie das Spiel wirklich verlassen?");
+		values.put(MENU, "Menü");
 	}
 
 	public static String String(String key) {
