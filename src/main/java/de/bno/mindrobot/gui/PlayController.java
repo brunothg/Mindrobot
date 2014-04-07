@@ -1,7 +1,6 @@
 package de.bno.mindrobot.gui;
 
 import static de.bno.mindrobot.gui.Strings.EDIT;
-import static de.bno.mindrobot.gui.Strings.EXIT_QUESTION;
 import static de.bno.mindrobot.gui.Strings.MENU;
 import static de.bno.mindrobot.gui.Strings.PLAY;
 import static de.bno.mindrobot.gui.Strings.STOP;
@@ -14,7 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
@@ -105,12 +103,6 @@ public class PlayController extends JComponent implements ActionListener {
 	}
 
 	private void menuAction() {
-
-		int answer = JOptionPane.showConfirmDialog(btnMenu,
-				String(EXIT_QUESTION), String(MENU),
-				JOptionPane.OK_CANCEL_OPTION);
-		if (answer == JOptionPane.OK_OPTION) {
-			Signals.sendSignal(Signals.SIGNAL_MENU);
-		}
+		Signals.sendSignal(Signals.SIGNAL_MENU);
 	}
 }
