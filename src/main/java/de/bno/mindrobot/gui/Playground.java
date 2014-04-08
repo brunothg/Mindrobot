@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
@@ -65,14 +66,27 @@ public class Playground extends JComponent implements RobotControl {
 		skinImporter = new CustomFileSkinImporter(this.map);
 	}
 
+	BufferedImage img;
+
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics g2) {
+
+		if (img == null || img.getWidth() != getWidth()
+				|| img.getHeight() != getHeight()) {
+			img = new BufferedImage(getWidth(), getHeight(),
+					BufferedImage.TYPE_INT_ARGB);
+		}
+
+		Graphics g = img.getGraphics();
 
 		paintFloor(g);
 
 		updateControllerSize();
 
 		paintChildren(g);
+
+		g2.drawImage(img, 0, 0, getWidth(), getHeight(), 0, 0, img.getWidth(),
+				img.getHeight(), null);
 	}
 
 	private void updateControllerSize() {
