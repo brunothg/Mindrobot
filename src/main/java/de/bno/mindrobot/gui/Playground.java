@@ -3,7 +3,11 @@ package de.bno.mindrobot.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
@@ -66,27 +70,34 @@ public class Playground extends JComponent implements RobotControl {
 		skinImporter = new CustomFileSkinImporter(this.map);
 	}
 
+	private final GraphicsConfiguration gfxConf = GraphicsEnvironment
+			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+			.getDefaultConfiguration();
 	BufferedImage img;
 
 	@Override
-	public void paint(Graphics g2) {
+	public void paint(Graphics g) {
 
 		if (img == null || img.getWidth() != getWidth()
 				|| img.getHeight() != getHeight()) {
-			img = new BufferedImage(getWidth(), getHeight(),
-					BufferedImage.TYPE_INT_ARGB);
+			img = gfxConf.createCompatibleImage(getWidth(), getHeight(),
+					Transparency.TRANSLUCENT);
 		}
 
-		Graphics g = img.getGraphics();
+		bigPaint(img.createGraphics(), img.getWidth(), img.getHeight());
+
+		g.drawImage(img, 0, 0, this);
+	}
+
+	private void bigPaint(Graphics2D g, int width, int height) {
+		g.setBackground(new Color(0, 0, 0, 0));
+		g.clearRect(0, 0, width, height);
 
 		paintFloor(g);
 
 		updateControllerSize();
 
 		paintChildren(g);
-
-		g2.drawImage(img, 0, 0, getWidth(), getHeight(), 0, 0, img.getWidth(),
-				img.getHeight(), null);
 	}
 
 	private void updateControllerSize() {
