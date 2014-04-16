@@ -188,9 +188,8 @@ public class Playground extends JComponent implements RobotControl,
 					if (speech != null && !speech.isEmpty()) {
 						g.setColor(new Color(255, 255, 255, 150));
 						FontMetrics fmt = g.getFontMetrics();
-						int xt = 150;
-						int yt = 100;
-						System.out.println(xt + " " + yt);
+						int xt = getPosForPainting(size, inset, offsetWidth, x);
+						int yt = getPosForPainting(size, inset, offsetHeight, y);
 						g.fill3DRect(xt, yt, fmt.stringWidth(speech) + 5,
 								fmt.getHeight() + 5, true);
 						g.setColor(Color.BLACK);
@@ -245,8 +244,8 @@ public class Playground extends JComponent implements RobotControl,
 				tile.getHeight(this), this);
 	}
 
-	private int getPosForPainting(int size, int inset, int offsetWidth, int xORy) {
-		return offsetWidth + xORy * size + ((xORy == 0) ? inset : 0);
+	private int getPosForPainting(int size, int inset, int offset, int xORy) {
+		return offset + xORy * size + ((xORy == 0) ? inset : 0);
 	}
 
 	private Image getTile(int x, int y) {
@@ -581,7 +580,7 @@ public class Playground extends JComponent implements RobotControl,
 
 			@Override
 			protected Void doInBackground() throws Exception {
-
+				waitAfterMovement();
 				konsole.runProgram(thisg());
 				return null;
 			}
