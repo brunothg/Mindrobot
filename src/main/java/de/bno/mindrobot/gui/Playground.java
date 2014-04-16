@@ -428,6 +428,7 @@ public class Playground extends JComponent implements RobotControl,
 			switchVisibleStateOfKonsole();
 			return true;
 		case Signals.SIGNAL_PLAY_BTN:
+			moveAvatarToLocation(spielfeld.getStartPoint());
 			playController.minimizeSwitch();
 			konsole.runProgram(this);
 			return true;
