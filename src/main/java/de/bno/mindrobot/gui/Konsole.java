@@ -170,7 +170,7 @@ public class Konsole extends JPanel implements KeyListener {
 	private void colorizeAction() {
 		clearTextHighlighting();
 		Pattern pattern = Pattern.compile(HIGHLIGHT_DEF_REGEX);
-		Matcher match = pattern.matcher(editor.getText());
+		Matcher match = pattern.matcher(editor.getText().replace("\n", ""));
 		while (match.find()) {
 			updateTextHighlighting(match.start(), match.end() - match.start());
 		}
