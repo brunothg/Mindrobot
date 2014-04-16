@@ -58,4 +58,10 @@ Translations:
 		start=Starten
 		one_instanz_only_title=Programm wurde bereits gestartet
 		menu=Menü
+		syntax_end=Ende
+		syntax_if=Wenn
+		syntax_then=Dann
+		syntax_else=Sonst
+		syntax_repeat=Wiederhole
+		syntax_while=Solange
 		END
