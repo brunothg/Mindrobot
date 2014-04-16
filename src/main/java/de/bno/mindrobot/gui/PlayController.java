@@ -6,6 +6,7 @@ import static de.bno.mindrobot.gui.Strings.PLAY;
 import static de.bno.mindrobot.gui.Strings.STOP;
 import static de.bno.mindrobot.gui.Strings.String;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +20,10 @@ import javax.swing.border.BevelBorder;
 public class PlayController extends JComponent implements ActionListener {
 
 	private static final long serialVersionUID = 6957828122433592878L;
+
+	private static final Color COLOR_AKTIV = Color.GREEN;
+	private static final Color COLOR_NOT_AKTIV = Color.RED;
+
 	private JButton btnOpen;
 	private JPanel openedPanel;
 	private JButton btnPlay;
@@ -56,6 +61,7 @@ public class PlayController extends JComponent implements ActionListener {
 	private void addEditButton() {
 		btnEdit = new JButton(String(EDIT));
 		btnEdit.addActionListener(this);
+		setKonsoleButtonAktiv(false);
 		openedPanel.add(btnEdit);
 	}
 
@@ -77,6 +83,14 @@ public class PlayController extends JComponent implements ActionListener {
 		btnOpen.addActionListener(this);
 		add(btnOpen);
 
+	}
+
+	public void setKonsoleButtonAktiv(boolean aktiv) {
+		if (aktiv) {
+			btnEdit.setBackground(COLOR_AKTIV);
+		} else {
+			btnEdit.setBackground(COLOR_NOT_AKTIV);
+		}
 	}
 
 	@Override

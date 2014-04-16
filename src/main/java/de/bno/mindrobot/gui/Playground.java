@@ -11,6 +11,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
 import de.bno.mindrobot.data.importer.SkinImporter;
@@ -19,7 +20,8 @@ import de.bno.mindrobot.feld.Feld;
 import de.bno.mindrobot.feld.FeldTyp;
 import de.bno.mindrobot.feld.ZielFeld;
 
-public class Playground extends JComponent implements RobotControl {
+public class Playground extends JComponent implements RobotControl,
+		SignalListener {
 
 	private static final long serialVersionUID = -5702637217520674503L;
 
@@ -36,6 +38,7 @@ public class Playground extends JComponent implements RobotControl {
 	private String map;
 
 	private PlayController playController;
+	private JPanel konsole;
 
 	private Location posAvatar;
 	private int directionAvatar;
@@ -56,7 +59,20 @@ public class Playground extends JComponent implements RobotControl {
 		loadImages();
 
 		createControl();
+		createKonsole();
 
+		Signals.addListener(this);
+	}
+
+	private void createKonsole() {
+		Konsole konsole = new Konsole();
+		konsole.setVisible(false);
+		konsole.setLocation(0, 0);
+		konsole.setSize(getWidth(), getHeight());
+		konsole.setTitleSize(playController.getHeight() + playController.getY());
+
+		this.konsole = konsole;
+		add(this.konsole);
 	}
 
 	private void createControl() {
@@ -76,7 +92,30 @@ public class Playground extends JComponent implements RobotControl {
 	BufferedImage img;
 
 	@Override
+	protected void paintChildren(Graphics g) {
+		updateControllerSize();
+		updateEditorSize();
+
+		super.paintChildren(g);
+	}
+
+	private void updateControllerSize() {
+		Dimension prefSize = playController.getPreferredSize();
+		Dimension size = new Dimension(Math.min(prefSize.width, getWidth()),
+				Math.min(prefSize.height, getHeight()));
+		playController.setSize(size);
+	}
+
+	private void updateEditorSize() {
+		konsole.setSize(getSize());
+	}
+
+	@Override
 	public void paintComponent(Graphics g) {
+
+		if (konsole.isVisible()) {
+			return;
+		}
 
 		if (img == null || img.getWidth() != getWidth()
 				|| img.getHeight() != getHeight()) {
@@ -94,17 +133,6 @@ public class Playground extends JComponent implements RobotControl {
 		g.clearRect(0, 0, width, height);
 
 		paintFloor(g);
-
-		updateControllerSize();
-
-		paintChildren(g);
-	}
-
-	private void updateControllerSize() {
-		Dimension prefSize = playController.getPreferredSize();
-		Dimension size = new Dimension(Math.min(prefSize.width, getWidth()),
-				Math.min(prefSize.height, getHeight()));
-		playController.setSize(size);
 	}
 
 	private void paintFloor(Graphics g) {
@@ -375,6 +403,23 @@ public class Playground extends JComponent implements RobotControl {
 		}
 
 		return ret;
+	}
+
+	@Override
+	public boolean Signal(String signal, Object... values) {
+
+		switch (signal) {
+		case Signals.SIGNAL_EDIT_BTN:
+			switchVisibleStateOfKonsole();
+			return true;
+		}
+
+		return false;
+	}
+
+	private void switchVisibleStateOfKonsole() {
+		konsole.setVisible(!konsole.isVisible());
+		playController.setKonsoleButtonAktiv(konsole.isVisible());
 	}
 
 }
