@@ -93,6 +93,10 @@ public class PlayController extends JComponent implements ActionListener {
 		}
 	}
 
+	public void minimizeSwitch() {
+		btnOpen.doClick();
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 

@@ -7,8 +7,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.logging.Logger;
 
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import de.bno.mindrobot.MindRobot;
 
@@ -22,6 +24,10 @@ public class Konsole extends JPanel {
 
 	private JPanel topPanel;
 
+	private JScrollPane sp;
+
+	private JEditorPane editor;
+
 	public Konsole() {
 		super();
 
@@ -29,7 +35,20 @@ public class Konsole extends JPanel {
 
 		createTopPanel();
 		createLabel();
+		createTextArea();
 
+	}
+
+	private void createTextArea() {
+		createScrollPane();
+
+		editor = new JEditorPane();
+		sp.setViewportView(editor);
+	}
+
+	private void createScrollPane() {
+		sp = new JScrollPane();
+		add(sp, BorderLayout.CENTER);
 	}
 
 	private void createTopPanel() {
@@ -46,6 +65,13 @@ public class Konsole extends JPanel {
 
 	public void setTitleSize(int size) {
 		title.setFont(new Font(title.getFont().getName(), Font.BOLD, size));
+	}
+
+	public void runProgram(RobotControl ctr) {
+		LOG.info("Start running program");
+
+		Signals.sendSignal(Signals.RUN_FINISHED);
+		LOG.info("Finished running program");
 	}
 
 }

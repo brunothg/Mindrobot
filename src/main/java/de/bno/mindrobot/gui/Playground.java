@@ -11,7 +11,6 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
 import de.bno.mindrobot.data.importer.SkinImporter;
@@ -38,7 +37,7 @@ public class Playground extends JComponent implements RobotControl,
 	private String map;
 
 	private PlayController playController;
-	private JPanel konsole;
+	private Konsole konsole;
 
 	private Location posAvatar;
 	private int directionAvatar;
@@ -411,6 +410,13 @@ public class Playground extends JComponent implements RobotControl,
 		switch (signal) {
 		case Signals.SIGNAL_EDIT_BTN:
 			switchVisibleStateOfKonsole();
+			return true;
+		case Signals.SIGNAL_PLAY_BTN:
+			playController.minimizeSwitch();
+			konsole.runProgram(this);
+			return true;
+		case Signals.RUN_FINISHED:
+			playController.minimizeSwitch();
 			return true;
 		}
 
