@@ -39,6 +39,13 @@ public class Strings {
 	public static final String EXIT_QUESTION = "exit_question";
 	public static final String MENU = "menu";
 
+	public static final String SYNTAX_ENDE = "syntax_end";
+	public static final String SYNTAX_WENN = "syntax_if";
+	public static final String SYNTAX_DANN = "syntax_then";
+	public static final String SYNTAX_SONST = "syntax_else";
+	public static final String SYNTAX_WIEDERHOLE = "syntax_repeat";
+	public static final String SYNTAX_SOLANGE = "syntax_while";
+
 	private static Map<String, String> values;
 
 	static {
@@ -67,6 +74,12 @@ public class Strings {
 		values.put(EDIT, "Konsole");
 		values.put(EXIT_QUESTION, "Wollen Sie das Spiel wirklich verlassen?");
 		values.put(MENU, "Menü");
+		values.put(SYNTAX_ENDE, "Ende");
+		values.put(SYNTAX_WENN, "Wenn");
+		values.put(SYNTAX_DANN, "Dann");
+		values.put(SYNTAX_SONST, "Sonst");
+		values.put(SYNTAX_WIEDERHOLE, "Wiederhole");
+		values.put(SYNTAX_SOLANGE, "Solange");
 	}
 
 	public static String String(String key) {
