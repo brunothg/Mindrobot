@@ -45,6 +45,8 @@ public class Playground extends JComponent implements RobotControl,
 	private int nextGoal;
 	private int lastGoal;
 
+	private boolean isConfused;
+
 	public Playground(SpielfeldData spielfeld, String map) {
 		super();
 
@@ -266,18 +268,44 @@ public class Playground extends JComponent implements RobotControl,
 
 	@Override
 	public void turnLeft() {
+		if (isConfused) {
+			turnRight_();
+			return;
+		}
+
+		turnLeft_();
+	}
+
+	private void turnLeft_() {
 		int actualDirection = getAvatarsDirection();
 		setAvatarsDirection(Avatar.leftOf(actualDirection));
 	}
 
 	@Override
 	public void turnRight() {
+		if (isConfused) {
+			turnLeft_();
+			return;
+		}
+
+		turnRight_();
+	}
+
+	private void turnRight_() {
 		int actualDirection = getAvatarsDirection();
 		setAvatarsDirection(Avatar.rightOf(actualDirection));
 	}
 
 	@Override
 	public boolean moveForwards() {
+		if (isConfused) {
+			return moveBackwards_();
+		}
+
+		return moveForwards_();
+	}
+
+	private boolean moveForwards_() {
 		if (isBlockedFieldInFront()) {
 			finishedGameFailed();
 			return false;
@@ -293,6 +321,10 @@ public class Playground extends JComponent implements RobotControl,
 		}
 
 		moveAvatarToLocation(newLocation);
+
+		if (standOnConfusingField()) {
+			isConfused = !isConfused;
+		}
 
 		checkIfGoalIsFinished();
 
@@ -320,6 +352,14 @@ public class Playground extends JComponent implements RobotControl,
 
 	@Override
 	public boolean moveBackwards() {
+		if (isConfused) {
+			return moveForwards_();
+		}
+
+		return moveBackwards_();
+	}
+
+	private boolean moveBackwards_() {
 		if (isBlockedFieldBehind()) {
 			finishedGameFailed();
 			return false;
@@ -335,6 +375,10 @@ public class Playground extends JComponent implements RobotControl,
 		}
 
 		moveAvatarToLocation(newLocation);
+
+		if (standOnConfusingField()) {
+			isConfused = !isConfused;
+		}
 
 		checkIfGoalIsFinished();
 
@@ -428,9 +472,7 @@ public class Playground extends JComponent implements RobotControl,
 			switchVisibleStateOfKonsole();
 			return true;
 		case Signals.SIGNAL_PLAY_BTN:
-			moveAvatarToLocation(spielfeld.getStartPoint());
-			playController.minimizeSwitch();
-			konsole.runProgram(this);
+			playSignal();
 			return true;
 		case Signals.RUN_FINISHED:
 			playController.minimizeSwitch();
@@ -441,6 +483,13 @@ public class Playground extends JComponent implements RobotControl,
 		}
 
 		return false;
+	}
+
+	private void playSignal() {
+		isConfused = false;
+		moveAvatarToLocation(spielfeld.getStartPoint());
+		playController.minimizeSwitch();
+		konsole.runProgram(this);
 	}
 
 	private void switchVisibleStateOfKonsole() {

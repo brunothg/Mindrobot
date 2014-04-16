@@ -44,6 +44,8 @@ public class Konsole extends JPanel implements KeyListener {
 
 	private JTextPane editor;
 
+	private Parser parser;
+
 	private boolean stopped;
 
 	private static final String[] HIGHLIGHT_DEF = new String[] {
@@ -74,6 +76,11 @@ public class Konsole extends JPanel implements KeyListener {
 		createLabel();
 		createTextArea();
 
+		createParser();
+	}
+
+	private void createParser() {
+		parser = new MindTalk();
 	}
 
 	private void createTextArea() {
@@ -129,12 +136,20 @@ public class Konsole extends JPanel implements KeyListener {
 		LOG.info("Start running program");
 		stopped = false;
 
+		if (parser != null) {
+			parser.run(ctr);
+		}
+
+		stopped = true;
 		Signals.sendSignal(Signals.RUN_FINISHED);
 		LOG.info("Finished running program");
 	}
 
 	public void stopProgram() {
-		stopped = true;
+		if (!stopped) {
+			parser.stop();
+			stopped = true;
+		}
 	}
 
 	@Override
