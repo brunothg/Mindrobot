@@ -164,47 +164,7 @@ public class Playground extends JComponent implements RobotControl,
 		}
 	}
 
-	// private void paintAvatar(Graphics g) {
-	// int size = (int) Math.floor(Math.min(
-	// getWidth() / ((double) spielfeld.getWidth()), getHeight()
-	// / ((double) spielfeld.getHeight())));
-	//
-	// int inset = Pixel.pointsToPixel(3);
-	//
-	// int fullWidth = size * spielfeld.getWidth();
-	// int fullHeight = size * spielfeld.getHeight();
-	//
-	// int offsetWidth = (getWidth() - fullWidth) / 2;
-	// int offsetHeight = (getHeight() - fullHeight) / 2;
-	//
-	// Location actLocation;
-	// for (int y = 0; y < spielfeld.getHeight(); y++) {
-	// for (int x = 0; x < spielfeld.getWidth(); x++) {
-	// actLocation = new Location(x, y);
-	//
-	// if (actLocation.equals(posAvatar)) {
-	// drawTile(g, size, inset, offsetWidth, offsetHeight,
-	// getAvatar(directionAvatar), y, x);
-	// if (speech != null && !speech.isEmpty()) {
-	// g.setColor(new Color(255, 255, 255, 150));
-	// FontMetrics fmt = g.getFontMetrics();
-	// int xt = 150;
-	// int yt = 100;
-	// System.out.println(xt + " " + yt);
-	// g.fill3DRect(xt, yt, fmt.stringWidth(speech) + 5,
-	// fmt.getHeight() + 5, true);
-	// g.setColor(Color.BLACK);
-	// g.drawString(speech, xt + 2, yt + fmt.getHeight() + 2);
-	// }
-	// }
-	//
-	// }
-	// }
-	//
-	// }
-
-	private void paintFloor(Graphics g) {
-
+	private void paintAvatar(Graphics g) {
 		int size = (int) Math.floor(Math.min(
 				getWidth() / ((double) spielfeld.getWidth()), getHeight()
 						/ ((double) spielfeld.getHeight())));
@@ -217,17 +177,10 @@ public class Playground extends JComponent implements RobotControl,
 		int offsetWidth = (getWidth() - fullWidth) / 2;
 		int offsetHeight = (getHeight() - fullHeight) / 2;
 
-		Image tile;
 		Location actLocation;
 		for (int y = 0; y < spielfeld.getHeight(); y++) {
 			for (int x = 0; x < spielfeld.getWidth(); x++) {
 				actLocation = new Location(x, y);
-				tile = getTile(x, y);
-				g.setColor(Color.BLACK);
-				g.fillRect(offsetWidth + x * size, offsetHeight + y * size,
-						size, size);
-
-				drawTile(g, size, inset, offsetWidth, offsetHeight, tile, y, x);
 
 				if (actLocation.equals(posAvatar)) {
 					drawTile(g, size, inset, offsetWidth, offsetHeight,
@@ -244,6 +197,35 @@ public class Playground extends JComponent implements RobotControl,
 						g.drawString(speech, xt + 2, yt + fmt.getHeight() + 2);
 					}
 				}
+
+			}
+		}
+
+	}
+
+	private void paintFloor(Graphics g) {
+
+		int size = (int) Math.floor(Math.min(
+				getWidth() / ((double) spielfeld.getWidth()), getHeight()
+						/ ((double) spielfeld.getHeight())));
+
+		int inset = Pixel.pointsToPixel(3);
+
+		int fullWidth = size * spielfeld.getWidth();
+		int fullHeight = size * spielfeld.getHeight();
+
+		int offsetWidth = (getWidth() - fullWidth) / 2;
+		int offsetHeight = (getHeight() - fullHeight) / 2;
+
+		Image tile;
+		for (int y = 0; y < spielfeld.getHeight(); y++) {
+			for (int x = 0; x < spielfeld.getWidth(); x++) {
+				tile = getTile(x, y);
+				g.setColor(Color.BLACK);
+				g.fillRect(offsetWidth + x * size, offsetHeight + y * size,
+						size, size);
+
+				drawTile(g, size, inset, offsetWidth, offsetHeight, tile, y, x);
 
 			}
 		}
