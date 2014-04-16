@@ -76,7 +76,7 @@ public class Playground extends JComponent implements RobotControl {
 	BufferedImage img;
 
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 
 		if (img == null || img.getWidth() != getWidth()
 				|| img.getHeight() != getHeight()) {
