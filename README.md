@@ -64,4 +64,8 @@ Translations:
 		syntax_else=Sonst
 		syntax_repeat=Wiederhole
 		syntax_while=Solange
+		robot_wall_speech=Aua! Dort kann ich nicht lang!
+		robot_out_of_map_speech=Hey! Hier geblieben.
+		robot_goal_x_speech=Yeah! Das %d. Ziel erreicht.
+		robot_goal_last_speech=Puh! Geschafft.
 		END
