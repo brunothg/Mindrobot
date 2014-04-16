@@ -226,6 +226,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 			ret = paintArrowOnAvatar(ret, direction);
 			avatarImages.put(directionI, ret);
 		}
+		avatarImages.put(directionI, ret);
 
 		return ret;
 	}

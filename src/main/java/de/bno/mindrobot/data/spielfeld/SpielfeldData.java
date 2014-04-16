@@ -88,7 +88,6 @@ public class SpielfeldData {
 	}
 
 	public boolean isLocationInBounds(Location loc) {
-
 		if (loc.getX() < 0 || loc.getY() < 0 || loc.getX() >= getWidth()
 				|| loc.getY() >= getHeight()) {
 			return false;
@@ -100,14 +99,13 @@ public class SpielfeldData {
 	public int getLastGoal() {
 		int ret = -1;
 
-		loop: for (int y = 0; y < felder.length; y++) {
+		for (int y = 0; y < felder.length; y++) {
 			for (int x = 0; x < felder[y].length; x++) {
 				Feld tmp = felder[y][x];
 				if (tmp instanceof ZielFeld) {
 					int number = ((ZielFeld) tmp).getNumber();
 					if (number > ret) {
 						ret = number;
-						break loop;
 					}
 				}
 			}

@@ -38,6 +38,10 @@ public class Strings {
 	public static final String EDIT = "edit";
 	public static final String EXIT_QUESTION = "exit_question";
 	public static final String MENU = "menu";
+	public static final String ROBOT_WALL = "robot_wall_speech";
+	public static final String ROBOT_OUT_OF_MAP = "robot_out_of_map_speech";
+	public static final String ROBOT_ZIEL_X = "robot_goal_x_speech";
+	public static final String ROBOT_ZIEL_SUC = "robot_goal_last_speech";
 
 	public static final String SYNTAX_ENDE = "syntax_end";
 	public static final String SYNTAX_WENN = "syntax_if";
@@ -80,6 +84,10 @@ public class Strings {
 		values.put(SYNTAX_SONST, "Sonst");
 		values.put(SYNTAX_WIEDERHOLE, "Wiederhole");
 		values.put(SYNTAX_SOLANGE, "Solange");
+		values.put(ROBOT_WALL, "Aua! Dort kann ich nicht lang!");
+		values.put(ROBOT_ZIEL_X, "Yeah! Das %d. Ziel erreicht.");
+		values.put(ROBOT_OUT_OF_MAP, "Hey! Hier geblieben.");
+		values.put(ROBOT_ZIEL_SUC, "Puh! Geschafft.");
 	}
 
 	public static String String(String key) {

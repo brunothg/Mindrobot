@@ -18,17 +18,12 @@ public class Background extends JPanel {
 		setOpaque(false);
 	}
 
-	private void superPaint(Graphics g) {
-		super.paint(g);
-	}
-
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 
 		g.drawImage(bg, 0, 0, getWidth(), getHeight(), 0, 0, bg.getWidth(this),
 				bg.getHeight(this), this);
 
-		superPaint(g);
 	}
 
 	private ImageIcon loadIcon(String s) {

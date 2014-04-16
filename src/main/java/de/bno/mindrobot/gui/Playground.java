@@ -1,7 +1,10 @@
 package de.bno.mindrobot.gui;
 
+import static de.bno.mindrobot.gui.Strings.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -9,9 +12,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
+import javax.swing.SwingWorker;
 
+import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.data.importer.CustomFileSkinImporter;
 import de.bno.mindrobot.data.importer.SkinImporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
@@ -23,12 +29,15 @@ public class Playground extends JComponent implements RobotControl,
 		SignalListener {
 
 	private static final long serialVersionUID = -5702637217520674503L;
+	private static final Logger LOG = MindRobot.getLogger(Playground.class);
 
 	private static final Dimension MINIMAL_FELD_SIZE = new Dimension(
 			Pixel.pointsToPixel(50), Pixel.pointsToPixel(50));
 
 	private static final Dimension NORMAL_FELD_SIZE = new Dimension(
 			Pixel.pointsToPixel(100), Pixel.pointsToPixel(100));
+
+	private static final int WAIT = 1000;
 
 	private SpielfeldData spielfeld;
 
@@ -44,6 +53,8 @@ public class Playground extends JComponent implements RobotControl,
 
 	private int nextGoal;
 	private int lastGoal;
+
+	private String speech;
 
 	private boolean isConfused;
 
@@ -145,12 +156,52 @@ public class Playground extends JComponent implements RobotControl,
 
 		if (spielfeld != null) {
 			paintFloor(g);
+			paintAvatar(g);
 		} else {
 			g.setColor(Color.RED);
 			g.drawLine(0, 0, width, height);
 			g.drawLine(width, 0, 0, height);
 		}
 	}
+
+	// private void paintAvatar(Graphics g) {
+	// int size = (int) Math.floor(Math.min(
+	// getWidth() / ((double) spielfeld.getWidth()), getHeight()
+	// / ((double) spielfeld.getHeight())));
+	//
+	// int inset = Pixel.pointsToPixel(3);
+	//
+	// int fullWidth = size * spielfeld.getWidth();
+	// int fullHeight = size * spielfeld.getHeight();
+	//
+	// int offsetWidth = (getWidth() - fullWidth) / 2;
+	// int offsetHeight = (getHeight() - fullHeight) / 2;
+	//
+	// Location actLocation;
+	// for (int y = 0; y < spielfeld.getHeight(); y++) {
+	// for (int x = 0; x < spielfeld.getWidth(); x++) {
+	// actLocation = new Location(x, y);
+	//
+	// if (actLocation.equals(posAvatar)) {
+	// drawTile(g, size, inset, offsetWidth, offsetHeight,
+	// getAvatar(directionAvatar), y, x);
+	// if (speech != null && !speech.isEmpty()) {
+	// g.setColor(new Color(255, 255, 255, 150));
+	// FontMetrics fmt = g.getFontMetrics();
+	// int xt = 150;
+	// int yt = 100;
+	// System.out.println(xt + " " + yt);
+	// g.fill3DRect(xt, yt, fmt.stringWidth(speech) + 5,
+	// fmt.getHeight() + 5, true);
+	// g.setColor(Color.BLACK);
+	// g.drawString(speech, xt + 2, yt + fmt.getHeight() + 2);
+	// }
+	// }
+	//
+	// }
+	// }
+	//
+	// }
 
 	private void paintFloor(Graphics g) {
 
@@ -181,6 +232,17 @@ public class Playground extends JComponent implements RobotControl,
 				if (actLocation.equals(posAvatar)) {
 					drawTile(g, size, inset, offsetWidth, offsetHeight,
 							getAvatar(directionAvatar), y, x);
+					if (speech != null && !speech.isEmpty()) {
+						g.setColor(new Color(255, 255, 255, 150));
+						FontMetrics fmt = g.getFontMetrics();
+						int xt = 150;
+						int yt = 100;
+						System.out.println(xt + " " + yt);
+						g.fill3DRect(xt, yt, fmt.stringWidth(speech) + 5,
+								fmt.getHeight() + 5, true);
+						g.setColor(Color.BLACK);
+						g.drawString(speech, xt + 2, yt + fmt.getHeight() + 2);
+					}
 				}
 
 			}
@@ -194,11 +256,15 @@ public class Playground extends JComponent implements RobotControl,
 
 	private void drawTile(Graphics g, int size, int inset, int offsetWidth,
 			int offsetHeight, Image tile, int y, int x) {
-		g.drawImage(tile, offsetWidth + x * size + ((x == 0) ? inset : 0),
-				offsetHeight + y * size + ((y == 0) ? inset : 0), offsetWidth
+		g.drawImage(tile, getPosForPainting(size, inset, offsetWidth, x),
+				getPosForPainting(size, inset, offsetHeight, y), offsetWidth
 						+ x * size + size - inset, offsetHeight + y * size
 						+ size - inset, 0, 0, tile.getWidth(this),
 				tile.getHeight(this), this);
+	}
+
+	private int getPosForPainting(int size, int inset, int offsetWidth, int xORy) {
+		return offsetWidth + xORy * size + ((xORy == 0) ? inset : 0);
 	}
 
 	private Image getTile(int x, int y) {
@@ -250,7 +316,7 @@ public class Playground extends JComponent implements RobotControl,
 				posAvatar.setY(l.getY());
 			}
 		}
-		update(getGraphics());
+		repaint();
 	}
 
 	public void setAvatarsDirection(int direction) {
@@ -259,11 +325,25 @@ public class Playground extends JComponent implements RobotControl,
 		}
 
 		this.directionAvatar = direction;
-		update(getGraphics());
+		repaint();
 	}
 
 	public int getAvatarsDirection() {
 		return this.directionAvatar;
+	}
+
+	private void waitAfterMovement() {
+		try {
+			Thread.sleep(WAIT);
+		} catch (final InterruptedException e) {
+		} finally {
+			speech = null;
+		}
+	}
+
+	private void say(String s) {
+		LOG.info("Sprich: '" + s + "'");
+		speech = s;
 	}
 
 	@Override
@@ -279,6 +359,8 @@ public class Playground extends JComponent implements RobotControl,
 	private void turnLeft_() {
 		int actualDirection = getAvatarsDirection();
 		setAvatarsDirection(Avatar.leftOf(actualDirection));
+
+		waitAfterMovement();
 	}
 
 	@Override
@@ -294,6 +376,8 @@ public class Playground extends JComponent implements RobotControl,
 	private void turnRight_() {
 		int actualDirection = getAvatarsDirection();
 		setAvatarsDirection(Avatar.rightOf(actualDirection));
+
+		waitAfterMovement();
 	}
 
 	@Override
@@ -307,6 +391,7 @@ public class Playground extends JComponent implements RobotControl,
 
 	private boolean moveForwards_() {
 		if (isBlockedFieldInFront()) {
+			say(String(ROBOT_WALL));
 			finishedGameFailed();
 			return false;
 		}
@@ -316,6 +401,7 @@ public class Playground extends JComponent implements RobotControl,
 				getAvatarsDirection());
 
 		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+			say(String(ROBOT_OUT_OF_MAP));
 			finishedGameFailed();
 			return false;
 		}
@@ -326,27 +412,44 @@ public class Playground extends JComponent implements RobotControl,
 			isConfused = !isConfused;
 		}
 
-		checkIfGoalIsFinished();
+		int answer = checkIfGoalIsFinished();
+
+		if (answer > 0) {
+			say(String.format(String(ROBOT_ZIEL_X), answer));
+		}
+
+		if (answer == 0) {
+			say(String(ROBOT_ZIEL_SUC));
+			finishdGameSuccessful();
+		}
+
+		waitAfterMovement();
 
 		return true;
 	}
 
-	private void checkIfGoalIsFinished() {
+	private int checkIfGoalIsFinished() {
 		int goal;
 		if ((goal = standOnGoalField()) == nextGoal) {
 			nextGoal = goal + 1;
 
 			if (nextGoal > lastGoal) {
-				finisehdGameSuccessful();
+				return 0;
+			} else {
+				return nextGoal - 1;
 			}
 		}
+
+		return -1;
 	}
 
-	private void finisehdGameSuccessful() {
+	private void finishdGameSuccessful() {
+		Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
 		Signals.sendSignal(Signals.SIGNAL_FINISHED, Boolean.TRUE);
 	}
 
 	private void finishedGameFailed() {
+		Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
 		Signals.sendSignal(Signals.SIGNAL_FINISHED, Boolean.FALSE);
 	}
 
@@ -381,6 +484,8 @@ public class Playground extends JComponent implements RobotControl,
 		}
 
 		checkIfGoalIsFinished();
+
+		waitAfterMovement();
 
 		return true;
 	}
@@ -474,9 +579,6 @@ public class Playground extends JComponent implements RobotControl,
 		case Signals.SIGNAL_PLAY_BTN:
 			playSignal();
 			return true;
-		case Signals.RUN_FINISHED:
-			playController.minimizeSwitch();
-			return true;
 		case Signals.SIGNAL_STOP_BTN:
 			konsole.stopProgram();
 			return true;
@@ -486,10 +588,23 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	private void playSignal() {
-		isConfused = false;
+		this.isConfused = false;
+		this.nextGoal = 1;
+		this.speech = null;
+		this.directionAvatar = this.spielfeld.getStartDirection();
 		moveAvatarToLocation(spielfeld.getStartPoint());
 		playController.minimizeSwitch();
-		konsole.runProgram(this);
+
+		new SwingWorker<Void, Object>() {
+
+			@Override
+			protected Void doInBackground() throws Exception {
+
+				konsole.runProgram(thisg());
+				return null;
+			}
+
+		}.execute();
 	}
 
 	private void switchVisibleStateOfKonsole() {
@@ -497,4 +612,7 @@ public class Playground extends JComponent implements RobotControl,
 		playController.setKonsoleButtonAktiv(konsole.isVisible());
 	}
 
+	private Playground thisg() {
+		return this;
+	}
 }
