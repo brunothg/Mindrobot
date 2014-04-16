@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -87,6 +88,7 @@ public class Konsole extends JPanel implements KeyListener {
 		createScrollPane();
 
 		editor = new JTextPane();
+		editor.setContentType("text/plain");
 		editor.addKeyListener(this);
 		sp.setViewportView(editor);
 	}
@@ -170,9 +172,16 @@ public class Konsole extends JPanel implements KeyListener {
 	private void colorizeAction() {
 		clearTextHighlighting();
 		Pattern pattern = Pattern.compile(HIGHLIGHT_DEF_REGEX);
-		Matcher match = pattern.matcher(editor.getText().replace("\n", ""));
-		while (match.find()) {
-			updateTextHighlighting(match.start(), match.end() - match.start());
+		Matcher match;
+		try {
+			match = pattern.matcher(editor.getDocument().getText(0,
+					editor.getDocument().getLength()));
+			while (match.find()) {
+				updateTextHighlighting(match.start(),
+						match.end() - match.start());
+			}
+		} catch (BadLocationException e) {
+			LOG.warning("Fehler beim SyntaxHighlightig " + e.getMessage());
 		}
 	}
 
