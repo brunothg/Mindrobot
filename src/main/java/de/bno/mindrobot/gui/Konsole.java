@@ -1,16 +1,17 @@
 package de.bno.mindrobot.gui;
 
-import static de.bno.mindrobot.gui.Strings.*;
+import static de.bno.mindrobot.gui.Strings.EDIT;
+import static de.bno.mindrobot.gui.Strings.String;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.logging.Logger;
 
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 import de.bno.mindrobot.MindRobot;
 
@@ -26,7 +27,9 @@ public class Konsole extends JPanel {
 
 	private JScrollPane sp;
 
-	private JEditorPane editor;
+	private JTextPane editor;
+
+	private boolean stopped;
 
 	public Konsole() {
 		super();
@@ -42,7 +45,7 @@ public class Konsole extends JPanel {
 	private void createTextArea() {
 		createScrollPane();
 
-		editor = new JEditorPane();
+		editor = new JTextPane();
 		sp.setViewportView(editor);
 	}
 
@@ -69,9 +72,14 @@ public class Konsole extends JPanel {
 
 	public void runProgram(RobotControl ctr) {
 		LOG.info("Start running program");
+		stopped = false;
 
 		Signals.sendSignal(Signals.RUN_FINISHED);
 		LOG.info("Finished running program");
+	}
+
+	public void stopProgram() {
+		stopped = true;
 	}
 
 }

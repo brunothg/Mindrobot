@@ -263,7 +263,7 @@ public class Playground extends JComponent implements RobotControl,
 	@Override
 	public boolean moveForwards() {
 		if (isBlockedFieldInFront()) {
-			finisehdGameFailed();
+			finishedGameFailed();
 			return false;
 		}
 
@@ -272,7 +272,7 @@ public class Playground extends JComponent implements RobotControl,
 				getAvatarsDirection());
 
 		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
-			finisehdGameFailed();
+			finishedGameFailed();
 			return false;
 		}
 
@@ -298,14 +298,14 @@ public class Playground extends JComponent implements RobotControl,
 		Signals.sendSignal(Signals.SIGNAL_FINISHED, Boolean.TRUE);
 	}
 
-	private void finisehdGameFailed() {
+	private void finishedGameFailed() {
 		Signals.sendSignal(Signals.SIGNAL_FINISHED, Boolean.FALSE);
 	}
 
 	@Override
 	public boolean moveBackwards() {
 		if (isBlockedFieldBehind()) {
-			finisehdGameFailed();
+			finishedGameFailed();
 			return false;
 		}
 
@@ -314,7 +314,7 @@ public class Playground extends JComponent implements RobotControl,
 				getAvatarsDirection());
 
 		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
-			finisehdGameFailed();
+			finishedGameFailed();
 			return false;
 		}
 
@@ -417,6 +417,9 @@ public class Playground extends JComponent implements RobotControl,
 			return true;
 		case Signals.RUN_FINISHED:
 			playController.minimizeSwitch();
+			return true;
+		case Signals.SIGNAL_STOP_BTN:
+			konsole.stopProgram();
 			return true;
 		}
 
