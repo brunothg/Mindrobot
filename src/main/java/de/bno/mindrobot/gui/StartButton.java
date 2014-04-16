@@ -5,12 +5,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
-public class StartButton extends JButton implements MouseListener {
+public class StartButton extends JButton implements MouseListener,
+		ActionListener {
 
 	private static final long serialVersionUID = -5082126803481181344L;
 	private boolean isMouseDown;
@@ -21,6 +24,7 @@ public class StartButton extends JButton implements MouseListener {
 		setOpaque(false);
 		isMouseDown = false;
 
+		addActionListener(this);
 		addMouseListener(this);
 	}
 
@@ -31,7 +35,7 @@ public class StartButton extends JButton implements MouseListener {
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 
 		if (isVisible()) {
 			g.setColor(Color.BLACK);
@@ -80,8 +84,7 @@ public class StartButton extends JButton implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+		isMouseDown = false;
 	}
 
 	@Override
@@ -106,5 +109,11 @@ public class StartButton extends JButton implements MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 		isMouseDown = false;
 		invalidate();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		isMouseDown = false;
+		isMouseIn = false;
 	}
 }

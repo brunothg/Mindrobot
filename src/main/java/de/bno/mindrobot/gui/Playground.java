@@ -47,20 +47,30 @@ public class Playground extends JComponent implements RobotControl,
 
 	public Playground(SpielfeldData spielfeld, String map) {
 		super();
-		this.spielfeld = spielfeld;
-		this.lastGoal = spielfeld.getLastGoal();
-		this.map = map;
-		this.posAvatar = this.spielfeld.getStartPoint();
-		this.directionAvatar = this.spielfeld.getStartDirection();
+
+		setSpielfeld(spielfeld, map);
 
 		setLayout(null);
-
-		loadImages();
 
 		createControl();
 		createKonsole();
 
 		Signals.addListener(this);
+	}
+
+	public void setSpielfeld(SpielfeldData spielfeld, String map) {
+		this.spielfeld = spielfeld;
+		this.map = map;
+
+		if (spielfeld != null) {
+			this.lastGoal = spielfeld.getLastGoal();
+			this.posAvatar = this.spielfeld.getStartPoint();
+			this.directionAvatar = this.spielfeld.getStartDirection();
+		}
+
+		if (map != null) {
+			loadImages();
+		}
 	}
 
 	private void createKonsole() {
@@ -131,7 +141,13 @@ public class Playground extends JComponent implements RobotControl,
 		g.setBackground(new Color(0, 0, 0, 0));
 		g.clearRect(0, 0, width, height);
 
-		paintFloor(g);
+		if (spielfeld != null) {
+			paintFloor(g);
+		} else {
+			g.setColor(Color.RED);
+			g.drawLine(0, 0, width, height);
+			g.drawLine(width, 0, 0, height);
+		}
 	}
 
 	private void paintFloor(Graphics g) {

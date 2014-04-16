@@ -36,6 +36,9 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private JComponent actualView;
 
+	private Playground playgroundView;
+	private MainMenu menuView;
+
 	public RobotFrame(boolean fullscreen) {
 		super();
 		setTitle(String(TITLE));
@@ -56,9 +59,15 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 		addMainPanel();
 
-		setView(new MainMenu());
+		createViews();
 
+		setView(menuView);
 		Signals.addListener(this);
+	}
+
+	private void createViews() {
+		menuView = new MainMenu();
+		playgroundView = new Playground(null, null);
 	}
 
 	private void addMainPanel() {
@@ -72,6 +81,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 		this.actualView = comp;
 		mainPanel.removeAll();
 		mainPanel.add(this.actualView, BorderLayout.CENTER);
+		update(getGraphics());
 		revalidate();
 	}
 
@@ -143,7 +153,7 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private boolean signalMenu() {
 
-		setView(new MainMenu());
+		setView(menuView);
 
 		return true;
 	}
@@ -157,8 +167,8 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 			try {
 				SpielfeldData spielfeld = spielfeldImporter.importSpielfeld();
-				setView(new Playground(spielfeld, values[0].toString()));
-				revalidate();
+				playgroundView.setSpielfeld(spielfeld, mapPath);
+				setView(playgroundView);
 			} catch (IOException e) {
 				LOG.warning("Fehler beim Laden der Map: " + e.getMessage());
 			}
