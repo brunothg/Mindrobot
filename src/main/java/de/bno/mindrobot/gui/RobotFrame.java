@@ -160,9 +160,9 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private boolean signalStart(Object[] values) {
 		if (values.length > 0) {
-			String mapPath = "./maps/" + values[0].toString();
+			String mapPath = values[0].toString();
 			SpielfeldImporter spielfeldImporter = new FileSpielfeldImporter(
-					Paths.get(mapPath));
+					Paths.get(MindRobot.MAP_SEARCH_STRING, mapPath));
 			LOG.info("Load Map Data from: " + mapPath);
 
 			try {

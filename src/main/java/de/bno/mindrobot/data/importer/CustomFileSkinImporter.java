@@ -212,33 +212,32 @@ public class CustomFileSkinImporter implements SkinImporter {
 			return null;
 		}
 
-		Integer directionI = new Integer(direction);
-
-		ImageIcon ret = avatarImages.get(directionI);
+		ImageIcon ret = avatarImages.get(direction);
 
 		if (ret == null) {
-			ret = reloadCustomAvatar(directionI);
-			avatarImages.put(directionI, ret);
+			ret = reloadCustomAvatar(direction);
+			avatarImages.put(direction, ret);
 		}
 
 		if (ret == null) {
 			ret = loadIcon("Avatar.png");
 			ret = paintArrowOnAvatar(ret, direction);
-			avatarImages.put(directionI, ret);
+			avatarImages.put(direction, ret);
 		}
-		avatarImages.put(directionI, ret);
 
 		return ret;
 	}
 
-	private ImageIcon reloadCustomAvatar(Integer directionI) {
-		LOG.info("Lade AvatarIcon " + directionI.intValue());
+	private ImageIcon reloadCustomAvatar(int direction) {
+		LOG.info("Lade AvatarIcon " + direction);
 		ImageIcon ret = null;
 
 		Path dir = Paths.get(MindRobot.MAP_SEARCH_STRING, map
 				+ MindRobot.IMAGE_SEARCH_STRING);
 
 		if (!Files.exists(dir) || !Files.isDirectory(dir)) {
+			System.out.println("1-------------- " + dir.toString() + " - "
+					+ map);
 			return null;
 		}
 
@@ -248,12 +247,11 @@ public class CustomFileSkinImporter implements SkinImporter {
 			DirectoryStream<Path> dirStream = Files.newDirectoryStream(dir);
 			for (Path file : dirStream) {
 				boolean isAvatarWithDirecion = file.getFileName().toString()
-						.indexOf("Avatar" + directionI.toString()) != -1;
+						.indexOf("Avatar" + direction) != -1;
 				boolean isAvatarForAnyDirection = file.getFileName().toString()
 						.indexOf("AvatarAny") != -1;
 				if (Files.isReadable(file) && Files.isRegularFile(file)
 						&& (isAvatarWithDirecion || isAvatarForAnyDirection)) {
-
 					ret = new ImageIcon(
 							ImageIO.read(Files.newInputStream(file)));
 
@@ -269,7 +267,7 @@ public class CustomFileSkinImporter implements SkinImporter {
 		}
 
 		if (paintArrows && ret != null) {
-			ret = paintArrowOnAvatar(ret, directionI.intValue());
+			ret = paintArrowOnAvatar(ret, direction);
 		}
 
 		return ret;
