@@ -9,6 +9,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
 
@@ -160,14 +161,15 @@ public class RobotFrame extends JFrame implements WindowListener,
 
 	private boolean signalStart(Object[] values) {
 		if (values.length > 0) {
-			String mapPath = values[0].toString();
+			String mapName = values[0].toString();
+			Path mapPath = Paths.get(MindRobot.MAP_SEARCH_STRING, mapName);
 			SpielfeldImporter spielfeldImporter = new FileSpielfeldImporter(
-					Paths.get(MindRobot.MAP_SEARCH_STRING, mapPath));
-			LOG.info("Load Map Data from: " + mapPath);
+					mapPath);
+			LOG.info("Load Map Data from: " + mapPath.toString());
 
 			try {
 				SpielfeldData spielfeld = spielfeldImporter.importSpielfeld();
-				playgroundView.setSpielfeld(spielfeld, mapPath);
+				playgroundView.setSpielfeld(spielfeld, mapName);
 				setView(playgroundView);
 			} catch (IOException e) {
 				LOG.warning("Fehler beim Laden der Map: " + e.getMessage());
