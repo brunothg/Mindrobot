@@ -325,6 +325,7 @@ public class Playground extends JComponent implements RobotControl,
 	private void say(String s) {
 		LOG.info("Sprich: '" + s + "'");
 		speech = s;
+		repaint();
 	}
 
 	@Override
@@ -449,6 +450,7 @@ public class Playground extends JComponent implements RobotControl,
 
 	private boolean moveBackwards_() {
 		if (isBlockedFieldBehind()) {
+			say(String(ROBOT_WALL));
 			finishedGameFailed();
 			return false;
 		}
@@ -458,6 +460,7 @@ public class Playground extends JComponent implements RobotControl,
 				getAvatarsDirection());
 
 		if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+			say(String(ROBOT_OUT_OF_MAP));
 			finishedGameFailed();
 			return false;
 		}
