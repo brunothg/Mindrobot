@@ -68,4 +68,16 @@ Translations:
 		robot_out_of_map_speech=Hey! Hier geblieben.
 		robot_goal_x_speech=Yeah! Das %d. Ziel erreicht.
 		robot_goal_last_speech=Puh! Geschafft.
+		syntax_if=Wenn
+		syntax_end=Ende
+		syntax_then=Dann
+		syntax_else=Sonst
+		syntax_while=Solange
+		syntax_repeat=Wiederhole
+		cmd_backwards=rückwärts
+		cmd_right=rechtsDrehen
+		qu_confused=binVerwirrt
+		cmd_forwards=vorwärts
+		qu_blocked=steheVorHindernis
+		cmd_left=linksDrehen
 		END
