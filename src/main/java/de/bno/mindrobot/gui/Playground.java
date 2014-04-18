@@ -393,6 +393,14 @@ public class Playground extends JComponent implements RobotControl,
 			isConfused = !isConfused;
 		}
 
+		checkAndSayGoal();
+
+		waitAfterMovement();
+
+		return true;
+	}
+
+	private void checkAndSayGoal() {
 		int answer = checkIfGoalIsFinished();
 
 		if (answer > 0) {
@@ -403,10 +411,6 @@ public class Playground extends JComponent implements RobotControl,
 			say(String(ROBOT_ZIEL_SUC));
 			finishdGameSuccessful();
 		}
-
-		waitAfterMovement();
-
-		return true;
 	}
 
 	private int checkIfGoalIsFinished() {
@@ -464,7 +468,7 @@ public class Playground extends JComponent implements RobotControl,
 			isConfused = !isConfused;
 		}
 
-		checkIfGoalIsFinished();
+		checkAndSayGoal();
 
 		waitAfterMovement();
 
