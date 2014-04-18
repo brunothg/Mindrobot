@@ -5,10 +5,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 
@@ -18,6 +20,8 @@ public class StartButton extends JButton implements MouseListener,
 	private static final long serialVersionUID = -5082126803481181344L;
 	private boolean isMouseDown;
 	private boolean isMouseIn;
+
+	private BufferedImage offImg;
 
 	public StartButton(String s) {
 		super(s);
@@ -37,16 +41,31 @@ public class StartButton extends JButton implements MouseListener,
 	@Override
 	public void paintComponent(Graphics g) {
 
+		if (offImg == null || offImg.getWidth() != getWidth()
+				|| offImg.getHeight() != getHeight()) {
+			offImg = new BufferedImage(getWidth(), getHeight(),
+					BufferedImage.TYPE_INT_ARGB);
+		}
+
+		paintBig(offImg.createGraphics(), offImg.getWidth(), offImg.getHeight());
+
+		g.drawImage(offImg, 0, 0, getWidth(), getHeight(), 0, 0,
+				offImg.getWidth(), offImg.getHeight(), this);
+	}
+
+	private void paintBig(Graphics2D g, int width, int height) {
+		g.setBackground(new Color(0, 0, 0, 0));
+		g.clearRect(0, 0, width, height);
 		if (isVisible()) {
 			g.setColor(Color.BLACK);
-			g.drawRoundRect(5, 5, getWidth() - 10, getHeight() - 10, 20, 20);
+			g.drawRoundRect(5, 5, width - 10, height - 10, 20, 20);
 
 			if (!isMouseDown) {
 				g.setColor(getColorWithAlpha(getBackground(), 150));
 			} else {
 				g.setColor(getColorWithAlpha(getBackground(), 255));
 			}
-			g.fillRoundRect(6, 6, getWidth() - 11, getHeight() - 11, 20, 20);
+			g.fillRoundRect(6, 6, width - 11, height - 11, 20, 20);
 
 			char[] start = getText().toCharArray();
 
@@ -62,10 +81,9 @@ public class StartButton extends JButton implements MouseListener,
 
 			int fontWidth = metrics.charsWidth(start, 0, start.length);
 			int fontHeight = metrics.getHeight();
-			g.drawChars(start, 0, start.length, (getWidth() - fontWidth) / 2,
-					(getHeight() + fontHeight) / 2);
+			g.drawChars(start, 0, start.length, (width - fontWidth) / 2,
+					(height + fontHeight) / 2);
 		}
-
 	}
 
 	private Color getColorWithAlpha(Color color, int alpha) {
