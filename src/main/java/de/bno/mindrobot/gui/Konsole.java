@@ -141,7 +141,15 @@ public class Konsole extends JPanel implements KeyListener {
 		stopped = false;
 
 		if (parser != null) {
-			parser.run(ctr);
+			try {
+				parser.run(
+						ctr,
+						editor.getDocument().getText(0,
+								editor.getDocument().getLength()));
+			} catch (BadLocationException e) {
+				LOG.warning("Fehler beim Parsen des Programms: "
+						+ e.getMessage());
+			}
 		}
 
 		stopped = true;

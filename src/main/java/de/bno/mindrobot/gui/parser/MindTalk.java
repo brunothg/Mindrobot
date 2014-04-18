@@ -7,7 +7,7 @@ public class MindTalk implements Parser {
 	boolean running;
 
 	@Override
-	public void run(RobotControl ctrl) {
+	public void run(RobotControl ctrl, String script) {
 		running = true;
 
 		running = false;
