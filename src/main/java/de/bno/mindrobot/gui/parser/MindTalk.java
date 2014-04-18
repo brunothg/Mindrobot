@@ -15,7 +15,6 @@ public class MindTalk implements Parser {
 
 		for (int i = 0; running && i < words.length; i++) {
 
-			System.out.println(words[i] + "->" + getCommandTyp(words, i));
 			switch (getCommandTyp(words, i)) {
 			case Befehl:
 				makeCMD(words[i], ctrl);
@@ -27,7 +26,6 @@ public class MindTalk implements Parser {
 				i = repeat(words, i, ctrl);
 				break;
 			default:
-				System.out.println("Undefinierte Situation");
 				running = false;
 				return;
 			}
@@ -53,10 +51,8 @@ public class MindTalk implements Parser {
 	private int repeatWhile(String[] s, int i, RobotControl ctrl) {
 
 		int index = 0;
-		System.out.println(askQU(s[i + 1], ctrl));
-		while (askQU(s[i + 1], ctrl)) {
+		while (askQU(s[i + 1], ctrl) && running) {
 			index = 0;
-			System.out.println("Repeat2->" + index);
 			while (i + 2 + index < s.length
 					&& !s[i + 2 + index].equals(String(SYNTAX_ENDE))) {
 				makeCMD(s[i + 2 + index], ctrl);
@@ -73,7 +69,6 @@ public class MindTalk implements Parser {
 		int index = 0;
 		for (; times > 0; times--) {
 			index = 0;
-			System.out.println("Repeat1->" + index);
 			while (i + 2 + index < s.length
 					&& !s[i + 2 + index].equals(String(SYNTAX_ENDE))) {
 				makeCMD(s[i + 2 + index], ctrl);
@@ -87,7 +82,6 @@ public class MindTalk implements Parser {
 	private int followCase(String[] s, int i, RobotControl ctrl) {
 		boolean _case = askQU(s[i + 1], ctrl);
 
-		System.out.println("Case->" + _case);
 		if (!s[i + 2].equals(String(SYNTAX_DANN))) {
 			return i + 1;
 		}
@@ -118,16 +112,12 @@ public class MindTalk implements Parser {
 			String cc = cmd.substring(0, cmd.length() - 1);
 
 			if (cc.equals(String(CMD_LINKS))) {
-				System.out.println("makeCMD L");
 				ctrl.turnLeft();
 			} else if (cc.equals(String(CMD_RECHTS))) {
-				System.out.println("makeCMD R");
 				ctrl.turnRight();
 			} else if (cc.equals(String(CMD_RUECKWAERTS))) {
-				System.out.println("makeCMD<-");
 				ctrl.moveBackwards();
 			} else if (cc.equals(String(CMD_VORWAERTS))) {
-				System.out.println("makeCMD->");
 				ctrl.moveForwards();
 			}
 
