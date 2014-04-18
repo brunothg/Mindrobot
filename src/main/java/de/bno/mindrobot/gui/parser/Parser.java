@@ -1,4 +1,6 @@
-package de.bno.mindrobot.gui;
+package de.bno.mindrobot.gui.parser;
+
+import de.bno.mindrobot.gui.RobotControl;
 
 public interface Parser {
 

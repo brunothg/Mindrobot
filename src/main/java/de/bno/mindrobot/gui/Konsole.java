@@ -30,6 +30,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 import de.bno.mindrobot.MindRobot;
+import de.bno.mindrobot.gui.parser.MindTalk;
+import de.bno.mindrobot.gui.parser.Parser;
 
 public class Konsole extends JPanel implements KeyListener {
 
