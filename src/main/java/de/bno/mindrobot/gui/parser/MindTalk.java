@@ -97,6 +97,8 @@ public class MindTalk implements Parser {
 
 				if (_case && !invert) {
 					makeCMD(s[i + index], ctrl);
+				} else if (!_case && invert) {
+					makeCMD(s[i + index], ctrl);
 				}
 
 			}
