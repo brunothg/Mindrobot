@@ -50,6 +50,14 @@ public class Strings {
 	public static final String SYNTAX_WIEDERHOLE = "syntax_repeat";
 	public static final String SYNTAX_SOLANGE = "syntax_while";
 
+	public static final String CMD_VORWAERTS = "cmd_forwards";
+	public static final String CMD_RUECKWAERTS = "cmd_backwards";
+	public static final String CMD_LINKS = "cmd_left";
+	public static final String CMD_RECHTS = "cmd_right";
+
+	public static final String QU_VERWIRRT = "qu_confused";
+	public static final String QU_HINDERNIS = "qu_blocked";
+
 	private static Map<String, String> values;
 
 	static {
@@ -88,6 +96,12 @@ public class Strings {
 		values.put(ROBOT_ZIEL_X, "Yeah! Das %d. Ziel erreicht.");
 		values.put(ROBOT_OUT_OF_MAP, "Hey! Hier geblieben.");
 		values.put(ROBOT_ZIEL_SUC, "Puh! Geschafft.");
+		values.put(CMD_LINKS, "linksDrehen");
+		values.put(CMD_RECHTS, "rechtsDrehen");
+		values.put(CMD_RUECKWAERTS, "rückwärts");
+		values.put(CMD_VORWAERTS, "vorwärts");
+		values.put(QU_HINDERNIS, "steheVorHindernis");
+		values.put(QU_VERWIRRT, "binVerwirrt");
 	}
 
 	public static String String(String key) {

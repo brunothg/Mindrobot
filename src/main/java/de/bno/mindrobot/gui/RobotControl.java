@@ -41,6 +41,13 @@ public interface RobotControl {
 	public boolean standOnConfusingField();
 
 	/**
+	 * Is the robot confused
+	 * 
+	 * @return true if the robot is confused
+	 */
+	public boolean isConfused();
+
+	/**
 	 * If the robot stands on a goal field and which goal.
 	 * 
 	 * @return number of goal or -1 if not a goal

@@ -535,6 +535,12 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	@Override
+	public boolean isConfused() {
+
+		return isConfused;
+	}
+
+	@Override
 	public int standOnGoalField() {
 		int ret = -1;
 
@@ -569,6 +575,7 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	private void playSignal() {
+		konsole.stopProgram();
 		this.isConfused = false;
 		this.nextGoal = 1;
 		this.speech = null;
