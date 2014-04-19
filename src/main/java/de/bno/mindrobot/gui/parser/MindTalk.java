@@ -6,10 +6,10 @@ import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
-import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SOLANGE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SONST;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_WENN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_WIEDERHOLE;
 import static de.bno.mindrobot.gui.Strings.String;
@@ -44,7 +44,7 @@ public class MindTalk implements Parser {
 			return;
 		}
 
-		LOG.info("Blok->" + Arrays.toString(words));
+		LOG.info("Block->" + Arrays.toString(words));
 
 		for (int i = 0; running && i < words.length; i++) {
 
@@ -96,18 +96,38 @@ public class MindTalk implements Parser {
 		return ret.toArray(new String[0]);
 	}
 
-	private boolean isStartBlock(String tmp) {
+	private String[][] splitBlock(String[] block, String divider) {
 
-		String[] starter = new String[] { String(SYNTAX_WENN),
-				String(SYNTAX_WIEDERHOLE), String(SYNTAX_SOLANGE) };
+		List<String> first = new LinkedList<String>();
+		List<String> second = new LinkedList<String>();
 
-		for (String s : starter) {
-			if (tmp.equals(s)) {
-				return true;
+		boolean foundDivider = false;
+		for (int i = 0; i < block.length; i++) {
+			String now = block[i];
+
+			if (now.equals(divider)) {
+				foundDivider = true;
+			}
+
+			if (foundDivider) {
+				second.add(now);
+			} else {
+				first.add(now);
 			}
 		}
 
-		return false;
+		return new String[][] { first.toArray(new String[0]),
+				second.toArray(new String[0]) };
+	}
+
+	private String[] subBlock(String[] ar, int start, int stop) {
+		String[] ret = new String[stop - start];
+
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = ar[start + i];
+		}
+
+		return ret;
 	}
 
 	private int repeat(String[] s, int i, RobotControl ctrl) {
@@ -152,31 +172,25 @@ public class MindTalk implements Parser {
 	private int followCase(String[] s, int i, RobotControl ctrl) {
 		boolean _case = askQU(s[i + 1], ctrl);
 
-		if (!s[i + 2].equals(String(SYNTAX_DANN))) {
-			return i + 1;
+		int index = 0;
+		String[] block = getBlock(s, i + 1);
+		index = block.length;
+
+		if (_case) {
+			block = splitBlock(block, String(SYNTAX_SONST))[0];
+		} else {
+			block = splitBlock(block, String(SYNTAX_SONST))[1];
 		}
 
-		int index = 3;
-		boolean invert = false;
-		while (i + index < s.length) {
-			if (s[i + index].equals(String(SYNTAX_SONST))) {
-				invert = true;
-			} else if (s[i + index].equals(String(SYNTAX_ENDE))) {
-				break;
-			} else {
+		if (block[0].equals(String(SYNTAX_DANN))
+				|| block[0].equals(String(SYNTAX_SONST))) {
+			block = subBlock(block, 1, block.length);
 
-				if (_case && !invert) {
-					makeCMD(s[i + index], ctrl);
-				} else if (!_case && invert) {
-					makeCMD(s[i + index], ctrl);
-				}
-
-			}
-
-			index++;
 		}
 
-		return i + index;
+		runBlock(block, ctrl);
+
+		return i + 2 + index;
 	}
 
 	private void makeCMD(String cmd, RobotControl ctrl) {
@@ -225,6 +239,20 @@ public class MindTalk implements Parser {
 						.isConfused();
 			}
 
+		}
+
+		return false;
+	}
+
+	private boolean isStartBlock(String tmp) {
+
+		String[] starter = new String[] { String(SYNTAX_WENN),
+				String(SYNTAX_WIEDERHOLE), String(SYNTAX_SOLANGE) };
+
+		for (String s : starter) {
+			if (tmp.equals(s)) {
+				return true;
+			}
 		}
 
 		return false;
