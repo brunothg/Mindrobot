@@ -233,7 +233,7 @@ public class MindTalk implements Parser {
 
 			if (cc.equals(String(QU_HINDERNIS))) {
 				return (!invert) ? !ctrl.isFieldInFrontAccessible() : ctrl
-						.isBlockedFieldInFront();
+						.isFieldInFrontAccessible();
 			} else if (cc.equals(String(QU_VERWIRRT))) {
 				return (invert) ? !ctrl.standOnConfusingField() : ctrl
 						.isConfused();
