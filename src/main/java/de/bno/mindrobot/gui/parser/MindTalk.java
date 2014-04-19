@@ -125,14 +125,11 @@ public class MindTalk implements Parser {
 
 	private int repeatWhile(String[] s, int i, RobotControl ctrl) {
 
-		int index = 0;
+		String[] block = getBlock(s, i + 1);
+		int index = block.length;
+
 		while (running && askQU(s[i + 1], ctrl)) {
-			index = 0;
-			while (i + 2 + index < s.length
-					&& !s[i + 2 + index].equals(String(SYNTAX_ENDE))) {
-				makeCMD(s[i + 2 + index], ctrl);
-				index++;
-			}
+			runBlock(block, ctrl);
 		}
 
 		return i + 2 + index;
