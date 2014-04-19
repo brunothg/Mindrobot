@@ -1,17 +1,50 @@
 package de.bno.mindrobot.gui.parser;
 
-import static de.bno.mindrobot.gui.Strings.*;
+import static de.bno.mindrobot.gui.Strings.CMD_LINKS;
+import static de.bno.mindrobot.gui.Strings.CMD_RECHTS;
+import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
+import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
+import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
+import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_SOLANGE;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_SONST;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_WENN;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_WIEDERHOLE;
+import static de.bno.mindrobot.gui.Strings.String;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Logger;
+
+import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.gui.RobotControl;
 
 public class MindTalk implements Parser {
 
-	boolean running;
+	private static final Logger LOG = MindRobot.getLogger(MindTalk.class);
+
+	volatile boolean running;
 
 	@Override
 	public void run(RobotControl ctrl, String script) {
 		running = true;
 
 		String[] words = script.split("\\s+");
+
+		runBlock(words, ctrl);
+
+		running = false;
+	}
+
+	private void runBlock(String[] words, RobotControl ctrl) {
+		if (words == null) {
+			return;
+		}
+
+		LOG.info("Blok->" + Arrays.toString(words));
 
 		for (int i = 0; running && i < words.length; i++) {
 
@@ -32,7 +65,49 @@ public class MindTalk implements Parser {
 
 		}
 
-		running = false;
+	}
+
+	private String[] getBlock(String[] words, int i) {
+
+		List<String> ret = new LinkedList<String>();
+
+		int end = 1;
+
+		int index = 0;
+		while (running && i + 1 + index < words.length && end > 0) {
+
+			String tmp = words[i + 1 + index];
+
+			if (tmp.equals(String(SYNTAX_ENDE))) {
+				end--;
+			} else if (isStartBlock(tmp)) {
+				end++;
+			}
+
+			if (end > 0) {
+				ret.add(tmp);
+			}
+			index++;
+		}
+
+		if (!running) {
+			return null;
+		}
+		return ret.toArray(new String[0]);
+	}
+
+	private boolean isStartBlock(String tmp) {
+
+		String[] starter = new String[] { String(SYNTAX_WENN),
+				String(SYNTAX_WIEDERHOLE), String(SYNTAX_SOLANGE) };
+
+		for (String s : starter) {
+			if (tmp.equals(s)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private int repeat(String[] s, int i, RobotControl ctrl) {
@@ -51,7 +126,7 @@ public class MindTalk implements Parser {
 	private int repeatWhile(String[] s, int i, RobotControl ctrl) {
 
 		int index = 0;
-		while (askQU(s[i + 1], ctrl) && running) {
+		while (running && askQU(s[i + 1], ctrl)) {
 			index = 0;
 			while (i + 2 + index < s.length
 					&& !s[i + 2 + index].equals(String(SYNTAX_ENDE))) {
@@ -66,14 +141,12 @@ public class MindTalk implements Parser {
 	private int repeatXTimes(String[] s, int i, RobotControl ctrl) {
 		long times = Long.valueOf(s[i + 1]).longValue();
 
-		int index = 0;
-		for (; times > 0; times--) {
-			index = 0;
-			while (i + 2 + index < s.length
-					&& !s[i + 2 + index].equals(String(SYNTAX_ENDE))) {
-				makeCMD(s[i + 2 + index], ctrl);
-				index++;
-			}
+		String[] block = getBlock(s, i + 1);
+		int index = block.length;
+
+		for (; running && times > 0; times--) {
+
+			runBlock(block, ctrl);
 		}
 
 		return i + 2 + index;
@@ -110,8 +183,13 @@ public class MindTalk implements Parser {
 	}
 
 	private void makeCMD(String cmd, RobotControl ctrl) {
+		if (cmd == null || ctrl == null) {
+			return;
+		}
+
 		if (cmd.endsWith(".")) {
 			String cc = cmd.substring(0, cmd.length() - 1);
+			LOG.info("CMD->" + cc);
 
 			if (cc.equals(String(CMD_LINKS))) {
 				ctrl.turnLeft();
@@ -127,11 +205,16 @@ public class MindTalk implements Parser {
 	}
 
 	private boolean askQU(String cmd, RobotControl ctrl) {
+		if (cmd == null || ctrl == null) {
+			return false;
+		}
 
 		if (cmd.endsWith("?")) {
 			boolean invert = false;
 
 			String cc = cmd.substring(0, cmd.length() - 1);
+			LOG.info("?->" + cc);
+
 			if (cc.startsWith("!")) {
 				cc = cc.substring(1);
 				invert = true;
