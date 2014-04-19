@@ -34,6 +34,13 @@ public interface RobotControl {
 	public boolean isBlockedFieldInFront();
 
 	/**
+	 * If the field in front, if there is one, is accessible
+	 * 
+	 * @return true if the field in front is accessible
+	 */
+	public boolean isFieldInFrontAccessible();
+
+	/**
 	 * Is a confusing field under the robot
 	 * 
 	 * @return true if there is a confusing field

@@ -483,6 +483,24 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	@Override
+	public boolean isFieldInFrontAccessible() {
+		boolean ret = true;
+
+		if (isBlockedFieldInFront()) {
+			ret = false;
+		} else {
+			Location actualLocation = getAvatarPosition();
+			Location newLocation = Avatar.fieldInFront(actualLocation,
+					getAvatarsDirection());
+			if (!isLocationInBoundsOfSpielfeld(newLocation)) {
+				ret = false;
+			}
+		}
+
+		return ret;
+	}
+
+	@Override
 	public boolean isBlockedFieldInFront() {
 		boolean ret = false;
 
