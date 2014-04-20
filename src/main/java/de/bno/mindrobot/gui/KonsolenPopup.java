@@ -107,7 +107,7 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO
+
 		if (arg0.getSource() == wennDann) {
 
 		} else if (arg0.getSource() == rechtsrum) {

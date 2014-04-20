@@ -159,7 +159,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener {
 		} catch (Exception e) {
 		} finally {
 			stopped = true;
-			Signals.sendSignal(Signals.RUN_FINISHED);
+			Signals.sendSignal(Signals.SIGNAL_RUN_FINISHED);
 			LOG.info("Finished running program");
 		}
 	}
