@@ -15,6 +15,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +35,7 @@ import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.gui.parser.MindTalk;
 import de.bno.mindrobot.gui.parser.Parser;
 
-public class Konsole extends JPanel implements KeyListener {
+public class Konsole extends JPanel implements KeyListener, MouseListener {
 
 	private static final Logger LOG = MindRobot.getLogger(Konsole.class);
 
@@ -93,6 +95,8 @@ public class Konsole extends JPanel implements KeyListener {
 		editor.setContentType("text/plain");
 		editor.addKeyListener(this);
 		sp.setViewportView(editor);
+
+		editor.addMouseListener(this);
 	}
 
 	private void createScrollPane() {
@@ -196,6 +200,44 @@ public class Konsole extends JPanel implements KeyListener {
 		} catch (BadLocationException e) {
 			LOG.warning("Fehler beim SyntaxHighlightig " + e.getMessage());
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+
+		if (arg0.getSource() == editor) {
+			if (arg0.isPopupTrigger()) {
+				popUp(arg0.getX(), arg0.getY());
+			}
+		}
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+
+		if (arg0.getSource() == editor) {
+			if (arg0.isPopupTrigger()) {
+				popUp(arg0.getX(), arg0.getY());
+			}
+		}
+
+	}
+
+	private void popUp(int x, int y) {
+		new KonsolenPopup().show(editor, x, y);
 	}
 
 }
