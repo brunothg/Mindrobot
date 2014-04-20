@@ -109,19 +109,23 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getSource() == wennDann) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT,
+					Insert.WENN_DANN_SONST);
 		} else if (arg0.getSource() == rechtsrum) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.RECHTS);
 		} else if (arg0.getSource() == linksrum) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.LINKS);
 		} else if (arg0.getSource() == solangeWie) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT,
+					Insert.SOLANGE_WIE);
 		} else if (arg0.getSource() == repeatX) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT,
+					Insert.WIEDERHOLE_X);
 		} else if (arg0.getSource() == moveBack) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT,
+					Insert.RUECKWAERTS);
 		} else if (arg0.getSource() == moveFront) {
-
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.VORWAERTS);
 		}
 
 	}
