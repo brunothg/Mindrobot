@@ -1,5 +1,9 @@
 package de.bno.mindrobot.gui;
 
+import static de.bno.mindrobot.gui.Strings.CMD_LINKS;
+import static de.bno.mindrobot.gui.Strings.CMD_RECHTS;
+import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
+import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.EDIT;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
@@ -30,12 +34,14 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.gui.parser.MindTalk;
 import de.bno.mindrobot.gui.parser.Parser;
 
-public class Konsole extends JPanel implements KeyListener, MouseListener {
+public class Konsole extends JPanel implements KeyListener, MouseListener,
+		SignalListener {
 
 	private static final Logger LOG = MindRobot.getLogger(Konsole.class);
 
@@ -82,6 +88,12 @@ public class Konsole extends JPanel implements KeyListener, MouseListener {
 		createTextArea();
 
 		createParser();
+
+		addListener();
+	}
+
+	private void addListener() {
+		Signals.addListener(this);
 	}
 
 	private void createParser() {
@@ -240,4 +252,69 @@ public class Konsole extends JPanel implements KeyListener, MouseListener {
 		new KonsolenPopup().show(editor, x, y);
 	}
 
+	@Override
+	public boolean Signal(String signal, Object... values) {
+
+		switch (signal) {
+		case Signals.SIGNAL_KONSOLE_INSERT:
+			insertCMD(values);
+			break;
+		}
+
+		return false;
+	}
+
+	private void insertCMD(Object[] values) {
+		if (values == null || values.length < 1
+				|| !(values[0] instanceof Insert)) {
+			return;
+		}
+
+		Insert what = (Insert) values[0];
+
+		String insertString = null;
+
+		switch (what) {
+		case WENN_DANN_SONST:
+			insertString = String.format("%s ...?%n%s%n%n%s%n%n%s ",
+					String(SYNTAX_WENN), String(SYNTAX_DANN),
+					String(SYNTAX_SONST), String(SYNTAX_ENDE));
+			break;
+		case WIEDERHOLE_X:
+			insertString = String.format("%s ...%n%n%s ",
+					String(SYNTAX_WIEDERHOLE), String(SYNTAX_ENDE));
+			break;
+		case SOLANGE_WIE:
+			insertString = String.format("%s ...?%n%n%s ",
+					String(SYNTAX_SOLANGE), String(SYNTAX_ENDE));
+			break;
+		case VORWAERTS:
+			insertString = String.format("%s. ", String(CMD_VORWAERTS));
+			break;
+		case RUECKWAERTS:
+			insertString = String.format("%s. ", String(CMD_RUECKWAERTS));
+			break;
+		case LINKS:
+			insertString = String.format("%s. ", String(CMD_LINKS));
+			break;
+		case RECHTS:
+			insertString = String.format("%s. ", String(CMD_RECHTS));
+			break;
+		default:
+			break;
+		}
+
+		if (insertString != null && !insertString.isEmpty()) {
+			StyledDocument doc = editor.getStyledDocument();
+			try {
+				doc.insertString(editor.getCaretPosition(), insertString,
+						SimpleAttributeSet.EMPTY);
+			} catch (BadLocationException e) {
+				LOG.warning("Fehler beim einfügen von Befehlen: "
+						+ e.getMessage());
+			}
+
+			colorizeAction();
+		}
+	}
 }
