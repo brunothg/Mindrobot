@@ -17,8 +17,7 @@ public class Signals {
 	public static final String SIGNAL_MENU = "mainmenu";
 	public static final String SIGNAL_FINISHED = "finished";
 	public static final String SIGNAL_RUN_FINISHED = "run_finfished";
-
-	// public static final String RUN_FINISHED = "run_finfished";
+	public static final String SIGNAL_KONSOLE_INSERT = "konsole_insert";
 
 	private static Vector<SignalListener> listener;
 
