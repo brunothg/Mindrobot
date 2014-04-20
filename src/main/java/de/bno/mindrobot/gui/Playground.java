@@ -600,6 +600,7 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	private void playSignal() {
+		setVisibleStateOfKonsole(false);
 		konsole.stopProgram();
 		this.isConfused = false;
 		this.nextGoal = 1;
@@ -621,7 +622,11 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	private void switchVisibleStateOfKonsole() {
-		konsole.setVisible(!konsole.isVisible());
+		setVisibleStateOfKonsole(!konsole.isVisible());
+	}
+
+	private void setVisibleStateOfKonsole(boolean visible) {
+		konsole.setVisible(visible);
 		playController.setKonsoleButtonAktiv(konsole.isVisible());
 	}
 
