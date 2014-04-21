@@ -5,6 +5,8 @@ import static de.bno.mindrobot.gui.Strings.CMD_RECHTS;
 import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.EDIT;
+import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
+import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SOLANGE;
@@ -299,6 +301,12 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			break;
 		case RECHTS:
 			insertString = String.format("%s. ", String(CMD_RECHTS));
+			break;
+		case HINDERNIS_Q:
+			insertString = String.format("%s? ", String(QU_HINDERNIS));
+			break;
+		case VERWIRRT_Q:
+			insertString = String.format("%s? ", String(QU_VERWIRRT));
 			break;
 		default:
 			break;

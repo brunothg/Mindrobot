@@ -1,6 +1,20 @@
 package de.bno.mindrobot.gui;
 
-import static de.bno.mindrobot.gui.Strings.*;
+import static de.bno.mindrobot.gui.Strings.MENU_BEFEHL;
+import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
+import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_HINDERNIS;
+import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_VERWIRRT;
+import static de.bno.mindrobot.gui.Strings.MENU_LINKSDREHEN;
+import static de.bno.mindrobot.gui.Strings.MENU_RECHTSDREHEN;
+import static de.bno.mindrobot.gui.Strings.MENU_RUECKWAERTS;
+import static de.bno.mindrobot.gui.Strings.MENU_SCHLEIFE;
+import static de.bno.mindrobot.gui.Strings.MENU_SOLANGEWIE;
+import static de.bno.mindrobot.gui.Strings.MENU_VERZWEIGUNG;
+import static de.bno.mindrobot.gui.Strings.MENU_VORWAERTS;
+import static de.bno.mindrobot.gui.Strings.MENU_WIEDERHOLUNG;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_WENN;
+import static de.bno.mindrobot.gui.Strings.String;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +36,9 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 	private JMenuItem moveFront;
 	private JMenuItem solangeWie;
 	private JMenuItem repeatX;
+	private JMenu fragenMenu;
+	private JMenuItem binVerwirrt;
+	private JMenuItem binHindernis;
 
 	public KonsolenPopup() {
 		super();
@@ -31,9 +48,30 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 	private void createEntries() {
 
 		createBefehle();
+		createFragen();
 		createVerzweigunen();
 		createSchleifen();
 
+	}
+
+	private void createFragen() {
+		fragenMenu = new JMenu(String(MENU_FRAGE));
+		add(fragenMenu);
+
+		createHindernisFrage();
+		createVerwirrtFrage();
+	}
+
+	private void createVerwirrtFrage() {
+		binVerwirrt = new JMenuItem(String(MENU_FRAGE_VERWIRRT));
+		fragenMenu.add(binVerwirrt);
+		binVerwirrt.addActionListener(this);
+	}
+
+	private void createHindernisFrage() {
+		binHindernis = new JMenuItem(String(MENU_FRAGE_HINDERNIS));
+		fragenMenu.add(binHindernis);
+		binHindernis.addActionListener(this);
 	}
 
 	private void createSchleifen() {
@@ -126,6 +164,11 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 					Insert.RUECKWAERTS);
 		} else if (arg0.getSource() == moveFront) {
 			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.VORWAERTS);
+		} else if (arg0.getSource() == binHindernis) {
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT,
+					Insert.HINDERNIS_Q);
+		} else if (arg0.getSource() == binVerwirrt) {
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.VERWIRRT_Q);
 		}
 
 	}
