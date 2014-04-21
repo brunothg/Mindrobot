@@ -83,4 +83,7 @@ Translations:
 		menu_turn_left=45° gegen den Uhrzeigersinn drehen
 		cmd_left=linksDrehen
 		one_instanz_only_title=Programm wurde bereits gestartet
+		menu_question=Frage
+		menu_question_confused=Bin ich verwirrt?
+		menu_question_obstacle=Stehe ich vor einem Hindernis?
 		END
