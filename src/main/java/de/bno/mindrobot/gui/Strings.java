@@ -171,7 +171,10 @@ public class Strings {
 							: null;
 
 					key = key.trim();
-					value = value.trim();
+
+					if (value != null) {
+						value = value.trim();
+					}
 
 					if (key != null && value != null && !key.isEmpty()
 							&& !value.isEmpty()) {
