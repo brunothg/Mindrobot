@@ -70,6 +70,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	private boolean isFirstTimePaint = true;
 
+	private JBufferedTextArea logArea;
+
 	private static final String[] HIGHLIGHT_DEF = new String[] {
 			String(SYNTAX_WENN), String(SYNTAX_DANN), String(SYNTAX_SONST),
 			String(SYNTAX_ENDE), String(SYNTAX_WIEDERHOLE),
@@ -135,7 +137,9 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	}
 
 	private void createRightBottom() {
-		centerRightPanel.setBottomComponent(new JLabel("by Marvin Bruns"));
+		logArea = new JBufferedTextArea(5000);
+		logArea.setEditable(false);
+		centerRightPanel.setBottomComponent(logArea);
 	}
 
 	private void createPreview() {
@@ -242,7 +246,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		if (isFirstTimePaint) {
 			isFirstTimePaint = false;
 			centerPanel.setDividerLocation(0.7);
-			centerRightPanel.setDividerLocation(0.7);
+			centerRightPanel.setDividerLocation(0.8);
 		}
 		super.paintComponent(g);
 	}
@@ -323,9 +327,18 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		case Signals.SIGNAL_KONSOLE_INSERT:
 			insertCMD(values);
 			break;
+		case Signals.SIGNAL_KONSOLE_LOG:
+			konsolenLog(values);
+			break;
 		}
 
 		return false;
+	}
+
+	private void konsolenLog(Object[] values) {
+		for (Object obj : values) {
+			logArea.appendText(obj.toString());
+		}
 	}
 
 	private void insertCMD(Object[] values) {
