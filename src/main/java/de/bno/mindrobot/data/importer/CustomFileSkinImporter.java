@@ -41,6 +41,15 @@ public class CustomFileSkinImporter implements SkinImporter {
 	}
 
 	@Override
+	public void setMap(String map) {
+		this.map = map;
+
+		images.clear();
+		goalImages.clear();
+		avatarImages.clear();
+	}
+
+	@Override
 	public Image getImage(int goalNumber) {
 		return getImageIcon(goalNumber).getImage();
 	}

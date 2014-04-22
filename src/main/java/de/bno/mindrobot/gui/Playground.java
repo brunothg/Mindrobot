@@ -105,7 +105,11 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	private void loadImages() {
-		skinImporter = new CustomFileSkinImporter(this.map);
+		if (skinImporter == null) {
+			skinImporter = new CustomFileSkinImporter(this.map);
+		} else {
+			skinImporter.setMap(this.map);
+		}
 	}
 
 	private final GraphicsConfiguration gfxConf = GraphicsEnvironment

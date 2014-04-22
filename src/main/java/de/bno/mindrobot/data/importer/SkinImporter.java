@@ -12,4 +12,6 @@ public interface SkinImporter {
 
 	public Image getAvatar(int direction);
 
+	public void setMap(String map);
+
 }
