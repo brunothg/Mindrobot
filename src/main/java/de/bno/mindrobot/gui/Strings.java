@@ -54,6 +54,7 @@ public class Strings {
 	public static final String MENU_FRAGE = "menu_question";
 	public static final String MENU_FRAGE_VERWIRRT = "menu_question_confused";
 	public static final String MENU_FRAGE_HINDERNIS = "menu_question_obstacle";
+	public static final String LOGGING = "logging";
 
 	public static final String SYNTAX_ENDE = "syntax_end";
 	public static final String SYNTAX_WENN = "syntax_if";
@@ -126,6 +127,7 @@ public class Strings {
 		values.put(MENU_FRAGE, "Frage");
 		values.put(MENU_FRAGE_VERWIRRT, "Bin ich verwirrt?");
 		values.put(MENU_FRAGE_HINDERNIS, "Stehe ich vor einem Hindernis?");
+		values.put(LOGGING, "Logging");
 	}
 
 	public static String String(String key) {

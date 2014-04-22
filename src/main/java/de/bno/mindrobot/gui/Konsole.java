@@ -5,6 +5,7 @@ import static de.bno.mindrobot.gui.Strings.CMD_RECHTS;
 import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.EDIT;
+import static de.bno.mindrobot.gui.Strings.LOGGING;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
@@ -28,6 +29,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -142,6 +144,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		logScrollPane = new JScrollPane();
 		logArea = new JBufferedTextArea(5000);
 		logArea.setEditable(false);
+		logArea.setBorder(BorderFactory.createTitledBorder(String(LOGGING)));
 		logScrollPane.setViewportView(logArea);
 		centerRightPanel.setBottomComponent(logScrollPane);
 	}
