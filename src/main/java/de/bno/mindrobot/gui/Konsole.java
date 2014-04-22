@@ -144,7 +144,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		logScrollPane = new JScrollPane();
 		logArea = new JBufferedTextArea(5000);
 		logArea.setEditable(false);
-		logArea.setBorder(BorderFactory.createTitledBorder(String(LOGGING)));
+		logScrollPane.setBorder(BorderFactory
+				.createTitledBorder(String(LOGGING)));
 		logScrollPane.setViewportView(logArea);
 		centerRightPanel.setBottomComponent(logScrollPane);
 	}
