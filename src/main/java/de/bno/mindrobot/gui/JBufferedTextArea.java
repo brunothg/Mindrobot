@@ -21,12 +21,13 @@ public class JBufferedTextArea extends JTextArea {
 		if (s.length() <= buffersize) {
 			super.setText(s);
 		} else {
-			super.setText(s.substring(s.length() - buffersize, s.length()));
+			super.setText(s.substring(0, buffersize - 1));
 		}
 	}
 
 	public void appendText(String s) {
-		setText(getText() + s);
+		setText(s + getText());
+		setCaretPosition(0);
 	}
 
 }

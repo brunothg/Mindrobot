@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 import de.bno.mindrobot.MindRobot;
 import de.bno.mindrobot.gui.RobotControl;
+import de.bno.mindrobot.gui.Signals;
 
 public class MindTalk implements Parser {
 
@@ -44,7 +45,9 @@ public class MindTalk implements Parser {
 			return;
 		}
 
-		LOG.info("Block->" + Arrays.toString(words));
+		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
+				String.format("Block -> %s%n%n", Arrays.toString(words)));
+		LOG.info("Block -> " + Arrays.toString(words));
 
 		for (int i = 0; running && i < words.length; i++) {
 
@@ -194,6 +197,8 @@ public class MindTalk implements Parser {
 	}
 
 	private void makeCMD(String cmd, RobotControl ctrl) {
+		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
+				String.format("CMD -> %s%n%n", cmd));
 		if (cmd == null || ctrl == null) {
 			return;
 		}
@@ -216,6 +221,8 @@ public class MindTalk implements Parser {
 	}
 
 	private boolean askQU(String cmd, RobotControl ctrl) {
+		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
+				String.format("? -> %s%n%n", cmd));
 		if (cmd == null || ctrl == null) {
 			return false;
 		}

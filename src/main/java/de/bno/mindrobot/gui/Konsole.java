@@ -80,6 +80,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	private static final Color DEFAULT_KEYWORD_COLOR = new Color(149, 0, 85);
 	public static String HIGHLIGHT_DEF_REGEX;
 
+	private JScrollPane logScrollPane;
+
 	static {
 		StringBuilder buff = new StringBuilder("");
 		buff.append("(");
@@ -137,9 +139,11 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	}
 
 	private void createRightBottom() {
+		logScrollPane = new JScrollPane();
 		logArea = new JBufferedTextArea(5000);
 		logArea.setEditable(false);
-		centerRightPanel.setBottomComponent(logArea);
+		logScrollPane.setViewportView(logArea);
+		centerRightPanel.setBottomComponent(logScrollPane);
 	}
 
 	private void createPreview() {
