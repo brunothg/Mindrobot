@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,6 +24,9 @@ public class StartButton extends JButton implements MouseListener,
 	private boolean isMouseDown;
 	private boolean isMouseIn;
 
+	private final GraphicsConfiguration gfxConf = GraphicsEnvironment
+			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+			.getDefaultConfiguration();
 	private BufferedImage offImg;
 
 	public StartButton(String s) {
@@ -43,8 +49,8 @@ public class StartButton extends JButton implements MouseListener,
 
 		if (offImg == null || offImg.getWidth() != getWidth()
 				|| offImg.getHeight() != getHeight()) {
-			offImg = new BufferedImage(getWidth(), getHeight(),
-					BufferedImage.TYPE_INT_ARGB);
+			offImg = gfxConf.createCompatibleImage(getWidth(), getHeight(),
+					Transparency.TRANSLUCENT);
 		}
 
 		paintBig(offImg.createGraphics(), offImg.getWidth(), offImg.getHeight());
