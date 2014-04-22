@@ -33,11 +33,13 @@ public class PlaygroundPreview extends JComponent {
 	}
 
 	public void setSpielfeld(SpielfeldData spielfeld) {
+
 		this.spielfeld = spielfeld;
 		repaint();
 	}
 
 	protected void paintComponent(Graphics g) {
+
 		if (spielfeld != null && skinImporter != null) {
 			if (img == null || img.getWidth() != getWidth()
 					|| img.getHeight() != getHeight()) {

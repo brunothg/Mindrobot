@@ -87,13 +87,15 @@ public class Playground extends JComponent implements RobotControl,
 			this.directionAvatar = this.spielfeld.getStartDirection();
 		}
 
-		if (map != null) {
-			loadImages();
+		loadImages();
+
+		if (konsole != null) {
+			konsole.setMapData(this.spielfeld);
 		}
 	}
 
 	private void createKonsole() {
-		Konsole konsole = new Konsole();
+		Konsole konsole = new Konsole(new PlaygroundPreview(skinImporter));
 		konsole.setVisible(false);
 		konsole.setLocation(0, 0);
 		konsole.setSize(getWidth(), getHeight());

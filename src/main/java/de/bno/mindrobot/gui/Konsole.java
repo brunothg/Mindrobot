@@ -19,6 +19,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -39,6 +41,7 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import de.bno.mindrobot.MindRobot;
+import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.gui.parser.MindTalk;
 import de.bno.mindrobot.gui.parser.Parser;
 
@@ -52,6 +55,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	private JLabel title;
 
 	private JPanel topPanel;
+	private JSplitPane centerPanel;
+	private JSplitPane centerRightPanel;
 
 	private JScrollPane sp;
 
@@ -59,7 +64,11 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	private Parser parser;
 
+	private PlaygroundPreview preview;
+
 	private boolean stopped;
+
+	private boolean isFirstTimePaint = true;
 
 	private static final String[] HIGHLIGHT_DEF = new String[] {
 			String(SYNTAX_WENN), String(SYNTAX_DANN), String(SYNTAX_SONST),
@@ -81,17 +90,59 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	}
 
 	public Konsole() {
+		this(null);
+	}
+
+	public Konsole(PlaygroundPreview preview) {
 		super();
+
+		this.preview = preview;
 
 		setLayout(new BorderLayout());
 
 		createTopPanel();
-		createLabel();
-		createTextArea();
+
+		createCenterPanel();
 
 		createParser();
 
 		addListener();
+
+	}
+
+	private void createCenterPanel() {
+		centerPanel = new JSplitPane();
+		centerPanel.setDividerSize(Pixel.pointsToPixel(10));
+		centerPanel.setDividerLocation(0.7);
+		centerPanel.setOneTouchExpandable(true);
+		centerPanel.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		add(centerPanel, BorderLayout.CENTER);
+
+		createTextArea();
+		createCenterRightPanel();
+	}
+
+	private void createCenterRightPanel() {
+		centerRightPanel = new JSplitPane();
+		centerRightPanel.setDividerSize(Pixel.pointsToPixel(15));
+		centerRightPanel.setDividerLocation(0.7);
+		centerRightPanel.setOneTouchExpandable(true);
+		centerRightPanel.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		centerPanel.setRightComponent(centerRightPanel);
+
+		createPreview();
+		createRightBottom();
+	}
+
+	private void createRightBottom() {
+		centerRightPanel.setBottomComponent(new JLabel("by Marvin Bruns"));
+	}
+
+	private void createPreview() {
+		if (preview == null) {
+			preview = new PlaygroundPreview(null);
+		}
+		centerRightPanel.setTopComponent(preview);
 	}
 
 	private void addListener() {
@@ -115,13 +166,15 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	private void createScrollPane() {
 		sp = new JScrollPane();
-		add(sp, BorderLayout.CENTER);
+		centerPanel.setLeftComponent(sp);
 	}
 
 	private void createTopPanel() {
 		topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		add(topPanel, BorderLayout.NORTH);
+
+		createLabel();
 	}
 
 	private void createLabel() {
@@ -183,6 +236,15 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			parser.stop();
 			stopped = true;
 		}
+	}
+
+	protected void paintComponent(Graphics g) {
+		if (isFirstTimePaint) {
+			isFirstTimePaint = false;
+			centerPanel.setDividerLocation(0.7);
+			centerRightPanel.setDividerLocation(0.7);
+		}
+		super.paintComponent(g);
 	}
 
 	@Override
@@ -323,6 +385,12 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			}
 
 			colorizeAction();
+		}
+	}
+
+	public void setMapData(SpielfeldData spielfeld) {
+		if (preview != null) {
+			preview.setSpielfeld(spielfeld);
 		}
 	}
 }
