@@ -58,6 +58,12 @@ public class Playground extends JComponent implements RobotControl,
 
 	private boolean isConfused;
 
+	private final GraphicsConfiguration gfxConf = GraphicsEnvironment
+			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+			.getDefaultConfiguration();
+
+	BufferedImage img;
+
 	public Playground(SpielfeldData spielfeld, String map) {
 		super();
 
@@ -112,11 +118,6 @@ public class Playground extends JComponent implements RobotControl,
 		}
 	}
 
-	private final GraphicsConfiguration gfxConf = GraphicsEnvironment
-			.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-			.getDefaultConfiguration();
-	BufferedImage img;
-
 	@Override
 	protected void paintChildren(Graphics g) {
 		updateControllerSize();
@@ -137,7 +138,7 @@ public class Playground extends JComponent implements RobotControl,
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 
 		if (konsole.isVisible()) {
 			return;
