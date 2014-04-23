@@ -176,7 +176,7 @@ public class Playground extends JComponent implements RobotControl,
 				getWidth() / ((double) spielfeld.getWidth()), getHeight()
 						/ ((double) spielfeld.getHeight())));
 
-		int inset = Pixel.pointsToPixel(3);
+		int inset = Pixel.pointsToPixel(2);
 
 		int fullWidth = size * spielfeld.getWidth();
 		int fullHeight = size * spielfeld.getHeight();
