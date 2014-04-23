@@ -22,6 +22,7 @@ Maps Format:
 		# - normal Field
 		S[direction] - start Field | direction = 1(EAST), 2(SOUTH), 3(WEST), 4(NORTH)
 		X - blocked Field
+		? - confusing Field. Invert all commands
 		Z[number] - goal Field | number = 1.. You have to go to goal 1 before you can finish goal 2 and so on.
 	
 	Example:
