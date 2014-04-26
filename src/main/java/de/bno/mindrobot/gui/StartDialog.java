@@ -64,6 +64,7 @@ public class StartDialog extends JDialog implements ActionListener,
 		setLocationByPlatform(true);
 		setIcon();
 		setLayout(new BorderLayout(5, 5));
+		setResizable(false);
 
 		createLogoLabel();
 		createMainPanel();
