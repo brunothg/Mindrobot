@@ -21,6 +21,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -398,7 +400,44 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			}
 
 		} else {
-			// TODO: Fullscreen export
+			final ScriptExporter _exporter = exporter;
+			exporter = null;
+
+			final JFileChooser fc = new JFileChooser();
+			fc.setDialogType(JFileChooser.SAVE_DIALOG);
+
+			if (filename != null) {
+				fc.setSelectedFile(new File(filename));
+			}
+
+			fc.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String command = e.getActionCommand();
+					if (command.equals(JFileChooser.APPROVE_SELECTION)) {
+						File selectedFile = fc.getSelectedFile();
+						Path out = selectedFile.toPath();
+
+						if (out == null) {
+							return;
+						}
+
+						try {
+							_exporter.exportAs(editor.getText(), out);
+						} catch (IOException e2) {
+							LOG.warning("Fehler beim exportieren des Scripts: "
+									+ e2.getMessage());
+						} finally {
+							sp.setViewportView(editor);
+						}
+					} else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
+						sp.setViewportView(editor);
+					}
+				}
+			});
+
+			sp.setViewportView(fc);
 		}
 
 		return true;
