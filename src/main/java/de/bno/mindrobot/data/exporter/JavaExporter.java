@@ -24,7 +24,7 @@ public class JavaExporter implements ScriptExporter {
 
 		LOG.info("JavaExport -> " + out.toString());
 		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
-				String.format("JavaExport -> %s", out.toString()));
+				String.format("JavaExport -> %s%n", out.toString()));
 
 		if (!Files.exists(out)) {
 			Files.createFile(out);
@@ -43,7 +43,7 @@ public class JavaExporter implements ScriptExporter {
 		outs.close();
 
 		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
-				String.format("JavaExport -> %s", String(BEENDET)));
+				String.format("JavaExport -> %s&n", String(BEENDET)));
 	}
 
 	private String parse(String s) {
