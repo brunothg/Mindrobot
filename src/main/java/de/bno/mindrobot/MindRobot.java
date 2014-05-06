@@ -29,6 +29,8 @@ public class MindRobot {
 
 	private static boolean logDetailed;
 
+	private static boolean fullscreen;
+
 	public static void main(String[] args) {
 
 		if (args != null) {
@@ -126,6 +128,14 @@ public class MindRobot {
 
 		return log;
 
+	}
+
+	public static boolean isFullscreen() {
+		return fullscreen;
+	}
+
+	public static void setFullscreen(boolean fullscreen) {
+		MindRobot.fullscreen = fullscreen;
 	}
 
 }

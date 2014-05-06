@@ -346,6 +346,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			return true;
 		case Signals.SIGNAL_EXPORT_AS:
 			return exportScriptAs(values);
+		default:
+			break;
 		}
 
 		return false;
@@ -380,17 +382,23 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			return false;
 		}
 
-		Path out = openPath(filename);
+		if (!MindRobot.isFullscreen()) {
 
-		if (out == null) {
-			return true;
-		}
+			Path out = openPath(filename);
 
-		try {
-			exporter.exportAs(editor.getText(), out);
-		} catch (IOException e) {
-			LOG.warning("Fehler beim exportieren des Scripts: "
-					+ e.getMessage());
+			if (out == null) {
+				return true;
+			}
+
+			try {
+				exporter.exportAs(editor.getText(), out);
+			} catch (IOException e) {
+				LOG.warning("Fehler beim exportieren des Scripts: "
+						+ e.getMessage());
+			}
+
+		} else {
+			// TODO: Fullscreen export
 		}
 
 		return true;
@@ -403,14 +411,16 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			fc.setSelectedFile(new File(name));
 		}
 
+		File f = null;
+
 		int ret = fc.showSaveDialog(editor);
 		if (ret != JFileChooser.APPROVE_OPTION) {
 			return null;
 		}
 
-		File f = fc.getSelectedFile();
+		f = fc.getSelectedFile();
 
-		return f.toPath();
+		return (f != null) ? f.toPath() : null;
 	}
 
 	private void konsolenLog(Object[] values) {

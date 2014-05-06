@@ -331,8 +331,12 @@ public class StartDialog extends JDialog implements ActionListener,
 				selectDisplay.getSelectedIndex());
 		dispose();
 
-		RobotFrame robotframe = new RobotFrame(
-				(selectDisplay.getSelectedIndex() == 1) ? true : false);
+		boolean fullscreen = (selectDisplay.getSelectedIndex() == 1) ? true
+				: false;
+
+		MindRobot.setFullscreen(fullscreen);
+
+		RobotFrame robotframe = new RobotFrame(fullscreen);
 		robotframe.setVisible(true);
 	}
 
