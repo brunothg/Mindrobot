@@ -363,13 +363,16 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		LOG.info("Export script as " + format);
 
 		ScriptExporter exporter;
+		String filename;
 
 		switch (format.toLowerCase()) {
 		case "java":
 			exporter = new JavaExporter();
+			filename = "MindExport.java";
 			break;
 		default:
 			exporter = null;
+			filename = null;
 			break;
 		}
 
@@ -377,7 +380,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			return false;
 		}
 
-		Path out = openPath();
+		Path out = openPath(filename);
 
 		if (out == null) {
 			return true;
@@ -393,8 +396,12 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		return true;
 	}
 
-	private Path openPath() {
+	private Path openPath(String name) {
 		JFileChooser fc = new JFileChooser();
+
+		if (name != null) {
+			fc.setSelectedFile(new File(name));
+		}
 
 		int ret = fc.showSaveDialog(editor);
 		if (ret != JFileChooser.APPROVE_OPTION) {
