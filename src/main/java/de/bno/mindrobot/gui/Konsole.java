@@ -25,11 +25,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,6 +47,8 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import de.bno.mindrobot.MindRobot;
+import de.bno.mindrobot.data.exporter.JavaExporter;
+import de.bno.mindrobot.data.exporter.ScriptExporter;
 import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.gui.parser.MindTalk;
 import de.bno.mindrobot.gui.parser.Parser;
@@ -334,13 +340,70 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		switch (signal) {
 		case Signals.SIGNAL_KONSOLE_INSERT:
 			insertCMD(values);
-			break;
+			return true;
 		case Signals.SIGNAL_KONSOLE_LOG:
 			konsolenLog(values);
-			break;
+			return true;
+		case Signals.SIGNAL_EXPORT_AS:
+			return exportScriptAs(values);
 		}
 
 		return false;
+	}
+
+	private boolean exportScriptAs(Object[] values) {
+		String format = "";
+
+		if (values == null || values.length < 1) {
+			return false;
+		}
+
+		format = values[0].toString();
+
+		LOG.info("Export script as " + format);
+
+		ScriptExporter exporter;
+
+		switch (format.toLowerCase()) {
+		case "java":
+			exporter = new JavaExporter();
+			break;
+		default:
+			exporter = null;
+			break;
+		}
+
+		if (exporter == null) {
+			return false;
+		}
+
+		Path out = openPath();
+
+		if (out == null) {
+			return true;
+		}
+
+		try {
+			exporter.exportAs(editor.getText(), out);
+		} catch (IOException e) {
+			LOG.warning("Fehler beim exportieren des Scripts: "
+					+ e.getMessage());
+		}
+
+		return true;
+	}
+
+	private Path openPath() {
+		JFileChooser fc = new JFileChooser();
+
+		int ret = fc.showSaveDialog(editor);
+		if (ret != JFileChooser.APPROVE_OPTION) {
+			return null;
+		}
+
+		File f = fc.getSelectedFile();
+
+		return f.toPath();
 	}
 
 	private void konsolenLog(Object[] values) {

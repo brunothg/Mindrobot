@@ -19,6 +19,7 @@ public class Signals {
 	public static final String SIGNAL_RUN_FINISHED = "run_finfished";
 	public static final String SIGNAL_KONSOLE_INSERT = "konsole_insert";
 	public static final String SIGNAL_KONSOLE_LOG = "konsole_log";
+	public static final String SIGNAL_EXPORT_AS = "exp_as";
 
 	private static Vector<SignalListener> listener;
 

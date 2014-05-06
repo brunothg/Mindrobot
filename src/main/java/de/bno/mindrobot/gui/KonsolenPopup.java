@@ -1,5 +1,7 @@
 package de.bno.mindrobot.gui;
 
+import static de.bno.mindrobot.gui.Strings.EXPORT;
+import static de.bno.mindrobot.gui.Strings.JAVA;
 import static de.bno.mindrobot.gui.Strings.MENU_BEFEHL;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_HINDERNIS;
@@ -39,6 +41,8 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 	private JMenu fragenMenu;
 	private JMenuItem binVerwirrt;
 	private JMenuItem binHindernis;
+	private JMenu exportMenu;
+	private JMenuItem expJava;
 
 	public KonsolenPopup() {
 		super();
@@ -51,7 +55,20 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 		createFragen();
 		createVerzweigunen();
 		createSchleifen();
+		createExport();
+	}
 
+	private void createExport() {
+		exportMenu = new JMenu(String(EXPORT));
+		add(exportMenu);
+
+		createJavaExport();
+	}
+
+	private void createJavaExport() {
+		expJava = new JMenuItem(String(JAVA));
+		exportMenu.add(expJava);
+		expJava.addActionListener(this);
 	}
 
 	private void createFragen() {
@@ -169,6 +186,8 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 					Insert.HINDERNIS_Q);
 		} else if (arg0.getSource() == binVerwirrt) {
 			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.VERWIRRT_Q);
+		} else if (arg0.getSource() == expJava) {
+			Signals.sendSignal(Signals.SIGNAL_EXPORT_AS, "java");
 		}
 
 	}
