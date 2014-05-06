@@ -57,6 +57,7 @@ public class Strings {
 	public static final String LOGGING = "logging";
 	public static final String EXPORT = "export";
 	public static final String JAVA = "java";
+	public static final String BEENDET = "finished";
 
 	public static final String SYNTAX_ENDE = "syntax_end";
 	public static final String SYNTAX_WENN = "syntax_if";
@@ -132,6 +133,7 @@ public class Strings {
 		values.put(LOGGING, "Logging");
 		values.put(EXPORT, "Exportieren");
 		values.put(JAVA, "Java");
+		values.put(BEENDET, "beendet");
 	}
 
 	public static String String(String key) {
