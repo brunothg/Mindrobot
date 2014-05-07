@@ -4,6 +4,7 @@ import static de.bno.mindrobot.gui.Strings.BEENDET;
 import static de.bno.mindrobot.gui.Strings.String;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,11 +31,14 @@ public class JavaExporter implements ScriptExporter {
 			Files.createFile(out);
 		}
 
-		String exportstring = s;
+		String exportstring;
+		String javastring = s;
 
 		if (!s.isEmpty()) {
-			exportstring = parse(s);
+			javastring = parse(s);
 		}
+
+		exportstring = String.format(loadDefault("rahmen_java"), javastring);
 
 		OutputStream outs = Files.newOutputStream(out);
 
@@ -43,12 +47,34 @@ public class JavaExporter implements ScriptExporter {
 		outs.close();
 
 		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
-				String.format("JavaExport -> %s&n", String(BEENDET)));
+				String.format("JavaExport -> %s%n", String(BEENDET)));
 	}
 
-	private String parse(String s) {
-		// TODO Auto-generated method stub
-		return s;
+	private String loadDefault(String name) {
+
+		String ret = "";
+
+		InputStream in = getClass().getClassLoader().getResourceAsStream(
+				"de/bno/mindrobot/data/exporter/" + name);
+
+		byte[] buf = new byte[20];
+
+		int num = -1;
+
+		try {
+			while ((num = in.read(buf)) != -1) {
+				ret += new String(buf, 0, num, "UTF-8");
+			}
+		} catch (IOException e) {
+			ret = "%s";
+		}
+
+		return ret;
+	}
+
+	private String parse(String source) {
+		// TODO parse to java code
+		return source;
 	}
 
 }

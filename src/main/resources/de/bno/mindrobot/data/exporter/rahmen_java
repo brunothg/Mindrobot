@@ -1,0 +1,15 @@
+class MindProg{
+	public static void run(RobotCtrl ctrl){
+		%s
+	}
+}
+
+/*
+* Interface RobotCtr should provide following methods
+* RobotCtrl: 	void	forwards(),
+*				void	backwards(),
+*				void	turnLeft(),
+*				void	turnRight(),
+*				boolean	obstacleInFront(),
+*				boolean	isConfused();
+*/
