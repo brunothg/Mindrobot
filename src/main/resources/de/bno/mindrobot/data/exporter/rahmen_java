@@ -1,5 +1,5 @@
 class MindProg{
-	public static void run(RobotCtrl ctrl){
+	public static void run(RobotCtrl %s){
 		%s
 	}
 }

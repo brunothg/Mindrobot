@@ -30,6 +30,13 @@ import de.bno.mindrobot.gui.parser.MindTalk;
 
 public class JavaExporter implements ScriptExporter {
 
+	private static final String FORWARDS = "forwards()";
+	private static final String BACKWARDS = "backwards()";
+	private static final String TURN_RIGHT = "turnRight()";
+	private static final String TURN_LEFT = "turnLeft()";
+	private static final String IS_CONFUSED = "isConfused()";
+	private static final String OBSTACLE_IN_FRONT = "obstacleInFront()";
+	private static final String CTRL = "ctrl";
 	private static final Logger LOG = MindRobot.getLogger(JavaExporter.class);
 
 	public void exportAs(String s, Path out) throws IOException {
@@ -53,7 +60,8 @@ public class JavaExporter implements ScriptExporter {
 			javastring = parse(s);
 		}
 
-		exportstring = String.format(loadDefault("rahmen_java"), javastring);
+		exportstring = String.format(loadDefault("rahmen_java"), CTRL,
+				javastring);
 
 		OutputStream outs = Files.newOutputStream(out);
 
@@ -181,8 +189,6 @@ public class JavaExporter implements ScriptExporter {
 		ret = String.format("%swhile( %s ){%s%n%s}", prefix, question, prog,
 				prefix);
 
-		// runBlock(block, ctrl);
-
 		return new JumpReturn<String>(i + 2 + index, ret);
 	}
 
@@ -284,9 +290,9 @@ public class JavaExporter implements ScriptExporter {
 			}
 
 			if (cc.equals(String(QU_HINDERNIS))) {
-				ret += "ctrl.obstacleInFront()";
+				ret += String.format("%s.%s", CTRL, OBSTACLE_IN_FRONT);
 			} else if (cc.equals(String(QU_VERWIRRT))) {
-				ret += "ctrl.isConfused()";
+				ret += String.format("%s.%s", CTRL, IS_CONFUSED);
 			}
 
 		}
@@ -305,13 +311,13 @@ public class JavaExporter implements ScriptExporter {
 			String cc = cmd.substring(0, cmd.length() - 1);
 
 			if (cc.equals(String(CMD_LINKS))) {
-				ret += "ctrl.turnLeft()";
+				ret += String.format("%s.%s", CTRL, TURN_LEFT);
 			} else if (cc.equals(String(CMD_RECHTS))) {
-				ret += "ctrl.turnRight()";
+				ret += String.format("%s.%s", CTRL, TURN_RIGHT);
 			} else if (cc.equals(String(CMD_RUECKWAERTS))) {
-				ret += "ctrl.backwards()";
+				ret += String.format("%s.%s", CTRL, BACKWARDS);
 			} else if (cc.equals(String(CMD_VORWAERTS))) {
-				ret += "ctrl.forwards()";
+				ret += String.format("%s.%s", CTRL, FORWARDS);
 			}
 
 		}
