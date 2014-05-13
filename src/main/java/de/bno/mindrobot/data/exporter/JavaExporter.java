@@ -160,7 +160,7 @@ public class JavaExporter implements ScriptExporter {
 		String[] block = getBlock(s, i + 1);
 		int index = block.length;
 
-		String prog = "\n" + prefix + parseBlock(block, prefix + "\t");
+		String prog = "\n" + prefix + parseBlock(block, "\t");
 
 		ret = String.format(
 				"%sfor(long times = %d; times > 0; times--){%s%n%s}", prefix,
@@ -178,7 +178,7 @@ public class JavaExporter implements ScriptExporter {
 		String question = askQU(s[i + 1]);
 		String prog = "\n" + prefix + parseBlock(block, "\t");
 
-		ret = String.format("%swhile(%s){%s%n%s}", prefix, question, prog,
+		ret = String.format("%swhile( %s ){%s%n%s}", prefix, question, prog,
 				prefix);
 
 		// runBlock(block, ctrl);
@@ -284,9 +284,9 @@ public class JavaExporter implements ScriptExporter {
 			}
 
 			if (cc.equals(String(QU_HINDERNIS))) {
-				ret += "obstacleInFront()";
+				ret += "ctrl.obstacleInFront()";
 			} else if (cc.equals(String(QU_VERWIRRT))) {
-				ret += "isConfused()";
+				ret += "ctrl.isConfused()";
 			}
 
 		}
@@ -305,13 +305,13 @@ public class JavaExporter implements ScriptExporter {
 			String cc = cmd.substring(0, cmd.length() - 1);
 
 			if (cc.equals(String(CMD_LINKS))) {
-				ret += "turnLeft()";
+				ret += "ctrl.turnLeft()";
 			} else if (cc.equals(String(CMD_RECHTS))) {
-				ret += "turnRight()";
+				ret += "ctrl.turnRight()";
 			} else if (cc.equals(String(CMD_RUECKWAERTS))) {
-				ret += "backwards()";
+				ret += "ctrl.backwards()";
 			} else if (cc.equals(String(CMD_VORWAERTS))) {
-				ret += "forwards()";
+				ret += "ctrl.forwards()";
 			}
 
 		}
