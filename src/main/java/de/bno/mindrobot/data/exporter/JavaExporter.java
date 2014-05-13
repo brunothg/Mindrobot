@@ -163,7 +163,7 @@ public class JavaExporter implements ScriptExporter {
 		String prog = parseBlock(block, prefix + "\t");
 
 		ret = String.format(
-				"%sfor(long times = %d; times > 0; times--){%s%n%s", prefix,
+				"%sfor(long times = %d; times > 0; times--){%s%n%s}", prefix,
 				times, prog, prefix);
 
 		return new JumpReturn<String>(i + 2 + index, ret);
