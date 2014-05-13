@@ -87,4 +87,8 @@ Translations:
 		menu_question=Frage
 		menu_question_confused=Bin ich verwirrt?
 		menu_question_obstacle=Stehe ich vor einem Hindernis?
+		logging=Logging
+		export=Exportieren
+		java=Java
+		finished=beendet
 		END
