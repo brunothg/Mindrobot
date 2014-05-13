@@ -99,7 +99,7 @@ public class MindTalk implements Parser {
 		return ret.toArray(new String[0]);
 	}
 
-	private String[][] splitBlock(String[] block, String divider) {
+	public static String[][] splitBlock(String[] block, String divider) {
 
 		List<String> first = new LinkedList<String>();
 		List<String> second = new LinkedList<String>();
@@ -123,7 +123,7 @@ public class MindTalk implements Parser {
 				second.toArray(new String[0]) };
 	}
 
-	private String[] subBlock(String[] ar, int start, int stop) {
+	public static String[] subBlock(String[] ar, int start, int stop) {
 		String[] ret = new String[stop - start];
 
 		for (int i = 0; i < ret.length; i++) {
@@ -265,7 +265,7 @@ public class MindTalk implements Parser {
 		return false;
 	}
 
-	private Schleife getSchleifenTyp(String[] words, int i) {
+	public static Schleife getSchleifenTyp(String[] words, int i) {
 
 		if (words[i].equals(String(SYNTAX_SOLANGE))) {
 			return Schleife.Solange;
@@ -278,7 +278,7 @@ public class MindTalk implements Parser {
 		return null;
 	}
 
-	private CommandTyp getCommandTyp(String[] words, int i) {
+	public static CommandTyp getCommandTyp(String[] words, int i) {
 
 		if (words[i].matches("!?[a-zA-Z]+[0-9a-zA-ZäüöÄÜÖß]*[\\.\\?]")) {
 			return CommandTyp.Befehl;
@@ -293,7 +293,7 @@ public class MindTalk implements Parser {
 			return CommandTyp.Schleife;
 		}
 
-		return null;
+		return CommandTyp.Unbekannt;
 	}
 
 	@Override
@@ -301,11 +301,11 @@ public class MindTalk implements Parser {
 		running = false;
 	}
 
-	private enum CommandTyp {
-		Befehl, Verzweigung, Schleife;
+	public enum CommandTyp {
+		Befehl, Verzweigung, Schleife, Unbekannt;
 	}
 
-	private enum Schleife {
+	public enum Schleife {
 		Wiederholung, Solange;
 	}
 
