@@ -111,9 +111,9 @@ public class JavaExporter implements ScriptExporter {
 				ret += "\n" + prefix + parseCMD(words[i], "\t\t");
 				break;
 			case Verzweigung:
-				Object[] case_ret = followCase(words, i, "\t\t");
-				i = ((Integer) case_ret[0]).intValue();
-				ret += "\n" + prefix + case_ret[1].toString() + "\n";
+				JumpReturn<String> case_ret = followCase(words, i, "\t\t");
+				i = case_ret.getJump();
+				ret += "\n" + prefix + case_ret.getReturnValue() + "\n";
 				break;
 			case Schleife:
 				// i = repeat(words, i, ctrl);
@@ -127,7 +127,7 @@ public class JavaExporter implements ScriptExporter {
 		return ret;
 	}
 
-	private Object[] followCase(String[] s, int i, String prefix) {
+	private JumpReturn<String> followCase(String[] s, int i, String prefix) {
 		String ret = "";
 
 		int index = 0;
@@ -165,7 +165,7 @@ public class JavaExporter implements ScriptExporter {
 			ret += String.format("else{%s%n%s}", sonst_block, prefix);
 		}
 
-		return new Object[] { new Integer(i + 2 + index), ret };
+		return new JumpReturn<String>(i + 2 + index, ret);
 	}
 
 	private String[] getBlock(String[] words, int i) {
