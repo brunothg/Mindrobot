@@ -113,7 +113,7 @@ public class JavaExporter implements ScriptExporter {
 			case Verzweigung:
 				Object[] case_ret = followCase(words, i, "\t\t");
 				i = ((Integer) case_ret[0]).intValue();
-				ret += "\n" + prefix + case_ret[1].toString();
+				ret += "\n" + prefix + case_ret[1].toString() + "\n";
 				break;
 			case Schleife:
 				// i = repeat(words, i, ctrl);
