@@ -160,7 +160,7 @@ public class JavaExporter implements ScriptExporter {
 		String[] block = getBlock(s, i + 1);
 		int index = block.length;
 
-		String prog = parseBlock(block, prefix + "\t");
+		String prog = "\n" + prefix + parseBlock(block, prefix + "\t");
 
 		ret = String.format(
 				"%sfor(long times = %d; times > 0; times--){%s%n%s}", prefix,
@@ -176,7 +176,7 @@ public class JavaExporter implements ScriptExporter {
 		int index = block.length;
 
 		String question = askQU(s[i + 1]);
-		String prog = parseBlock(block, prefix + "\t");
+		String prog = "\n" + prefix + parseBlock(block, "\t");
 
 		ret = String.format("%swhile(%s){%s%n%s}", prefix, question, prog,
 				prefix);
@@ -202,7 +202,7 @@ public class JavaExporter implements ScriptExporter {
 		if (wenn_dann[0].length > 0
 				&& wenn_dann[0][0].equals(String(SYNTAX_DANN))) {
 			block = MindTalk.subBlock(wenn_dann[0], 1, wenn_dann[0].length);
-			dann_block = "\n" + parseBlock(block, prefix + "\t");
+			dann_block = "\n" + prefix + parseBlock(block, "\t");
 		} else {
 			dann_block = "\n" + prefix + "//Error translating then block";
 		}
