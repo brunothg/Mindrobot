@@ -113,10 +113,12 @@ public class JavaExporter implements ScriptExporter {
 			case Verzweigung:
 				JumpReturn<String> case_ret = followCase(words, i, "\t\t");
 				i = case_ret.getJump();
-				ret += "\n" + prefix + case_ret.getReturnValue() + "\n";
+				ret += "\n\n" + prefix + case_ret.getReturnValue() + "\n";
 				break;
 			case Schleife:
-				// i = repeat(words, i, ctrl);
+				JumpReturn<String> loop_ret = repeat(words, i, "\t\t");
+				i = loop_ret.getJump();
+				ret += "\n\n" + prefix + loop_ret.getReturnValue() + "\n";
 				break;
 			default:
 				break;
@@ -125,6 +127,63 @@ public class JavaExporter implements ScriptExporter {
 		}
 
 		return ret;
+	}
+
+	private JumpReturn<String> repeat(String[] s, int i, String prefix) {
+		String ret = "";
+		int index = 0;
+
+		switch (MindTalk.getSchleifenTyp(s, i)) {
+		case Solange:
+			JumpReturn<String> rep_ret = repeatWhile(s, i, prefix);
+			index = rep_ret.getJump();
+			ret = rep_ret.getReturnValue();
+			break;
+		case Wiederholung:
+			JumpReturn<String> repx_ret = repeatXTimes(s, i, prefix);
+			index = repx_ret.getJump();
+			ret = repx_ret.getReturnValue();
+			break;
+		default:
+			index = i;
+			break;
+		}
+
+		return new JumpReturn<String>(index, ret);
+	}
+
+	private JumpReturn<String> repeatXTimes(String[] s, int i, String prefix) {
+		String ret = "";
+
+		long times = Long.valueOf(s[i + 1]).longValue();
+
+		String[] block = getBlock(s, i + 1);
+		int index = block.length;
+
+		String prog = parseBlock(block, prefix + "\t");
+
+		ret = String.format(
+				"%sfor(long times = %d; times > 0; times--){%s%n%s", prefix,
+				times, prog, prefix);
+
+		return new JumpReturn<String>(i + 2 + index, ret);
+	}
+
+	private JumpReturn<String> repeatWhile(String[] s, int i, String prefix) {
+		String ret = "";
+
+		String[] block = getBlock(s, i + 1);
+		int index = block.length;
+
+		String question = askQU(s[i + 1]);
+		String prog = parseBlock(block, prefix + "\t");
+
+		ret = String.format("%swhile(%s){%s%n%s}", prefix, question, prog,
+				prefix);
+
+		// runBlock(block, ctrl);
+
+		return new JumpReturn<String>(i + 2 + index, ret);
 	}
 
 	private JumpReturn<String> followCase(String[] s, int i, String prefix) {
@@ -143,7 +202,7 @@ public class JavaExporter implements ScriptExporter {
 		if (wenn_dann[0].length > 0
 				&& wenn_dann[0][0].equals(String(SYNTAX_DANN))) {
 			block = MindTalk.subBlock(wenn_dann[0], 1, wenn_dann[0].length);
-			dann_block = "\n" + prefix + parseBlock(block, "\t");
+			dann_block = "\n" + parseBlock(block, prefix + "\t");
 		} else {
 			dann_block = "\n" + prefix + "//Error translating then block";
 		}
@@ -244,7 +303,6 @@ public class JavaExporter implements ScriptExporter {
 
 		if (cmd.endsWith(".")) {
 			String cc = cmd.substring(0, cmd.length() - 1);
-			LOG.info("CMD->" + cc);
 
 			if (cc.equals(String(CMD_LINKS))) {
 				ret += "turnLeft()";
