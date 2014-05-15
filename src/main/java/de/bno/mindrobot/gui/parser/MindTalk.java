@@ -185,13 +185,15 @@ public class MindTalk implements Parser {
 			block = splitBlock(block, String(SYNTAX_SONST))[1];
 		}
 
-		if (block[0].equals(String(SYNTAX_DANN))
-				|| block[0].equals(String(SYNTAX_SONST))) {
+		if (block != null
+				&& block.length > 0
+				&& (block[0].equals(String(SYNTAX_DANN)) || block[0]
+						.equals(String(SYNTAX_SONST)))) {
+
 			block = subBlock(block, 1, block.length);
 
+			runBlock(block, ctrl);
 		}
-
-		runBlock(block, ctrl);
 
 		return i + 2 + index;
 	}
@@ -242,8 +244,7 @@ public class MindTalk implements Parser {
 				return (!invert) ? !ctrl.isFieldInFrontAccessible() : ctrl
 						.isFieldInFrontAccessible();
 			} else if (cc.equals(String(QU_VERWIRRT))) {
-				return (invert) ? !ctrl.standOnConfusingField() : ctrl
-						.isConfused();
+				return (invert) ? !ctrl.isConfused() : ctrl.isConfused();
 			}
 
 		}
