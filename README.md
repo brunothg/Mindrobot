@@ -91,4 +91,5 @@ Translations:
 		export=Exportieren
 		java=Java
 		finished=beendet
+		number=Zahl
 		END

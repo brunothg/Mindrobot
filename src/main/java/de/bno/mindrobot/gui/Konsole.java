@@ -7,6 +7,7 @@ import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.EDIT;
 import static de.bno.mindrobot.gui.Strings.LOGGING;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
+import static de.bno.mindrobot.gui.Strings.NUMBER;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
@@ -488,7 +489,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 			break;
 		case WIEDERHOLE_X:
 			insertString = String.format("%s <%s>%n%n%s ",
-					String(SYNTAX_WIEDERHOLE), String(MENU_FRAGE),
+					String(SYNTAX_WIEDERHOLE), String(NUMBER),
 					String(SYNTAX_ENDE));
 			break;
 		case SOLANGE_WIE:
