@@ -223,11 +223,11 @@ public class MindTalk implements Parser {
 	}
 
 	private boolean askQU(String cmd, RobotControl ctrl) {
-		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
-				String.format("? -> %s%n%n", cmd));
 		if (cmd == null || ctrl == null) {
 			return false;
 		}
+
+		boolean ret = false;
 
 		if (cmd.endsWith("?")) {
 			boolean invert = false;
@@ -241,15 +241,18 @@ public class MindTalk implements Parser {
 			}
 
 			if (cc.equals(String(QU_HINDERNIS))) {
-				return (!invert) ? !ctrl.isFieldInFrontAccessible() : ctrl
+				ret = (!invert) ? !ctrl.isFieldInFrontAccessible() : ctrl
 						.isFieldInFrontAccessible();
 			} else if (cc.equals(String(QU_VERWIRRT))) {
-				return (invert) ? !ctrl.isConfused() : ctrl.isConfused();
+				ret = (invert) ? !ctrl.isConfused() : ctrl.isConfused();
 			}
 
 		}
 
-		return false;
+		Signals.sendSignal(Signals.SIGNAL_KONSOLE_LOG,
+				String.format("? -> %s = %b%n%n", cmd, ret));
+
+		return ret;
 	}
 
 	private boolean isStartBlock(String tmp) {
