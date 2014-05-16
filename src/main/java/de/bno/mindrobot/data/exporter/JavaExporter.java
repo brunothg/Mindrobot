@@ -200,7 +200,8 @@ public class JavaExporter implements ScriptExporter {
 		index = block.length;
 
 		// [WENN, DANN]
-		String[][] wenn_dann = MindTalk.splitBlock(block, String(SYNTAX_SONST));
+		String[][] wenn_dann = MindTalk.splitBlock(block, String(SYNTAX_SONST),
+				String(SYNTAX_DANN));
 
 		String bedingung = askQU(s[i + 1]);
 		String dann_block = "";

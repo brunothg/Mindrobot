@@ -99,17 +99,30 @@ public class MindTalk implements Parser {
 		return ret.toArray(new String[0]);
 	}
 
-	public static String[][] splitBlock(String[] block, String divider) {
+	/**
+	 * Trennt einen <b>block</b> an der Stelle des <b>divider</b>. Sollte ein
+	 * <b>starter</b> auftauchen muss ein weiterer <b>divider</b> auftauchen.
+	 */
+	public static String[][] splitBlock(String[] block, String divider,
+			String starter) {
 
 		List<String> first = new LinkedList<String>();
 		List<String> second = new LinkedList<String>();
+
+		int counter = -1;
 
 		boolean foundDivider = false;
 		for (int i = 0; i < block.length; i++) {
 			String now = block[i];
 
 			if (now.equals(divider)) {
-				foundDivider = true;
+				if (counter == 0) {
+					foundDivider = true;
+				} else {
+					counter--;
+				}
+			} else if (now.equals(starter)) {
+				counter++;
 			}
 
 			if (foundDivider) {
@@ -180,9 +193,9 @@ public class MindTalk implements Parser {
 		index = block.length;
 
 		if (_case) {
-			block = splitBlock(block, String(SYNTAX_SONST))[0];
+			block = splitBlock(block, String(SYNTAX_SONST), String(SYNTAX_DANN))[0];
 		} else {
-			block = splitBlock(block, String(SYNTAX_SONST))[1];
+			block = splitBlock(block, String(SYNTAX_SONST), String(SYNTAX_DANN))[1];
 		}
 
 		if (block != null
