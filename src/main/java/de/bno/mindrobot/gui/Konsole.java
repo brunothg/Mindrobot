@@ -485,7 +485,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 					String(SYNTAX_SONST), String(SYNTAX_ENDE));
 			break;
 		case WIEDERHOLE_X:
-			insertString = String.format("%s ...%n%n%s ",
+			insertString = String.format("%s 1%n%n%s ",
 					String(SYNTAX_WIEDERHOLE), String(SYNTAX_ENDE));
 			break;
 		case SOLANGE_WIE:
