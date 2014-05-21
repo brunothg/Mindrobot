@@ -128,6 +128,8 @@ public class JavaExporter implements ScriptExporter {
 				i = loop_ret.getJump();
 				ret += "\n\n" + prefix + loop_ret.getReturnValue() + "\n";
 				break;
+			case Ignorieren:
+				break;
 			default:
 				break;
 			}
