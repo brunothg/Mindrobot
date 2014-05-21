@@ -61,7 +61,10 @@ public class MindTalk implements Parser {
 			case Schleife:
 				i = repeat(words, i, ctrl);
 				break;
+			case Ignorieren:
+				break;
 			default:
+				LOG.warning("Unknown Command -> " + words[i]);
 				running = false;
 				return;
 			}
@@ -310,6 +313,10 @@ public class MindTalk implements Parser {
 			return CommandTyp.Schleife;
 		}
 
+		if (words[i].isEmpty()) {
+			return CommandTyp.Ignorieren;
+		}
+
 		return CommandTyp.Unbekannt;
 	}
 
@@ -319,7 +326,7 @@ public class MindTalk implements Parser {
 	}
 
 	public enum CommandTyp {
-		Befehl, Verzweigung, Schleife, Unbekannt;
+		Befehl, Verzweigung, Schleife, Unbekannt, Ignorieren;
 	}
 
 	public enum Schleife {
