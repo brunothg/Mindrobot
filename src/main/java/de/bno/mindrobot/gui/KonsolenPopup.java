@@ -6,6 +6,7 @@ import static de.bno.mindrobot.gui.Strings.MENU_BEFEHL;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_VERWIRRT;
+import static de.bno.mindrobot.gui.Strings.MENU_GESCHWINDIGKEIT;
 import static de.bno.mindrobot.gui.Strings.MENU_LINKSDREHEN;
 import static de.bno.mindrobot.gui.Strings.MENU_RECHTSDREHEN;
 import static de.bno.mindrobot.gui.Strings.MENU_RUECKWAERTS;
@@ -28,19 +29,25 @@ import javax.swing.JPopupMenu;
 public class KonsolenPopup extends JPopupMenu implements ActionListener {
 
 	private static final long serialVersionUID = -2967732009111903750L;
-	private JMenu befehleMenu;
-	private JMenu schleifenMenu;
+
 	private JMenu verzweigungenMenu;
 	private JMenuItem wennDann;
+
+	private JMenu befehleMenu;
 	private JMenuItem rechtsrum;
 	private JMenuItem linksrum;
 	private JMenuItem moveBack;
 	private JMenuItem moveFront;
+	private JMenuItem setSpeed;
+
+	private JMenu schleifenMenu;
 	private JMenuItem solangeWie;
 	private JMenuItem repeatX;
+
 	private JMenu fragenMenu;
 	private JMenuItem binVerwirrt;
 	private JMenuItem binHindernis;
+
 	private JMenu exportMenu;
 	private JMenuItem expJava;
 
@@ -133,7 +140,14 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 		createRueckwaerts();
 		createLinksDrehen();
 		createRechtsDrehen();
+		createSetzeGeschwindigkeit();
 
+	}
+
+	private void createSetzeGeschwindigkeit() {
+		setSpeed = new JMenuItem(String(MENU_GESCHWINDIGKEIT));
+		befehleMenu.add(setSpeed);
+		setSpeed.addActionListener(this);
 	}
 
 	private void createRechtsDrehen() {
@@ -188,6 +202,9 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener {
 			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.VERWIRRT_Q);
 		} else if (arg0.getSource() == expJava) {
 			Signals.sendSignal(Signals.SIGNAL_EXPORT_AS, "java");
+		} else if (arg0.getSource() == setSpeed) {
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT,
+					Insert.SETZE_GESCHWINDIGKEIT);
 		}
 
 	}

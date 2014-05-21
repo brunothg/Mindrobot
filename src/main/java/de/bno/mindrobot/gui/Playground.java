@@ -37,7 +37,7 @@ public class Playground extends JComponent implements RobotControl,
 	private static final Dimension NORMAL_FELD_SIZE = new Dimension(
 			Pixel.pointsToPixel(100), Pixel.pointsToPixel(100));
 
-	private static final int WAIT = 1000;
+	private static int WAIT = 1000;
 
 	private SpielfeldData spielfeld;
 
@@ -601,6 +601,9 @@ public class Playground extends JComponent implements RobotControl,
 		case Signals.SIGNAL_STOP_BTN:
 			konsole.stopProgram();
 			return true;
+		case Signals.SIGNAL_SET_WAIT:
+			WAIT = ((Integer) values[0]).intValue();
+			break;
 		}
 
 		return false;

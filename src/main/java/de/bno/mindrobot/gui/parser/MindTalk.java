@@ -3,13 +3,14 @@ package de.bno.mindrobot.gui.parser;
 import static de.bno.mindrobot.gui.Strings.CMD_LINKS;
 import static de.bno.mindrobot.gui.Strings.CMD_RECHTS;
 import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
+import static de.bno.mindrobot.gui.Strings.CMD_SPEED;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
+import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SOLANGE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SONST;
-import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_WENN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_WIEDERHOLE;
 import static de.bno.mindrobot.gui.Strings.String;
@@ -233,9 +234,25 @@ public class MindTalk implements Parser {
 				ctrl.moveBackwards();
 			} else if (cc.equals(String(CMD_VORWAERTS))) {
 				ctrl.moveForwards();
+			} else if (cc.startsWith(String(CMD_SPEED))) {
+				setSpeedCmd(cc);
 			}
 
 		}
+	}
+
+	private void setSpeedCmd(String cc) {
+		if (cc == null) {
+			return;
+		}
+
+		int startArgIndex = cc.indexOf('(') + 1;
+		int stopArgIndex = cc.indexOf(')');
+
+		String arg = cc.substring(startArgIndex, stopArgIndex);
+		Integer arg_i = Integer.valueOf(arg);
+
+		Signals.sendSignal(Signals.SIGNAL_SET_WAIT, arg_i);
 	}
 
 	private boolean askQU(String cmd, RobotControl ctrl) {
@@ -300,7 +317,7 @@ public class MindTalk implements Parser {
 
 	public static CommandTyp getCommandTyp(String[] words, int i) {
 
-		if (words[i].matches("!?[a-zA-Z]+[0-9a-zA-ZäüöÄÜÖß]*[\\.\\?]")) {
+		if (words[i].matches("!?[a-zA-Z]+[0-9a-zA-ZäüöÄÜÖß()]*[\\.\\?]")) {
 			return CommandTyp.Befehl;
 		}
 

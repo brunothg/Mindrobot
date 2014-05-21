@@ -37,11 +37,18 @@ public class Strings {
 	public static final String STOP = "stop";
 	public static final String EDIT = "edit";
 	public static final String EXIT_QUESTION = "exit_question";
-	public static final String MENU = "menu";
+	public static final String LOGGING = "logging";
+	public static final String EXPORT = "export";
+	public static final String JAVA = "java";
+	public static final String BEENDET = "finished";
+	public static final String NUMBER = "number";
+
 	public static final String ROBOT_WALL = "robot_wall_speech";
 	public static final String ROBOT_OUT_OF_MAP = "robot_out_of_map_speech";
 	public static final String ROBOT_ZIEL_X = "robot_goal_x_speech";
 	public static final String ROBOT_ZIEL_SUC = "robot_goal_last_speech";
+
+	public static final String MENU = "menu";
 	public static final String MENU_BEFEHL = "menu_command";
 	public static final String MENU_SCHLEIFE = "menu_loop";
 	public static final String MENU_VERZWEIGUNG = "menu_branch";
@@ -54,11 +61,7 @@ public class Strings {
 	public static final String MENU_FRAGE = "menu_question";
 	public static final String MENU_FRAGE_VERWIRRT = "menu_question_confused";
 	public static final String MENU_FRAGE_HINDERNIS = "menu_question_obstacle";
-	public static final String LOGGING = "logging";
-	public static final String EXPORT = "export";
-	public static final String JAVA = "java";
-	public static final String BEENDET = "finished";
-	public static final String NUMBER = "number";
+	public static final String MENU_GESCHWINDIGKEIT = "menu_set_speed";
 
 	public static final String SYNTAX_ENDE = "syntax_end";
 	public static final String SYNTAX_WENN = "syntax_if";
@@ -71,6 +74,7 @@ public class Strings {
 	public static final String CMD_RUECKWAERTS = "cmd_backwards";
 	public static final String CMD_LINKS = "cmd_left";
 	public static final String CMD_RECHTS = "cmd_right";
+	public static final String CMD_SPEED = "cmd_speed";
 
 	public static final String QU_VERWIRRT = "qu_confused";
 	public static final String QU_HINDERNIS = "qu_blocked";
@@ -117,6 +121,7 @@ public class Strings {
 		values.put(CMD_RECHTS, "rechtsDrehen");
 		values.put(CMD_RUECKWAERTS, "rückwärts");
 		values.put(CMD_VORWAERTS, "vorwärts");
+		values.put(CMD_SPEED, "setzeGeschwindigkeit");
 		values.put(QU_HINDERNIS, "steheVorHindernis");
 		values.put(QU_VERWIRRT, "binVerwirrt");
 		values.put(MENU_BEFEHL, "Befehl");
@@ -124,6 +129,7 @@ public class Strings {
 		values.put(MENU_VERZWEIGUNG, "Verzweigung");
 		values.put(MENU_RECHTSDREHEN, "45° im Uhrzeigersinn drehen");
 		values.put(MENU_LINKSDREHEN, "45° gegen den Uhrzeigersinn drehen");
+		values.put(MENU_GESCHWINDIGKEIT, "Ändere Geschwindigkeit");
 		values.put(MENU_VORWAERTS, "Einen Schritt vorwärts");
 		values.put(MENU_RUECKWAERTS, "Einen Schritt rückwärts");
 		values.put(MENU_WIEDERHOLUNG, "Wiederhole x-mal");

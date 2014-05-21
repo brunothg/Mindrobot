@@ -20,6 +20,7 @@ public class Signals {
 	public static final String SIGNAL_KONSOLE_INSERT = "konsole_insert";
 	public static final String SIGNAL_KONSOLE_LOG = "konsole_log";
 	public static final String SIGNAL_EXPORT_AS = "exp_as";
+	public static final String SIGNAL_SET_WAIT = "set_wait";
 
 	private static Vector<SignalListener> listener;
 
