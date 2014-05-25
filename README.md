@@ -64,7 +64,7 @@ Translations:
 		cmd_backwards=rückwärts
 		cmd_right=rechtsDrehen
 		menu_move_forwards=Einen Schritt vorwärts
-		menu_turn_right=45° im Uhrzeigersinn drehen
+		menu_turn_right=90° im Uhrzeigersinn drehen
 		dft=Standart
 		exit_question=Wollen Sie das Spiel wirklich verlassen?
 		menu_loop=Schleife
@@ -81,7 +81,7 @@ Translations:
 		robot_goal_x_speech=Yeah! Das %d. Ziel erreicht.
 		one_instanz_only_message=Es läuft bereits eine Instanz des Programms.
 		start=Starten
-		menu_turn_left=45° gegen den Uhrzeigersinn drehen
+		menu_turn_left=90° gegen den Uhrzeigersinn drehen
 		cmd_left=linksDrehen
 		one_instanz_only_title=Programm wurde bereits gestartet
 		menu_question=Frage

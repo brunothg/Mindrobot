@@ -37,7 +37,8 @@ public class Playground extends JComponent implements RobotControl,
 	private static final Dimension NORMAL_FELD_SIZE = new Dimension(
 			Pixel.pointsToPixel(100), Pixel.pointsToPixel(100));
 
-	private static int WAIT = 1000;
+	private static int DEFAULT_WAIT = 1000;
+	private static int WAIT = DEFAULT_WAIT;
 
 	private SpielfeldData spielfeld;
 
@@ -618,6 +619,7 @@ public class Playground extends JComponent implements RobotControl,
 		this.directionAvatar = this.spielfeld.getStartDirection();
 		moveAvatarToLocation(spielfeld.getStartPoint());
 		playController.minimizeSwitch();
+		WAIT = DEFAULT_WAIT;
 
 		new SwingWorker<Void, Object>() {
 

@@ -127,8 +127,8 @@ public class Strings {
 		values.put(MENU_BEFEHL, "Befehl");
 		values.put(MENU_SCHLEIFE, "Schleife");
 		values.put(MENU_VERZWEIGUNG, "Verzweigung");
-		values.put(MENU_RECHTSDREHEN, "45° im Uhrzeigersinn drehen");
-		values.put(MENU_LINKSDREHEN, "45° gegen den Uhrzeigersinn drehen");
+		values.put(MENU_RECHTSDREHEN, "90° im Uhrzeigersinn drehen");
+		values.put(MENU_LINKSDREHEN, "90° gegen den Uhrzeigersinn drehen");
 		values.put(MENU_GESCHWINDIGKEIT, "Ändere Geschwindigkeit");
 		values.put(MENU_VORWAERTS, "Einen Schritt vorwärts");
 		values.put(MENU_RUECKWAERTS, "Einen Schritt rückwärts");
