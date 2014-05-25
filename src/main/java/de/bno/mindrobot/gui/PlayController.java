@@ -101,26 +101,43 @@ public class PlayController extends JComponent implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getSource() == btnPlay) {
-			Signals.sendSignal(Signals.SIGNAL_PLAY_BTN);
+			playAction();
 		} else if (arg0.getSource() == btnStop) {
-			Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
+			stopAction();
 		} else if (arg0.getSource() == btnEdit) {
-			Signals.sendSignal(Signals.SIGNAL_EDIT_BTN);
+			editAction();
 		} else if (arg0.getSource() == btnMenu) {
 			menuAction();
 		} else if (arg0.getSource() == btnOpen) {
-			btnOpen.setText((btnOpen.getText().equalsIgnoreCase(">")) ? "<"
-					: ">");
-			if (btnOpen.getText().equalsIgnoreCase(">")) {
-				openedPanel.setVisible(false);
-			} else {
-				openedPanel.setVisible(true);
-			}
+			openAction();
 		}
 
 	}
 
+	private void openAction() {
+		btnOpen.setText((btnOpen.getText().equalsIgnoreCase(">")) ? "<" : ">");
+		if (btnOpen.getText().equalsIgnoreCase(">")) {
+			openedPanel.setVisible(false);
+		} else {
+			openedPanel.setVisible(true);
+		}
+	}
+
+	private void editAction() {
+		Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
+		Signals.sendSignal(Signals.SIGNAL_EDIT_BTN);
+	}
+
+	private void stopAction() {
+		Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
+	}
+
+	private void playAction() {
+		Signals.sendSignal(Signals.SIGNAL_PLAY_BTN);
+	}
+
 	private void menuAction() {
+		Signals.sendSignal(Signals.SIGNAL_STOP_BTN);
 		Signals.sendSignal(Signals.SIGNAL_MENU);
 	}
 }
