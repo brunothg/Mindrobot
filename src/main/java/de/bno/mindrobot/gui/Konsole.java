@@ -85,6 +85,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	private JBufferedTextArea logArea;
 
+	/* Highlighting Keywords */
 	private static final String[] HIGHLIGHT_DEF = new String[] {
 			String(SYNTAX_WENN), String(SYNTAX_DANN), String(SYNTAX_SONST),
 			String(SYNTAX_ENDE), String(SYNTAX_WIEDERHOLE),
@@ -105,6 +106,18 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		buff.append(")");
 		HIGHLIGHT_DEF_REGEX = buff.toString();
 	}
+	/* Highlighting Keywords */
+
+	/* Highlight cmd */
+	private static final Color CMD_KEYWORD_COLOR = new Color(255, 153, 0);
+	private static final String HIGHLIGHT_CMD_REGEX = "((\\s+|\\A)[a-zA-ZöüäÖÜÄß]+[a-zA-Z0-9öüäÖÜÄß()]*\\.(\\s|\\Z))";
+	/* Highlight cmd */
+
+	/* Highlight question */
+	private static final Color QU_KEYWORD_COLOR = new Color(255, 0, 0);
+	private static final String HIGHLIGHT_QU_REGEX = "((\\s+|\\A)!?[a-zA-ZöüäÖÜÄß]+[a-zA-Z0-9öüäÖÜÄß()]*\\?(\\s|\\Z))";
+
+	/* Highlight question */
 
 	public Konsole() {
 		this(null);
@@ -223,11 +236,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	}
 
 	public void clearTextHighlighting() {
-		updateTextHighlighting(0, editor.getText().length(), Color.BLACK, false);
-	}
-
-	public void updateTextHighlighting(int offset, int length) {
-		updateTextHighlighting(offset, length, DEFAULT_KEYWORD_COLOR, true);
+		updateTextHighlighting(0, editor.getText().length(),
+				editor.getForeground(), false);
 	}
 
 	public void runProgram(RobotControl ctr) {
@@ -287,18 +297,37 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	private void colorizeAction() {
 		clearTextHighlighting();
-		Pattern pattern = Pattern.compile(HIGHLIGHT_DEF_REGEX);
+
+		highlightCMD();
+		highlightQU();
+		highlightDefault();
+	}
+
+	private void highlight(String regex, Color color, boolean bold) {
+		Pattern pattern = Pattern.compile(regex);
 		Matcher match;
 		try {
 			match = pattern.matcher(editor.getDocument().getText(0,
 					editor.getDocument().getLength()));
 			while (match.find()) {
 				updateTextHighlighting(match.start(),
-						match.end() - match.start());
+						match.end() - match.start(), color, bold);
 			}
 		} catch (BadLocationException e) {
 			LOG.warning("Fehler beim SyntaxHighlightig " + e.getMessage());
 		}
+	}
+
+	private void highlightCMD() {
+		highlight(HIGHLIGHT_CMD_REGEX, CMD_KEYWORD_COLOR, false);
+	}
+
+	private void highlightQU() {
+		highlight(HIGHLIGHT_QU_REGEX, QU_KEYWORD_COLOR, false);
+	}
+
+	private void highlightDefault() {
+		highlight(HIGHLIGHT_DEF_REGEX, DEFAULT_KEYWORD_COLOR, true);
 	}
 
 	@Override
