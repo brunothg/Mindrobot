@@ -58,8 +58,8 @@ import de.bno.mindrobot.data.spielfeld.SpielfeldData;
 import de.bno.mindrobot.gui.parser.MindTalk;
 import de.bno.mindrobot.gui.parser.Parser;
 
-public class Konsole extends JPanel implements KeyListener, MouseListener,
-		SignalListener {
+public class Konsole extends JPanel implements KeyListener, MouseListener, SignalListener
+{
 
 	private static final Logger LOG = MindRobot.getLogger(Konsole.class);
 
@@ -86,20 +86,20 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	private JBufferedTextArea logArea;
 
 	/* Highlighting Keywords */
-	private static final String[] HIGHLIGHT_DEF = new String[] {
-			String(SYNTAX_WENN), String(SYNTAX_DANN), String(SYNTAX_SONST),
-			String(SYNTAX_ENDE), String(SYNTAX_WIEDERHOLE),
-			String(SYNTAX_SOLANGE) };
+	private static final String[] HIGHLIGHT_DEF = new String[] { String(SYNTAX_WENN), String(SYNTAX_DANN),
+			String(SYNTAX_SONST), String(SYNTAX_ENDE), String(SYNTAX_WIEDERHOLE), String(SYNTAX_SOLANGE) };
 
 	private static final Color DEFAULT_KEYWORD_COLOR = new Color(149, 0, 85);
 	public static String HIGHLIGHT_DEF_REGEX;
 
 	private JScrollPane logScrollPane;
 
-	static {
+	static
+	{
 		StringBuilder buff = new StringBuilder("");
 		buff.append("(");
-		for (String keyword : HIGHLIGHT_DEF) {
+		for (String keyword : HIGHLIGHT_DEF)
+		{
 			buff.append("\\b").append(keyword).append("\\b").append("|");
 		}
 		buff.deleteCharAt(buff.length() - 1);
@@ -110,20 +110,22 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	/* Highlight cmd */
 	private static final Color CMD_KEYWORD_COLOR = new Color(255, 153, 0);
-	private static final String HIGHLIGHT_CMD_REGEX = "((\\s+|\\A)[a-zA-ZöüäÖÜÄß]+[a-zA-Z0-9öüäÖÜÄß()]*\\.(\\s|\\Z))";
+	private static final String HIGHLIGHT_CMD_REGEX = "\\S+\\.";
 	/* Highlight cmd */
 
 	/* Highlight question */
 	private static final Color QU_KEYWORD_COLOR = new Color(255, 0, 0);
-	private static final String HIGHLIGHT_QU_REGEX = "((\\s+|\\A)!?[a-zA-ZöüäÖÜÄß]+[a-zA-Z0-9öüäÖÜÄß()]*\\?(\\s|\\Z))";
+	private static final String HIGHLIGHT_QU_REGEX = "\\S+\\?";
 
 	/* Highlight question */
 
-	public Konsole() {
+	public Konsole()
+	{
 		this(null);
 	}
 
-	public Konsole(PlaygroundPreview preview) {
+	public Konsole(PlaygroundPreview preview)
+	{
 		super();
 
 		this.preview = preview;
@@ -140,7 +142,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 	}
 
-	private void createCenterPanel() {
+	private void createCenterPanel()
+	{
 		centerPanel = new JSplitPane();
 		centerPanel.setDividerSize(Pixel.pointsToPixel(10));
 		centerPanel.setDividerLocation(0.7);
@@ -152,7 +155,8 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		createCenterRightPanel();
 	}
 
-	private void createCenterRightPanel() {
+	private void createCenterRightPanel()
+	{
 		centerRightPanel = new JSplitPane();
 		centerRightPanel.setDividerSize(Pixel.pointsToPixel(15));
 		centerRightPanel.setDividerLocation(0.7);
@@ -164,32 +168,37 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		createRightBottom();
 	}
 
-	private void createRightBottom() {
+	private void createRightBottom()
+	{
 		logScrollPane = new JScrollPane();
 		logArea = new JBufferedTextArea(5000);
 		logArea.setEditable(false);
-		logScrollPane.setBorder(BorderFactory
-				.createTitledBorder(String(LOGGING)));
+		logScrollPane.setBorder(BorderFactory.createTitledBorder(String(LOGGING)));
 		logScrollPane.setViewportView(logArea);
 		centerRightPanel.setBottomComponent(logScrollPane);
 	}
 
-	private void createPreview() {
-		if (preview == null) {
+	private void createPreview()
+	{
+		if (preview == null)
+		{
 			preview = new PlaygroundPreview(null);
 		}
 		centerRightPanel.setTopComponent(preview);
 	}
 
-	private void addListener() {
+	private void addListener()
+	{
 		Signals.addListener(this);
 	}
 
-	private void createParser() {
+	private void createParser()
+	{
 		parser = new MindTalk();
 	}
 
-	private void createTextArea() {
+	private void createTextArea()
+	{
 		createScrollPane();
 
 		editor = new JTextPane();
@@ -200,12 +209,14 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		editor.addMouseListener(this);
 	}
 
-	private void createScrollPane() {
+	private void createScrollPane()
+	{
 		sp = new JScrollPane();
 		centerPanel.setLeftComponent(sp);
 	}
 
-	private void createTopPanel() {
+	private void createTopPanel()
+	{
 		topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		add(topPanel, BorderLayout.NORTH);
@@ -213,66 +224,76 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		createLabel();
 	}
 
-	private void createLabel() {
+	private void createLabel()
+	{
 		title = new JLabel(String(EDIT));
 		setTitleSize(20);
 		topPanel.add(title);
 	}
 
-	public void setTitleSize(int size) {
+	public void setTitleSize(int size)
+	{
 		title.setFont(new Font(title.getFont().getName(), Font.BOLD, size));
 	}
 
-	public void updateTextHighlighting(int offset, int length, Color c,
-			boolean bold) {
+	public void updateTextHighlighting(int offset, int length, Color c, boolean bold)
+	{
 		StyleContext sc = StyleContext.getDefaultStyleContext();
 
-		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
-				StyleConstants.Foreground, c);
+		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
 		aset = sc.addAttribute(aset, StyleConstants.Bold, bold);
 
-		editor.getStyledDocument().setCharacterAttributes(offset, length, aset,
-				true);
+		editor.getStyledDocument().setCharacterAttributes(offset, length, aset, true);
 	}
 
-	public void clearTextHighlighting() {
-		updateTextHighlighting(0, editor.getText().length(),
-				editor.getForeground(), false);
+	public void clearTextHighlighting()
+	{
+		updateTextHighlighting(0, editor.getText().length(), editor.getForeground(), false);
 	}
 
-	public void runProgram(RobotControl ctr) {
+	public void runProgram(RobotControl ctr)
+	{
 		LOG.info("Start running program");
 		stopped = false;
 
-		try {
-			if (parser != null) {
-				try {
-					parser.run(
-							ctr,
-							editor.getDocument().getText(0,
-									editor.getDocument().getLength()));
-				} catch (BadLocationException e) {
-					LOG.warning("Fehler beim Parsen des Programms: "
-							+ e.getMessage());
+		try
+		{
+			if (parser != null)
+			{
+				try
+				{
+					parser.run(ctr, editor.getDocument().getText(0, editor.getDocument().getLength()));
+				}
+				catch (BadLocationException e)
+				{
+					LOG.warning("Fehler beim Parsen des Programms: " + e.getMessage());
 				}
 			}
-		} catch (Exception e) {
-		} finally {
+		}
+		catch (Exception e)
+		{
+		}
+		finally
+		{
 			stopped = true;
 			Signals.sendSignal(Signals.SIGNAL_RUN_FINISHED);
 			LOG.info("Finished running program");
 		}
 	}
 
-	public void stopProgram() {
-		if (!stopped) {
+	public void stopProgram()
+	{
+		if (!stopped)
+		{
 			parser.stop();
 			stopped = true;
 		}
 	}
 
-	protected void paintComponent(Graphics g) {
-		if (isFirstTimePaint) {
+	protected void paintComponent(Graphics g)
+	{
+		if (isFirstTimePaint)
+		{
 			isFirstTimePaint = false;
 			centerPanel.setDividerLocation(0.7);
 			centerRightPanel.setDividerLocation(0.8);
@@ -281,21 +302,26 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(KeyEvent e)
+	{
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e)
+	{
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		if (e.getSource() == editor) {
+	public void keyReleased(KeyEvent e)
+	{
+		if (e.getSource() == editor)
+		{
 			colorizeAction();
 		}
 	}
 
-	private void colorizeAction() {
+	private void colorizeAction()
+	{
 		clearTextHighlighting();
 
 		highlightCMD();
@@ -303,50 +329,62 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		highlightDefault();
 	}
 
-	private void highlight(String regex, Color color, boolean bold) {
+	private void highlight(String regex, Color color, boolean bold)
+	{
 		Pattern pattern = Pattern.compile(regex);
 		Matcher match;
-		try {
-			match = pattern.matcher(editor.getDocument().getText(0,
-					editor.getDocument().getLength()));
-			while (match.find()) {
-				updateTextHighlighting(match.start(),
-						match.end() - match.start(), color, bold);
+		try
+		{
+			match = pattern.matcher(editor.getDocument().getText(0, editor.getDocument().getLength()));
+			while (match.find())
+			{
+				updateTextHighlighting(match.start(), match.end() - match.start(), color, bold);
 			}
-		} catch (BadLocationException e) {
+		}
+		catch (BadLocationException e)
+		{
 			LOG.warning("Fehler beim SyntaxHighlightig " + e.getMessage());
 		}
 	}
 
-	private void highlightCMD() {
+	private void highlightCMD()
+	{
 		highlight(HIGHLIGHT_CMD_REGEX, CMD_KEYWORD_COLOR, false);
 	}
 
-	private void highlightQU() {
+	private void highlightQU()
+	{
 		highlight(HIGHLIGHT_QU_REGEX, QU_KEYWORD_COLOR, false);
 	}
 
-	private void highlightDefault() {
+	private void highlightDefault()
+	{
 		highlight(HIGHLIGHT_DEF_REGEX, DEFAULT_KEYWORD_COLOR, true);
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent arg0)
+	{
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent arg0)
+	{
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent arg0)
+	{
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent arg0)
+	{
 
-		if (arg0.getSource() == editor) {
-			if (arg0.isPopupTrigger()) {
+		if (arg0.getSource() == editor)
+		{
+			if (arg0.isPopupTrigger())
+			{
 				popUp(arg0.getX(), arg0.getY());
 			}
 		}
@@ -354,43 +392,51 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent arg0)
+	{
 
-		if (arg0.getSource() == editor) {
-			if (arg0.isPopupTrigger()) {
+		if (arg0.getSource() == editor)
+		{
+			if (arg0.isPopupTrigger())
+			{
 				popUp(arg0.getX(), arg0.getY());
 			}
 		}
 
 	}
 
-	private void popUp(int x, int y) {
+	private void popUp(int x, int y)
+	{
 		new KonsolenPopup().show(editor, x, y);
 	}
 
 	@Override
-	public boolean Signal(String signal, Object... values) {
+	public boolean Signal(String signal, Object... values)
+	{
 
-		switch (signal) {
-		case Signals.SIGNAL_KONSOLE_INSERT:
-			insertCMD(values);
-			return true;
-		case Signals.SIGNAL_KONSOLE_LOG:
-			konsolenLog(values);
-			return true;
-		case Signals.SIGNAL_EXPORT_AS:
-			return exportScriptAs(values);
-		default:
+		switch (signal)
+		{
+			case Signals.SIGNAL_KONSOLE_INSERT:
+				insertCMD(values);
+				return true;
+			case Signals.SIGNAL_KONSOLE_LOG:
+				konsolenLog(values);
+				return true;
+			case Signals.SIGNAL_EXPORT_AS:
+				return exportScriptAs(values);
+			default:
 			break;
 		}
 
 		return false;
 	}
 
-	private boolean exportScriptAs(Object[] values) {
+	private boolean exportScriptAs(Object[] values)
+	{
 		String format = "";
 
-		if (values == null || values.length < 1) {
+		if (values == null || values.length < 1)
+		{
 			return false;
 		}
 
@@ -401,69 +447,88 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		ScriptExporter exporter;
 		String filename;
 
-		switch (format.toLowerCase()) {
-		case "java":
-			exporter = new JavaExporter();
-			filename = "MindExport.java";
+		switch (format.toLowerCase())
+		{
+			case "java":
+				exporter = new JavaExporter();
+				filename = "MindExport.java";
 			break;
-		default:
-			exporter = null;
-			filename = null;
+			default:
+				exporter = null;
+				filename = null;
 			break;
 		}
 
-		if (exporter == null) {
+		if (exporter == null)
+		{
 			return false;
 		}
 
-		if (!MindRobot.isFullscreen()) {
+		if (!MindRobot.isFullscreen())
+		{
 
 			Path out = openPath(filename);
 
-			if (out == null) {
+			if (out == null)
+			{
 				return true;
 			}
 
-			try {
+			try
+			{
 				exporter.exportAs(editor.getText(), out);
-			} catch (IOException e) {
-				LOG.warning("Fehler beim exportieren des Scripts: "
-						+ e.getMessage());
+			}
+			catch (IOException e)
+			{
+				LOG.warning("Fehler beim exportieren des Scripts: " + e.getMessage());
 			}
 
-		} else {
+		}
+		else
+		{
 			final ScriptExporter _exporter = exporter;
 			exporter = null;
 
 			final JFileChooser fc = new JFileChooser();
 			fc.setDialogType(JFileChooser.SAVE_DIALOG);
 
-			if (filename != null) {
+			if (filename != null)
+			{
 				fc.setSelectedFile(new File(filename));
 			}
 
-			fc.addActionListener(new ActionListener() {
+			fc.addActionListener(new ActionListener()
+			{
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e)
+				{
 					String command = e.getActionCommand();
-					if (command.equals(JFileChooser.APPROVE_SELECTION)) {
+					if (command.equals(JFileChooser.APPROVE_SELECTION))
+					{
 						File selectedFile = fc.getSelectedFile();
 						Path out = selectedFile.toPath();
 
-						if (out == null) {
+						if (out == null)
+						{
 							return;
 						}
 
-						try {
+						try
+						{
 							_exporter.exportAs(editor.getText(), out);
-						} catch (IOException e2) {
-							LOG.warning("Fehler beim exportieren des Scripts: "
-									+ e2.getMessage());
-						} finally {
+						}
+						catch (IOException e2)
+						{
+							LOG.warning("Fehler beim exportieren des Scripts: " + e2.getMessage());
+						}
+						finally
+						{
 							sp.setViewportView(editor);
 						}
-					} else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
+					}
+					else if (command.equals(JFileChooser.CANCEL_SELECTION))
+					{
 						sp.setViewportView(editor);
 					}
 				}
@@ -475,17 +540,20 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		return true;
 	}
 
-	private Path openPath(String name) {
+	private Path openPath(String name)
+	{
 		JFileChooser fc = new JFileChooser();
 
-		if (name != null) {
+		if (name != null)
+		{
 			fc.setSelectedFile(new File(name));
 		}
 
 		File f = null;
 
 		int ret = fc.showSaveDialog(editor);
-		if (ret != JFileChooser.APPROVE_OPTION) {
+		if (ret != JFileChooser.APPROVE_OPTION)
+		{
 			return null;
 		}
 
@@ -494,15 +562,18 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 		return (f != null) ? f.toPath() : null;
 	}
 
-	private void konsolenLog(Object[] values) {
-		for (Object obj : values) {
+	private void konsolenLog(Object[] values)
+	{
+		for (Object obj : values)
+		{
 			logArea.appendText(obj.toString());
 		}
 	}
 
-	private void insertCMD(Object[] values) {
-		if (values == null || values.length < 1
-				|| !(values[0] instanceof Insert)) {
+	private void insertCMD(Object[] values)
+	{
+		if (values == null || values.length < 1 || !(values[0] instanceof Insert))
+		{
 			return;
 		}
 
@@ -510,64 +581,65 @@ public class Konsole extends JPanel implements KeyListener, MouseListener,
 
 		String insertString = null;
 
-		switch (what) {
-		case WENN_DANN_SONST:
-			insertString = String.format("%s <%s>?%n%s%n%n%s%n%n%s ",
-					String(SYNTAX_WENN), String(MENU_FRAGE),
-					String(SYNTAX_DANN), String(SYNTAX_SONST),
+		switch (what)
+		{
+			case WENN_DANN_SONST:
+				insertString = String.format("%s <%s>?%n%s%n%n%s%n%n%s ", String(SYNTAX_WENN), String(MENU_FRAGE),
+					String(SYNTAX_DANN), String(SYNTAX_SONST), String(SYNTAX_ENDE));
+			break;
+			case WIEDERHOLE_X:
+				insertString = String.format("%s <%s>%n%n%s ", String(SYNTAX_WIEDERHOLE), String(NUMBER),
 					String(SYNTAX_ENDE));
 			break;
-		case WIEDERHOLE_X:
-			insertString = String.format("%s <%s>%n%n%s ",
-					String(SYNTAX_WIEDERHOLE), String(NUMBER),
+			case SOLANGE_WIE:
+				insertString = String.format("%s <%s>?%n%n%s ", String(SYNTAX_SOLANGE), String(MENU_FRAGE),
 					String(SYNTAX_ENDE));
 			break;
-		case SOLANGE_WIE:
-			insertString = String.format("%s <%s>?%n%n%s ",
-					String(SYNTAX_SOLANGE), String(MENU_FRAGE),
-					String(SYNTAX_ENDE));
+			case VORWAERTS:
+				insertString = String.format("%s. ", String(CMD_VORWAERTS));
 			break;
-		case VORWAERTS:
-			insertString = String.format("%s. ", String(CMD_VORWAERTS));
+			case RUECKWAERTS:
+				insertString = String.format("%s. ", String(CMD_RUECKWAERTS));
 			break;
-		case RUECKWAERTS:
-			insertString = String.format("%s. ", String(CMD_RUECKWAERTS));
+			case LINKS:
+				insertString = String.format("%s. ", String(CMD_LINKS));
 			break;
-		case LINKS:
-			insertString = String.format("%s. ", String(CMD_LINKS));
+			case RECHTS:
+				insertString = String.format("%s. ", String(CMD_RECHTS));
 			break;
-		case RECHTS:
-			insertString = String.format("%s. ", String(CMD_RECHTS));
+			case HINDERNIS_Q:
+				insertString = String.format("%s? ", String(QU_HINDERNIS));
 			break;
-		case HINDERNIS_Q:
-			insertString = String.format("%s? ", String(QU_HINDERNIS));
+			case VERWIRRT_Q:
+				insertString = String.format("%s? ", String(QU_VERWIRRT));
 			break;
-		case VERWIRRT_Q:
-			insertString = String.format("%s? ", String(QU_VERWIRRT));
+			case SETZE_GESCHWINDIGKEIT:
+				insertString = String.format("%s(1000).", String(CMD_SPEED));
 			break;
-		case SETZE_GESCHWINDIGKEIT:
-			insertString = String.format("%s(1000).", String(CMD_SPEED));
-			break;
-		default:
+			default:
 			break;
 		}
 
-		if (insertString != null && !insertString.isEmpty()) {
+		if (insertString != null && !insertString.isEmpty())
+		{
 			StyledDocument doc = editor.getStyledDocument();
-			try {
-				doc.insertString(editor.getCaretPosition(), insertString,
-						SimpleAttributeSet.EMPTY);
-			} catch (BadLocationException e) {
-				LOG.warning("Fehler beim einfügen von Befehlen: "
-						+ e.getMessage());
+			try
+			{
+				doc.insertString(editor.getCaretPosition(), insertString, SimpleAttributeSet.EMPTY);
+			}
+			catch (BadLocationException e)
+			{
+				LOG.warning("Fehler beim einfügen von Befehlen: " + e.getMessage());
 			}
 
 			colorizeAction();
 		}
 	}
 
-	public void setMapData(SpielfeldData spielfeld) {
-		if (preview != null) {
+	public void setMapData(SpielfeldData spielfeld)
+	{
+		if (preview != null)
+		{
 			preview.setSpielfeld(spielfeld);
 		}
 	}
