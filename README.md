@@ -92,4 +92,5 @@ Translations:
 		java=Java
 		finished=beendet
 		number=Zahl
+		msg_points=Dein Ergebnis: %.2f
 		END

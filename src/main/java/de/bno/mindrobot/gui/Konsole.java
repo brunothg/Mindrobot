@@ -6,6 +6,7 @@ import static de.bno.mindrobot.gui.Strings.CMD_RUECKWAERTS;
 import static de.bno.mindrobot.gui.Strings.CMD_SPEED;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.EDIT;
+import static de.bno.mindrobot.gui.Strings.MSG_POINTS;
 import static de.bno.mindrobot.gui.Strings.LOGGING;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
 import static de.bno.mindrobot.gui.Strings.NUMBER;
@@ -40,6 +41,7 @@ import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -276,6 +278,11 @@ public class Konsole extends JPanel implements KeyListener, MouseListener, Signa
 		finally
 		{
 			stopped = true;
+
+			double points = parser.getPoints();
+			JOptionPane.showMessageDialog(this, String.format(String(MSG_POINTS), points), "Ergebnis",
+				JOptionPane.INFORMATION_MESSAGE);
+
 			Signals.sendSignal(Signals.SIGNAL_RUN_FINISHED);
 			LOG.info("Finished running program");
 		}

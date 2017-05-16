@@ -15,7 +15,8 @@ import java.util.logging.Logger;
 
 import de.bno.mindrobot.MindRobot;
 
-public class Strings {
+public class Strings
+{
 
 	private static final Logger LOG = MindRobot.getLogger(Strings.class);
 	private static final Charset CHARSET = StandardCharsets.UTF_8;
@@ -79,24 +80,26 @@ public class Strings {
 	public static final String QU_VERWIRRT = "qu_confused";
 	public static final String QU_HINDERNIS = "qu_blocked";
 
+	public static final String MSG_POINTS = "msg_points";
+
 	private static Map<String, String> values;
 
-	static {
+	static
+	{
 		values = new HashMap<String, String>();
 		loadDefault();
 	}
 
-	public static void loadDefault() {
+	public static void loadDefault()
+	{
 		values.put(TITLE, "MindRobot");
 		values.put(ONE_INSTANZ_ONLY_TITLE, "Programm wurde bereits gestartet");
-		values.put(ONE_INSTANZ_ONLY_MESSAGE,
-				"Es läuft bereits eine Instanz des Programms.");
+		values.put(ONE_INSTANZ_ONLY_MESSAGE, "Es läuft bereits eine Instanz des Programms.");
 		values.put(START_APP, "Start");
 		values.put(CANCEL, "Abbrechen");
 		values.put(LANGUAGE, "Sprache");
 		values.put(DEFAULT, "Standart");
-		values.put(TOOLTIP_SELECT_LANG,
-				"Weitere Sprachen müssen im Ordner '%s' abgelegt werden.");
+		values.put(TOOLTIP_SELECT_LANG, "Weitere Sprachen müssen im Ordner '%s' abgelegt werden.");
 		values.put(DSIPLAY_SET, "Grafikeinstellung");
 		values.put(FULLSCREEN, "Vollbild");
 		values.put(WINDOWED, "Fenster");
@@ -124,6 +127,7 @@ public class Strings {
 		values.put(CMD_SPEED, "setzeGeschwindigkeit");
 		values.put(QU_HINDERNIS, "steheVorHindernis");
 		values.put(QU_VERWIRRT, "binVerwirrt");
+		values.put(MSG_POINTS, "Dein Ergebnis: %.2f");
 		values.put(MENU_BEFEHL, "Befehl");
 		values.put(MENU_SCHLEIFE, "Schleife");
 		values.put(MENU_VERZWEIGUNG, "Verzweigung");
@@ -144,19 +148,22 @@ public class Strings {
 		values.put(NUMBER, "Zahl");
 	}
 
-	public static String String(String key) {
+	public static String String(String key)
+	{
 
 		String ret = values.get(key);
 
 		return (ret != null) ? ret : "N/A";
 	}
 
-	public static void writeStrings(Path loc) throws IOException {
+	public static void writeStrings(Path loc) throws IOException
+	{
 		BufferedWriter writer = Files.newBufferedWriter(loc, CHARSET);
 
 		Set<Entry<String, String>> entrySet = values.entrySet();
 
-		for (Entry<String, String> entry : entrySet) {
+		for (Entry<String, String> entry : entrySet)
+		{
 			writer.append(entry.getKey());
 			writer.append('=');
 			writer.append(entry.getValue());
@@ -168,43 +175,53 @@ public class Strings {
 		writer.close();
 	}
 
-	public static void loadStrings(Path loc) throws IOException {
+	public static void loadStrings(Path loc) throws IOException
+	{
 		BufferedReader reader = null;
-		try {
+		try
+		{
 			reader = Files.newBufferedReader(loc, CHARSET);
 
 			String tmp;
 
-			while ((tmp = reader.readLine()) != null) {
+			while ((tmp = reader.readLine()) != null)
+			{
 				tmp = tmp.trim();
-				if (tmp.equalsIgnoreCase("END")) {
+				if (tmp.equalsIgnoreCase("END"))
+				{
 					break;
-				} else if (!tmp.isEmpty() && tmp.indexOf('=') != -1) {
+				}
+				else if (!tmp.isEmpty() && tmp.indexOf('=') != -1)
+				{
 
 					String key = tmp.substring(0, tmp.indexOf('='));
-					String value = (tmp.length() - 1 >= tmp.indexOf('=' + 1)) ? tmp
-							.substring(tmp.indexOf('=') + 1, tmp.length())
-							: null;
+					String value = (tmp.length() - 1 >= tmp.indexOf('=' + 1))
+						? tmp.substring(tmp.indexOf('=') + 1, tmp.length()) : null;
 
 					key = key.trim();
 
-					if (value != null) {
+					if (value != null)
+					{
 						value = value.trim();
 					}
 
-					if (key != null && value != null && !key.isEmpty()
-							&& !value.isEmpty()) {
+					if (key != null && value != null && !key.isEmpty() && !value.isEmpty())
+					{
 						values.put(key, value);
 					}
 				}
 			}
 
-		} catch (IOException e) {
-			LOG.warning("Fehler beim Laden von Übersetzungen. Path: "
-					+ loc.toAbsolutePath());
+		}
+		catch (IOException e)
+		{
+			LOG.warning("Fehler beim Laden von Übersetzungen. Path: " + loc.toAbsolutePath());
 			throw e;
-		} finally {
-			if (reader != null) {
+		}
+		finally
+		{
+			if (reader != null)
+			{
 				reader.close();
 			}
 		}
