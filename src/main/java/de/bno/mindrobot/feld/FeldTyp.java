@@ -1,26 +1,31 @@
 package de.bno.mindrobot.feld;
 
 public enum FeldTyp {
-	NORMAL('#'), BLOCKED('X'), CONFUSE('Q'), START('S'), ZIEL('Z'), UNDEFINIERT('$');
+	NORMAL('#'), BLOCKED('X'), CONFUSE('?'), START('S'), ZIEL('Z'), UNDEFINIERT('$');
 
 	char c;
 	char[] alias;
 
-	FeldTyp(char c, char... alias) {
+	FeldTyp(char c, char... alias)
+	{
 		this.c = c;
 		this.alias = alias;
 	}
 
-	public char getCharRepresentation() {
+	public char getCharRepresentation()
+	{
 		return c;
 	}
 
-	public static FeldTyp getTyp(char c) {
+	public static FeldTyp getTyp(char c)
+	{
 
 		FeldTyp[] types = values();
 
-		for (FeldTyp typ : types) {
-			if (typ.c == c) {
+		for (FeldTyp typ : types)
+		{
+			if (typ.c == c)
+			{
 				return typ;
 			}
 		}
