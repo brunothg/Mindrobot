@@ -7,6 +7,8 @@ import static de.bno.mindrobot.gui.Strings.CMD_SPEED;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.EDIT;
 import static de.bno.mindrobot.gui.Strings.MSG_POINTS;
+import static de.bno.mindrobot.gui.Strings.MSG_RESULT;
+import static de.bno.mindrobot.gui.Strings.MSG_FAILED;
 import static de.bno.mindrobot.gui.Strings.LOGGING;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
 import static de.bno.mindrobot.gui.Strings.NUMBER;
@@ -279,9 +281,16 @@ public class Konsole extends JPanel implements KeyListener, MouseListener, Signa
 		{
 			stopped = true;
 
-			double points = parser.getPoints();
-			JOptionPane.showMessageDialog(this, String.format(String(MSG_POINTS), points), "Ergebnis",
-				JOptionPane.INFORMATION_MESSAGE);
+			if (ctr.standOnGoalField() >= 0)
+			{
+				double points = parser.getPoints();
+				JOptionPane.showMessageDialog(this, String.format(String(MSG_POINTS), points), String(MSG_RESULT),
+					JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, String(MSG_FAILED), String(MSG_RESULT), JOptionPane.ERROR_MESSAGE);
+			}
 
 			Signals.sendSignal(Signals.SIGNAL_RUN_FINISHED);
 			LOG.info("Finished running program");

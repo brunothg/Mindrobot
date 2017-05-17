@@ -93,4 +93,6 @@ Translations:
 		finished=beendet
 		number=Zahl
 		msg_points=Dein Ergebnis: %.2f
+		msg_result=Ergebnis
+		msg_failed=Schade, du hast das Ziel nicht erreicht. \nVersuche es doch noch einmal.
 		END

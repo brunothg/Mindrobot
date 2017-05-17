@@ -81,6 +81,8 @@ public class Strings
 	public static final String QU_HINDERNIS = "qu_blocked";
 
 	public static final String MSG_POINTS = "msg_points";
+	public static final String MSG_RESULT = "msg_result";
+	public static final String MSG_FAILED = "msg_failed";
 
 	private static Map<String, String> values;
 
@@ -98,7 +100,7 @@ public class Strings
 		values.put(START_APP, "Start");
 		values.put(CANCEL, "Abbrechen");
 		values.put(LANGUAGE, "Sprache");
-		values.put(DEFAULT, "Standart");
+		values.put(DEFAULT, "Standard");
 		values.put(TOOLTIP_SELECT_LANG, "Weitere Sprachen müssen im Ordner '%s' abgelegt werden.");
 		values.put(DSIPLAY_SET, "Grafikeinstellung");
 		values.put(FULLSCREEN, "Vollbild");
@@ -128,6 +130,8 @@ public class Strings
 		values.put(QU_HINDERNIS, "steheVorHindernis");
 		values.put(QU_VERWIRRT, "binVerwirrt");
 		values.put(MSG_POINTS, "Dein Ergebnis: %.2f");
+		values.put(MSG_RESULT, "Ergebnis");
+		values.put(MSG_FAILED, "Schade, du hast das Ziel nicht erreicht. \nVersuche es doch noch einmal.");
 		values.put(MENU_BEFEHL, "Befehl");
 		values.put(MENU_SCHLEIFE, "Schleife");
 		values.put(MENU_VERZWEIGUNG, "Verzweigung");
