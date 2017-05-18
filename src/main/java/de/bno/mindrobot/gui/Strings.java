@@ -148,6 +148,7 @@ public class Strings
 		values.put(MENU_FRAGE, "Frage");
 		values.put(MENU_FRAGE_VERWIRRT, "Bin ich verwirrt?");
 		values.put(MENU_FRAGE_HINDERNIS, "Stehe ich vor einem Hindernis?");
+		values.put(MENU_FRAGE_AUF_ZIELFELD, "Stehe ich auf einem Zielfeld?");
 		values.put(LOGGING, "Logging");
 		values.put(EXPORT, "Exportieren");
 		values.put(JAVA, "Java");
