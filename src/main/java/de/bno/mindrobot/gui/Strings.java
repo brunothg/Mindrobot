@@ -61,6 +61,7 @@ public class Strings
 	public static final String MENU_SOLANGEWIE = "menu_while_do";
 	public static final String MENU_FRAGE = "menu_question";
 	public static final String MENU_FRAGE_VERWIRRT = "menu_question_confused";
+	public static final String MENU_FRAGE_AUF_ZIELFELD = "menu_question_stand_gaol_field";
 	public static final String MENU_FRAGE_HINDERNIS = "menu_question_obstacle";
 	public static final String MENU_GESCHWINDIGKEIT = "menu_set_speed";
 
@@ -79,6 +80,7 @@ public class Strings
 
 	public static final String QU_VERWIRRT = "qu_confused";
 	public static final String QU_HINDERNIS = "qu_blocked";
+	public static final String QU_ZIELFELD = "qu_goalfield";
 
 	public static final String MSG_POINTS = "msg_points";
 	public static final String MSG_RESULT = "msg_result";
@@ -129,6 +131,7 @@ public class Strings
 		values.put(CMD_SPEED, "setzeGeschwindigkeit");
 		values.put(QU_HINDERNIS, "steheVorHindernis");
 		values.put(QU_VERWIRRT, "binVerwirrt");
+		values.put(QU_ZIELFELD, "steheAufZielfeld");
 		values.put(MSG_POINTS, "Dein Ergebnis: %.2f");
 		values.put(MSG_RESULT, "Ergebnis");
 		values.put(MSG_FAILED, "Schade, du hast das Ziel nicht erreicht. \nVersuche es doch noch einmal.");

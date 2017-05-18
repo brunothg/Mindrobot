@@ -12,6 +12,7 @@ import static de.bno.mindrobot.gui.Strings.MSG_FAILED;
 import static de.bno.mindrobot.gui.Strings.LOGGING;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
 import static de.bno.mindrobot.gui.Strings.NUMBER;
+import static de.bno.mindrobot.gui.Strings.QU_ZIELFELD;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
@@ -628,6 +629,9 @@ public class Konsole extends JPanel implements KeyListener, MouseListener, Signa
 			break;
 			case VERWIRRT_Q:
 				insertString = String.format("%s? ", String(QU_VERWIRRT));
+			break;
+			case ZIELFELD_Q:
+				insertString = String.format("%s? ", String(QU_ZIELFELD));
 			break;
 			case SETZE_GESCHWINDIGKEIT:
 				insertString = String.format("%s(1000).", String(CMD_SPEED));

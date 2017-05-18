@@ -7,6 +7,7 @@ import static de.bno.mindrobot.gui.Strings.CMD_SPEED;
 import static de.bno.mindrobot.gui.Strings.CMD_VORWAERTS;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
+import static de.bno.mindrobot.gui.Strings.QU_ZIELFELD;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SOLANGE;
@@ -349,6 +350,10 @@ public class MindTalk implements Parser
 			else if (cc.equals(String(QU_VERWIRRT)))
 			{
 				ret = (invert) ? !ctrl.isConfused() : ctrl.isConfused();
+			}
+			else if (cc.equals(String(QU_ZIELFELD)))
+			{
+				ret = (invert) ? ctrl.standOnGoalField() < 0 : ctrl.standOnGoalField() >= 0;
 			}
 
 		}

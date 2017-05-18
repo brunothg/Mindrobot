@@ -61,6 +61,7 @@ Translations:
 		menu_move_backwards=Einen Schritt rückwärts
 		menu_command=Befehl
 		qu_blocked=steheVorHindernis
+		qu_goalfield=steheAufZielfeld
 		cmd_backwards=rückwärts
 		cmd_right=rechtsDrehen
 		menu_move_forwards=Einen Schritt vorwärts
@@ -95,4 +96,5 @@ Translations:
 		msg_points=Dein Ergebnis: %.2f
 		msg_result=Ergebnis
 		msg_failed=Schade, du hast das Ziel nicht erreicht. \nVersuche es doch noch einmal.
+		menu_question_stand_gaol_field=Stehe ich auf einem Zielfeld?
 		END
