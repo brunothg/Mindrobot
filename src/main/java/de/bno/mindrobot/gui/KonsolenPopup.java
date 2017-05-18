@@ -7,6 +7,7 @@ import static de.bno.mindrobot.gui.Strings.MENU_FRAGE;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_VERWIRRT;
 import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_AUF_ZIELFELD;
+import static de.bno.mindrobot.gui.Strings.MENU_FRAGE_RANDOM;
 import static de.bno.mindrobot.gui.Strings.MENU_GESCHWINDIGKEIT;
 import static de.bno.mindrobot.gui.Strings.MENU_LINKSDREHEN;
 import static de.bno.mindrobot.gui.Strings.MENU_RECHTSDREHEN;
@@ -50,6 +51,7 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener
 	private JMenuItem binVerwirrt;
 	private JMenuItem binHindernis;
 	private JMenuItem binAufZielfeld;
+	private JMenuItem binRandom;
 
 	private JMenu exportMenu;
 	private JMenuItem expJava;
@@ -93,6 +95,7 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener
 		createHindernisFrage();
 		createVerwirrtFrage();
 		createAufZielfledFrage();
+		createRandomFrage();
 	}
 
 	private void createVerwirrtFrage()
@@ -114,6 +117,13 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener
 		binAufZielfeld = new JMenuItem(String(MENU_FRAGE_AUF_ZIELFELD));
 		fragenMenu.add(binAufZielfeld);
 		binAufZielfeld.addActionListener(this);
+	}
+
+	private void createRandomFrage()
+	{
+		binRandom = new JMenuItem(String(MENU_FRAGE_RANDOM));
+		fragenMenu.add(binRandom);
+		binRandom.addActionListener(this);
 	}
 
 	private void createSchleifen()
@@ -245,6 +255,10 @@ public class KonsolenPopup extends JPopupMenu implements ActionListener
 		else if (arg0.getSource() == binAufZielfeld)
 		{
 			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.ZIELFELD_Q);
+		}
+		else if (arg0.getSource() == binRandom)
+		{
+			Signals.sendSignal(Signals.SIGNAL_KONSOLE_INSERT, Insert.RANDOM_Q);
 		}
 		else if (arg0.getSource() == expJava)
 		{

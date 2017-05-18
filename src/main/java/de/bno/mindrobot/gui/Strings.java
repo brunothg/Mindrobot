@@ -63,6 +63,7 @@ public class Strings
 	public static final String MENU_FRAGE_VERWIRRT = "menu_question_confused";
 	public static final String MENU_FRAGE_AUF_ZIELFELD = "menu_question_stand_gaol_field";
 	public static final String MENU_FRAGE_HINDERNIS = "menu_question_obstacle";
+	public static final String MENU_FRAGE_RANDOM = "menu_question_random";
 	public static final String MENU_GESCHWINDIGKEIT = "menu_set_speed";
 
 	public static final String SYNTAX_ENDE = "syntax_end";
@@ -81,6 +82,7 @@ public class Strings
 	public static final String QU_VERWIRRT = "qu_confused";
 	public static final String QU_HINDERNIS = "qu_blocked";
 	public static final String QU_ZIELFELD = "qu_goalfield";
+	public static final String QU_RANDOM = "qu_random";
 
 	public static final String MSG_POINTS = "msg_points";
 	public static final String MSG_RESULT = "msg_result";
@@ -132,6 +134,7 @@ public class Strings
 		values.put(QU_HINDERNIS, "steheVorHindernis");
 		values.put(QU_VERWIRRT, "binVerwirrt");
 		values.put(QU_ZIELFELD, "steheAufZielfeld");
+		values.put(QU_RANDOM, "mirDochEgal");
 		values.put(MSG_POINTS, "Dein Ergebnis: %.2f");
 		values.put(MSG_RESULT, "Ergebnis");
 		values.put(MSG_FAILED, "Schade, du hast das Ziel nicht erreicht. \nVersuche es doch noch einmal.");
@@ -149,6 +152,7 @@ public class Strings
 		values.put(MENU_FRAGE_VERWIRRT, "Bin ich verwirrt?");
 		values.put(MENU_FRAGE_HINDERNIS, "Stehe ich vor einem Hindernis?");
 		values.put(MENU_FRAGE_AUF_ZIELFELD, "Stehe ich auf einem Zielfeld?");
+		values.put(MENU_FRAGE_RANDOM, "Trifft der Zufall zu?");
 		values.put(LOGGING, "Logging");
 		values.put(EXPORT, "Exportieren");
 		values.put(JAVA, "Java");

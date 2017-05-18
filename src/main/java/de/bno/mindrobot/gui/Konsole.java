@@ -15,6 +15,7 @@ import static de.bno.mindrobot.gui.Strings.NUMBER;
 import static de.bno.mindrobot.gui.Strings.QU_ZIELFELD;
 import static de.bno.mindrobot.gui.Strings.QU_HINDERNIS;
 import static de.bno.mindrobot.gui.Strings.QU_VERWIRRT;
+import static de.bno.mindrobot.gui.Strings.QU_RANDOM;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_DANN;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_ENDE;
 import static de.bno.mindrobot.gui.Strings.SYNTAX_SOLANGE;
@@ -632,6 +633,9 @@ public class Konsole extends JPanel implements KeyListener, MouseListener, Signa
 			break;
 			case ZIELFELD_Q:
 				insertString = String.format("%s? ", String(QU_ZIELFELD));
+			break;
+			case RANDOM_Q:
+				insertString = String.format("%s? ", String(QU_RANDOM));
 			break;
 			case SETZE_GESCHWINDIGKEIT:
 				insertString = String.format("%s(1000).", String(CMD_SPEED));
