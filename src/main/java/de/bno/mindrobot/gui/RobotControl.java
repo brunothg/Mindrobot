@@ -1,6 +1,7 @@
 package de.bno.mindrobot.gui;
 
-public interface RobotControl {
+public interface RobotControl
+{
 
 	/**
 	 * Turn robot 45° anti clockwise
@@ -60,5 +61,13 @@ public interface RobotControl {
 	 * @return number of goal or -1 if not a goal
 	 */
 	public int standOnGoalField();
+
+	/**
+	 * Returns the number of the last goal field. Can be used with actual goal field to check
+	 * finished state.
+	 * 
+	 * @return number of last goal
+	 */
+	public int getLastGoalNumber();
 
 }

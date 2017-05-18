@@ -282,7 +282,7 @@ public class Konsole extends JPanel implements KeyListener, MouseListener, Signa
 		{
 			stopped = true;
 
-			if (ctr.standOnGoalField() >= 0)
+			if (ctr.standOnGoalField() == ctr.getLastGoalNumber())
 			{
 				double points = parser.getPoints();
 				JOptionPane.showMessageDialog(this, String.format(String(MSG_POINTS), points), String(MSG_RESULT),
